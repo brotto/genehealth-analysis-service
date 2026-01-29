@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  analysis-service:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ANALYSIS_SERVICE_API_KEY=${ANALYSIS_SERVICE_API_KEY:-dev-analysis-key}
+      - CLINVAR_PATH=/app/data/clinvar_alleles.tsv
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
