@@ -114,7 +114,9 @@ async def process_analysis(
             source_format
         )
 
-        print(f"Analysis complete: {result['snp_count']} SNPs, {len(result.get('reports', {}))} reports")
+        reports = result.get("reports", {})
+        print(f"Analysis complete: {result['snp_count']} SNPs, {len(reports)} reports")
+        print(f"Report types generated: {list(reports.keys())}")
 
         # Send success callback with reports
         async with httpx.AsyncClient() as client:
