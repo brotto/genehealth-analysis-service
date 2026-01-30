@@ -9,6 +9,7 @@ from typing import Dict, Tuple, Any
 
 from .disease_risk_analyzer import analyze_disease_risks
 from .generate_exhaustive_report import generate_reports
+from .traits_analyzer import analyze_traits, generate_traits_report
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -153,6 +154,10 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
 
     risk_result = analyze_disease_risks(variants, clinvar_path)
 
+    # Run traits analysis
+    traits_result = analyze_traits(variants)
+    print(f"Traits analysis: {traits_result.traits_found} found, {traits_result.traits_not_found} not available")
+
     # Generate findings summary
     findings_summary = {
         "totalSnpsAnalyzed": risk_result.total_variants_analyzed,
@@ -160,20 +165,25 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         "highRiskVariants": len(risk_result.high_risk_variants),
         "moderateRiskVariants": len(risk_result.moderate_risk_variants),
         "pharmacogenomicVariants": len(risk_result.pharmacogenomic_variants),
+        "traitsAnalyzed": traits_result.traits_found,
         "categories": [
             {"category": cat, "count": count, "highRisk": 0}
             for cat, count in risk_result.categories.items()
         ]
     }
 
-    # Generate reports
+    # Generate reports (disease-focused)
     reports = generate_reports(risk_result)
+
+    # Add traits report
+    reports["traits"] = generate_traits_report(traits_result)
 
     return {
         "snp_count": len(variants),
         "findings_summary": findings_summary,
         "reports": reports,
-        "risk_result": risk_result
+        "risk_result": risk_result,
+        "traits_result": traits_result
     }
 
 
