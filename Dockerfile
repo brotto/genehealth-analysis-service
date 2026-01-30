@@ -15,12 +15,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY api_server.py .
 COPY scripts/ ./scripts/
 
-# Create data directory
+# Create data directory and copy ClinVar database
 RUN mkdir -p /app/data
+COPY data/clinvar_alleles.tsv.gz /app/data/
+RUN gunzip /app/data/clinvar_alleles.tsv.gz
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
+ENV CLINVAR_PATH=/app/data/clinvar_alleles.tsv
 
 # Expose port
 EXPOSE 8080
