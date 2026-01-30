@@ -114,7 +114,9 @@ async def process_analysis(
             source_format
         )
 
-        # Send success callback
+        print(f"Analysis complete: {result['snp_count']} SNPs, {len(result.get('reports', {}))} reports")
+
+        # Send success callback with reports
         async with httpx.AsyncClient() as client:
             await client.post(
                 callback_url,
@@ -122,11 +124,13 @@ async def process_analysis(
                     "jobId": job_id,
                     "status": "completed",
                     "snpCount": result["snp_count"],
-                    "findingsSummary": result["findings_summary"]
+                    "findingsSummary": result["findings_summary"],
+                    "reports": result.get("reports", {})
                 },
                 headers={"X-Analysis-Service-Key": API_KEY},
-                timeout=30.0
+                timeout=60.0  # Increased timeout for larger payload
             )
+            print(f"Callback sent successfully for job {job_id}")
 
     except Exception as e:
         # Send failure callback
