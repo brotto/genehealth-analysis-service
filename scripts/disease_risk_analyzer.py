@@ -51,17 +51,30 @@ class DiseaseRiskAnalyzer:
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter='\t')
+                loaded = 0
                 for row in reader:
-                    rsid = row.get('RS# (dbSNP)', '').strip()
-                    if rsid:
-                        self.clinvar_data[f"rs{rsid}"] = {
-                            'gene': row.get('GeneSymbol', ''),
-                            'condition': row.get('PhenotypeList', ''),
-                            'clinical_significance': row.get('ClinicalSignificance', ''),
-                            'review_status': row.get('ReviewStatus', ''),
-                            'chromosome': row.get('Chromosome', ''),
-                            'position': row.get('PositionVCF', ''),
-                        }
+                    # Build position key (chr:pos)
+                    chrom = row.get('chrom', '').strip()
+                    pos = row.get('pos', '').strip()
+
+                    if chrom and pos:
+                        pos_key = f"{chrom}:{pos}"
+                        clinical_sig = row.get('clinical_significance', '')
+
+                        # Only include pathogenic variants to save memory
+                        if 'pathogenic' in clinical_sig.lower():
+                            self.clinvar_data[pos_key] = {
+                                'gene': row.get('symbol', ''),
+                                'condition': row.get('all_traits', ''),
+                                'clinical_significance': clinical_sig,
+                                'review_status': row.get('review_status', ''),
+                                'chromosome': chrom,
+                                'position': pos,
+                                'ref': row.get('ref', ''),
+                                'alt': row.get('alt', ''),
+                            }
+                            loaded += 1
+                print(f"Loaded {loaded} pathogenic variants from ClinVar")
         except Exception as e:
             print(f"Warning: Could not load ClinVar data: {e}")
 
@@ -112,20 +125,25 @@ class DiseaseRiskAnalyzer:
                     # Count by category
                     categories[match.category] = categories.get(match.category, 0) + 1
 
-            # Check ClinVar data
-            if rsid_lower in self.clinvar_data:
-                clinvar_matches += 1
-                clinvar_info = self.clinvar_data[rsid_lower]
+            # Check ClinVar data by position (chr:pos)
+            pos_key = f"{chrom}:{pos}"
+            if pos_key in self.clinvar_data:
+                clinvar_info = self.clinvar_data[pos_key]
 
-                # Only add if not already found in curated database
-                if rsid_lower not in self.snp_database:
-                    match = self._create_clinvar_match(rsid_lower, genotype, clinvar_info)
-                    if match:
-                        if "pathogenic" in match.clinical_significance.lower():
-                            high_risk.append(match)
-                        elif "likely pathogenic" in match.clinical_significance.lower():
-                            moderate_risk.append(match)
-                        categories["ClinVar"] = categories.get("ClinVar", 0) + 1
+                # Check if genotype matches the pathogenic allele
+                alt_allele = clinvar_info.get('alt', '')
+                if alt_allele and alt_allele.upper() in genotype.upper():
+                    clinvar_matches += 1
+
+                    # Only add if not already found in curated database
+                    if rsid_lower not in self.snp_database:
+                        match = self._create_clinvar_match(rsid_lower, genotype, clinvar_info)
+                        if match:
+                            if "pathogenic" in match.clinical_significance.lower() and "likely" not in match.clinical_significance.lower():
+                                high_risk.append(match)
+                            elif "likely pathogenic" in match.clinical_significance.lower():
+                                moderate_risk.append(match)
+                            categories["ClinVar"] = categories.get("ClinVar", 0) + 1
 
         return DiseaseRiskResult(
             total_variants_analyzed=len(variants),

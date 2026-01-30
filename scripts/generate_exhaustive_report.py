@@ -49,14 +49,29 @@ def generate_summary_report(result: DiseaseRiskResult, subject_name: str) -> str
 """
 
     if result.high_risk_variants:
-        report += "### High Priority Items\n\n"
+        report += "### 🔴 High Risk Variants\n\n"
         for variant in result.high_risk_variants[:5]:
             report += f"- **{variant.gene}** ({variant.rsid}): {variant.condition}\n"
+            report += f"  - Genotype: {variant.genotype} | {variant.description[:100]}...\n"
+        report += "\n"
+
+    if result.moderate_risk_variants:
+        report += "### 🟡 Moderate Risk Variants\n\n"
+        for variant in result.moderate_risk_variants[:10]:
+            report += f"- **{variant.gene}** ({variant.rsid}): {variant.condition}\n"
+            report += f"  - Genotype: {variant.genotype} | {variant.description[:100]}...\n"
         report += "\n"
 
     if result.pharmacogenomic_variants:
-        report += "### Drug Metabolism Variants\n\n"
+        report += "### 💊 Drug Metabolism Variants\n\n"
         for variant in result.pharmacogenomic_variants[:5]:
+            report += f"- **{variant.gene}** ({variant.rsid}): {variant.condition}\n"
+            report += f"  - Genotype: {variant.genotype}\n"
+        report += "\n"
+
+    if result.beneficial_variants:
+        report += "### ✅ Beneficial Variants\n\n"
+        for variant in result.beneficial_variants[:5]:
             report += f"- **{variant.gene}** ({variant.rsid}): {variant.condition}\n"
         report += "\n"
 
