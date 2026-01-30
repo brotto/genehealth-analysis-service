@@ -24,8 +24,10 @@ API_KEY = os.environ.get("ANALYSIS_SERVICE_API_KEY", "dev-key")
 class AnalysisRequest(BaseModel):
     jobId: str
     sourceFormat: str
-    genomeContent: str
+    genomeContent: Optional[str] = None  # Direct content (small files)
+    fileUrl: Optional[str] = None        # URL to download (large files)
     callbackUrl: str
+    apiKey: Optional[str] = None         # API key for downloading
 
 
 class AnalysisProgress(BaseModel):
@@ -70,6 +72,8 @@ async def analyze(
         request.jobId,
         request.sourceFormat,
         request.genomeContent,
+        request.fileUrl,
+        request.apiKey or x_api_key,
         request.callbackUrl
     )
 
@@ -79,15 +83,34 @@ async def analyze(
 async def process_analysis(
     job_id: str,
     source_format: str,
-    genome_content: str,
+    genome_content: Optional[str],
+    file_url: Optional[str],
+    api_key: str,
     callback_url: str
 ):
     """Process the genome analysis and send callback"""
     try:
+        # Get genome content - either directly or by downloading
+        if genome_content:
+            content = genome_content
+        elif file_url:
+            print(f"Downloading genome file from: {file_url}")
+            async with httpx.AsyncClient() as client:
+                response = await client.get(
+                    file_url,
+                    headers={"X-API-Key": api_key},
+                    timeout=120.0
+                )
+                response.raise_for_status()
+                content = response.text
+                print(f"Downloaded {len(content)} bytes")
+        else:
+            raise ValueError("No genome content or file URL provided")
+
         # Run the full analysis pipeline
         result = await asyncio.to_thread(
             run_analysis,
-            genome_content,
+            content,
             source_format
         )
 
