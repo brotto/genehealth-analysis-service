@@ -5,11 +5,14 @@ Main orchestrator for genetic analysis
 
 import os
 import re
+import json
 from typing import Dict, Tuple, Any
 
 from .disease_risk_analyzer import analyze_disease_risks
 from .generate_exhaustive_report import generate_reports
 from .traits_analyzer import analyze_traits, generate_traits_report
+from .neanderthal_analyzer import analyze_neanderthal
+from .ancestry_analyzer import analyze_ancestry
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -177,6 +180,25 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
 
     # Add traits report
     reports["traits"] = generate_traits_report(traits_result)
+
+    # Run neanderthal analysis
+    try:
+        neanderthal_result = analyze_neanderthal(variants)
+        reports["neanderthal"] = json.dumps(neanderthal_result)
+        print(f"Neanderthal analysis: {neanderthal_result['summary']['variantsCarried']} variants carried")
+        findings_summary["neanderthalVariantsCarried"] = neanderthal_result["summary"]["variantsCarried"]
+        findings_summary["neanderthalPercentage"] = neanderthal_result["summary"]["estimatedPercentage"]
+    except Exception as e:
+        print(f"Neanderthal analysis failed: {e}")
+
+    # Run ancestry analysis
+    try:
+        ancestry_result = analyze_ancestry(variants)
+        reports["ancestry"] = json.dumps(ancestry_result)
+        print(f"Ancestry analysis: {ancestry_result['summary']['aimsGenotyped']} AIMs genotyped")
+        findings_summary["ancestryReliability"] = ancestry_result["summary"]["reliability"]
+    except Exception as e:
+        print(f"Ancestry analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
