@@ -17,6 +17,8 @@ from .fitness_analyzer import analyze_fitness, generate_fitness_json
 from .nutrition_analyzer import analyze_nutrition, generate_nutrition_json
 from .skincare_analyzer import analyze_skincare, generate_skincare_json
 from .ancient_analyzer import analyze_ancient, generate_ancient_json
+from .viking_analyzer import analyze_viking, generate_viking_json
+from .italian_analyzer import analyze_italian, generate_italian_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -228,11 +230,29 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
     except Exception as e:
         print(f"Skincare analysis failed: {e}")
 
-    # Run ancient bloodlines analysis
+    # Run ancient bloodlines analysis (includes Viking + Italian sub-analyses)
     try:
         ancient_result = analyze_ancient(variants)
-        reports["ancient"] = json.dumps(generate_ancient_json(ancient_result))
-        print(f"Ancient bloodlines analysis: {ancient_result['aims_genotyped']} AIMs genotyped")
+        ancient_json = generate_ancient_json(ancient_result)
+        print(f"Ancient bloodlines analysis: {len(ancient_result['used_snps'])} AIMs genotyped")
+
+        # Add Viking heritage sub-analysis
+        try:
+            viking_result = analyze_viking(variants)
+            ancient_json["vikingHeritage"] = generate_viking_json(viking_result)
+            print(f"Viking heritage analysis: {len(viking_result['used_snps'])} SNPs used")
+        except Exception as e:
+            print(f"Viking heritage sub-analysis failed: {e}")
+
+        # Add Italian ancestry sub-analysis
+        try:
+            italian_result = analyze_italian(variants)
+            ancient_json["italianAncestry"] = generate_italian_json(italian_result)
+            print(f"Italian ancestry analysis: {len(italian_result['used_snps'])} SNPs used")
+        except Exception as e:
+            print(f"Italian ancestry sub-analysis failed: {e}")
+
+        reports["ancient"] = json.dumps(ancient_json)
     except Exception as e:
         print(f"Ancient bloodlines analysis failed: {e}")
 
