@@ -13,6 +13,10 @@ from .generate_exhaustive_report import generate_reports
 from .traits_analyzer import analyze_traits, generate_traits_report, generate_traits_json
 from .neanderthal_analyzer import analyze_neanderthal
 from .ancestry_analyzer import analyze_ancestry
+from .fitness_analyzer import analyze_fitness, generate_fitness_json
+from .nutrition_analyzer import analyze_nutrition, generate_nutrition_json
+from .skincare_analyzer import analyze_skincare, generate_skincare_json
+from .ancient_analyzer import analyze_ancient, generate_ancient_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -199,6 +203,38 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         findings_summary["ancestryReliability"] = ancestry_result["summary"]["reliability"]
     except Exception as e:
         print(f"Ancestry analysis failed: {e}")
+
+    # Run fitness analysis
+    try:
+        fitness_result = analyze_fitness(variants)
+        reports["fitness"] = json.dumps(generate_fitness_json(fitness_result))
+        print(f"Fitness analysis: {fitness_result.found} variants found")
+    except Exception as e:
+        print(f"Fitness analysis failed: {e}")
+
+    # Run nutrition analysis
+    try:
+        nutrition_result = analyze_nutrition(variants)
+        reports["nutrition"] = json.dumps(generate_nutrition_json(nutrition_result))
+        print(f"Nutrition analysis: {nutrition_result['found']} variants found")
+    except Exception as e:
+        print(f"Nutrition analysis failed: {e}")
+
+    # Run skincare analysis
+    try:
+        skincare_result = analyze_skincare(variants)
+        reports["skincare"] = json.dumps(generate_skincare_json(skincare_result))
+        print(f"Skincare analysis: {skincare_result['found']} variants found")
+    except Exception as e:
+        print(f"Skincare analysis failed: {e}")
+
+    # Run ancient bloodlines analysis
+    try:
+        ancient_result = analyze_ancient(variants)
+        reports["ancient"] = json.dumps(generate_ancient_json(ancient_result))
+        print(f"Ancient bloodlines analysis: {ancient_result['aims_genotyped']} AIMs genotyped")
+    except Exception as e:
+        print(f"Ancient bloodlines analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
