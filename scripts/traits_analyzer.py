@@ -193,6 +193,67 @@ The following traits could not be analyzed because the SNPs were not found in yo
     return report
 
 
+def generate_traits_json(result: TraitsAnalysisResult) -> dict:
+    """Generate a JSON structure for the visual traits report"""
+    categories = []
+
+    for category in TRAIT_CATEGORIES:
+        findings = result.results_by_category.get(category, [])
+        if not findings:
+            continue
+
+        # Group findings by trait name
+        traits_dict: Dict[str, List[TraitResult]] = {}
+        for f in findings:
+            if f.trait not in traits_dict:
+                traits_dict[f.trait] = []
+            traits_dict[f.trait].append(f)
+
+        traits_list = []
+        for trait_name, trait_findings in traits_dict.items():
+            # Determine overall status for this trait
+            max_risk = max(f.risk_allele_count for f in trait_findings)
+            has_any_risk = any(f.has_risk_allele for f in trait_findings)
+
+            variants = []
+            for f in trait_findings:
+                variants.append({
+                    "rsid": f.rsid,
+                    "gene": f.gene,
+                    "genotype": f.genotype,
+                    "hasRiskAllele": f.has_risk_allele,
+                    "riskAlleleCount": f.risk_allele_count,
+                    "effect": f.effect,
+                    "interpretation": f.interpretation,
+                    "description": f.description,
+                })
+
+            traits_list.append({
+                "name": trait_name,
+                "hasRiskAllele": has_any_risk,
+                "maxRiskAlleleCount": max_risk,
+                "variants": variants,
+            })
+
+        categories.append({
+            "name": category,
+            "emoji": get_category_emoji(category),
+            "totalTraits": len(traits_list),
+            "riskTraits": sum(1 for t in traits_list if t["hasRiskAllele"]),
+            "traits": traits_list,
+        })
+
+    return {
+        "summary": {
+            "totalChecked": result.total_traits_checked,
+            "found": result.traits_found,
+            "notFound": result.traits_not_found,
+            "categoriesWithFindings": len(categories),
+        },
+        "categories": categories,
+    }
+
+
 def get_category_emoji(category: str) -> str:
     """Return an emoji for each category"""
     emojis = {

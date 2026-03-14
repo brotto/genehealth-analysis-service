@@ -10,7 +10,7 @@ from typing import Dict, Tuple, Any
 
 from .disease_risk_analyzer import analyze_disease_risks
 from .generate_exhaustive_report import generate_reports
-from .traits_analyzer import analyze_traits, generate_traits_report
+from .traits_analyzer import analyze_traits, generate_traits_report, generate_traits_json
 from .neanderthal_analyzer import analyze_neanderthal
 from .ancestry_analyzer import analyze_ancestry
 
@@ -178,8 +178,8 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
     # Generate reports (disease-focused)
     reports = generate_reports(risk_result)
 
-    # Add traits report
-    reports["traits"] = generate_traits_report(traits_result)
+    # Add traits report (JSON for visual display)
+    reports["traits"] = json.dumps(generate_traits_json(traits_result))
 
     # Run neanderthal analysis
     try:
