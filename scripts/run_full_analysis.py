@@ -19,6 +19,10 @@ from .skincare_analyzer import analyze_skincare, generate_skincare_json
 from .ancient_analyzer import analyze_ancient, generate_ancient_json
 from .viking_analyzer import analyze_viking, generate_viking_json
 from .italian_analyzer import analyze_italian, generate_italian_json
+from .evolution_analyzer import analyze_evolution, generate_evolution_json
+from .haplogroup_analyzer import analyze_haplogroup, generate_haplogroup_json
+from .roh_analyzer import analyze_roh, generate_roh_json
+from .immune_microbiome_analyzer import analyze_immune_microbiome, generate_immune_microbiome_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -255,6 +259,40 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         reports["ancient"] = json.dumps(ancient_json)
     except Exception as e:
         print(f"Ancient bloodlines analysis failed: {e}")
+
+    # Run evolution analysis (adaptive sweeps + archaic introgression)
+    try:
+        evolution_result = analyze_evolution(variants)
+        reports["evolution"] = json.dumps(generate_evolution_json(evolution_result))
+        print(f"Evolution analysis: {evolution_result['snps_used']} SNPs used")
+    except Exception as e:
+        print(f"Evolution analysis failed: {e}")
+
+    # Run haplogroup analysis (mitochondrial + Y chromosome)
+    try:
+        haplogroup_result = analyze_haplogroup(variants)
+        reports["haplogroup"] = json.dumps(generate_haplogroup_json(haplogroup_result))
+        mt = haplogroup_result.get('mitochondrial', {}).get('haplogroup', 'Unknown')
+        y = haplogroup_result.get('y_chromosome', {}).get('haplogroup', 'Unknown')
+        print(f"Haplogroup analysis: mt={mt}, Y={y}")
+    except Exception as e:
+        print(f"Haplogroup analysis failed: {e}")
+
+    # Run ROH analysis (runs of homozygosity)
+    try:
+        roh_result = analyze_roh(variants)
+        reports["roh"] = json.dumps(generate_roh_json(roh_result))
+        print(f"ROH analysis: FROH={roh_result['froh']:.4f}, {roh_result['total_segments']} segments")
+    except Exception as e:
+        print(f"ROH analysis failed: {e}")
+
+    # Run immune & microbiome analysis
+    try:
+        immune_result = analyze_immune_microbiome(variants)
+        reports["immune_microbiome"] = json.dumps(generate_immune_microbiome_json(immune_result))
+        print(f"Immune/Microbiome analysis: {immune_result['immune_snps_typed']} immune SNPs, {immune_result['microbiome_snps_typed']} microbiome SNPs")
+    except Exception as e:
+        print(f"Immune/Microbiome analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
