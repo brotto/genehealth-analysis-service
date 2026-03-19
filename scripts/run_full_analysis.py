@@ -23,6 +23,7 @@ from .evolution_analyzer import analyze_evolution, generate_evolution_json
 from .haplogroup_analyzer import analyze_haplogroup, generate_haplogroup_json
 from .roh_analyzer import analyze_roh, generate_roh_json
 from .immune_microbiome_analyzer import analyze_immune_microbiome, generate_immune_microbiome_json
+from .historical_connections_analyzer import analyze_historical_connections, generate_historical_connections_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -293,6 +294,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Immune/Microbiome analysis: {immune_result['immune_snps_typed']} immune SNPs, {immune_result['microbiome_snps_typed']} microbiome SNPs")
     except Exception as e:
         print(f"Immune/Microbiome analysis failed: {e}")
+
+    # Run historical connections analysis (haplogroup matching + Otzi comparison)
+    try:
+        hist_result = analyze_historical_connections(variants)
+        reports["historical_connections"] = json.dumps(generate_historical_connections_json(hist_result))
+        y_hg = hist_result['user_y_hg'] or 'N/A'
+        mt_hg = hist_result['user_mt_hg'] or 'N/A'
+        y_matches = len(hist_result['y_connections'])
+        mt_matches = len(hist_result['mt_connections'])
+        print(f"Historical connections: Y={y_hg}, mt={mt_hg}, {y_matches} Y-DNA matches, {mt_matches} mtDNA matches")
+    except Exception as e:
+        print(f"Historical connections analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
