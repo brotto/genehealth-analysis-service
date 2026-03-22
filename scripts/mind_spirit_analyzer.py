@@ -1,24 +1,24 @@
 """
-Mind & Spirit Analyzer
-Analyzes genetic variants associated with personality traits, mental health
-predispositions, and spiritual sensitivity (including mediumship genetics).
+Analisador de Mente & Espírito
+Analisa variantes genéticas associadas a traços de personalidade, predisposições
+de saúde mental e sensibilidade espiritual (incluindo genética da mediunidade).
 
-THREE CATEGORIES:
-  1. Personality Traits - COMT, CADM2, MSRA, OPRM1, OXTR
-  2. Mental Health & Stress Response - FKBP5, BDNF, MTHFR, CACNA1C, RGS2, SNAP25
-  3. Spiritual Sensitivity - HTR2A, VMAT2/SLC18A2, OXTR (absorption context)
+TRÊS CATEGORIAS:
+  1. Traços de Personalidade - COMT, CADM2, MSRA, OPRM1, OXTR
+  2. Saúde Mental & Resposta ao Estresse - FKBP5, BDNF, MTHFR, CACNA1C, RGS2, SNAP25
+  3. Sensibilidade Espiritual - HTR2A, VMAT2/SLC18A2, OXTR (contexto de absorção)
 
-SCIENTIFIC BASIS:
-  - Personality: GWAS-validated SNPs (Nature Human Behaviour 2024, Translational Psychiatry 2023)
-  - Mental Health: PGC consortium studies (Cell 2024, Nature Genetics 2025)
-  - Spiritual: USP/BJPsych 2025 mediumship study (PMID 39874024), HTR2A mystical experience research
+BASE CIENTÍFICA:
+  - Personalidade: SNPs validados por GWAS (Nature Human Behaviour 2024, Translational Psychiatry 2023)
+  - Saúde Mental: Estudos do consórcio PGC (Cell 2024, Nature Genetics 2025)
+  - Espiritual: Estudo USP/BJPsych 2025 sobre mediunidade (PMID 39874024), pesquisa HTR2A sobre experiências místicas
 
-IMPORTANT CAVEATS:
-  - All associations are probabilistic, not deterministic
-  - Effect sizes are generally small (each SNP explains <1% of trait variance)
-  - Environment, culture, and personal choice strongly modify any genetic tendency
-  - Mental health reports are educational only, not diagnostic
-  - Spiritual sensitivity findings are preliminary and exploratory
+RESSALVAS IMPORTANTES:
+  - Todas as associações são probabilísticas, não determinísticas
+  - Os tamanhos de efeito são geralmente pequenos (cada SNP explica <1% da variância do traço)
+  - Ambiente, cultura e escolha pessoal modificam fortemente qualquer tendência genética
+  - Relatórios de saúde mental são apenas educativos, não diagnósticos
+  - Achados sobre sensibilidade espiritual são preliminares e exploratórios
 
 References:
   - PGC MDD Working Group 2024, Cell (PMC11092713) - 697 depression loci
@@ -32,952 +32,954 @@ from typing import Dict, List, Tuple, Any, Optional
 
 
 # ---------------------------------------------------------------------------
-# SNP DATABASE: Personality Traits
+# BANCO DE SNPs: Traços de Personalidade
 # ---------------------------------------------------------------------------
 
 PERSONALITY_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs4680",
         "gene": "COMT",
-        "name": "Dopamine Regulation & Cognitive Style",
+        "name": "Regulação de Dopamina e Estilo Cognitivo",
         "chromosome": "22",
         "position": 19963748,
         "effectSize": "moderate",
         "genotypes": {
             "GG": {
                 "label": "Val/Val",
-                "nickname": "Warrior",
+                "nickname": "Guerreiro",
                 "interpretation": (
-                    "Higher COMT enzyme activity leads to faster dopamine clearance in the "
-                    "prefrontal cortex. Associated with better stress tolerance, higher pain "
-                    "threshold, and advantage under pressure. May show slightly lower baseline "
-                    "cognitive performance but better performance under stress."
+                    "Maior atividade da enzima COMT leva a uma eliminação mais rápida de dopamina no "
+                    "córtex pré-frontal. Associado a melhor tolerância ao estresse, maior limiar de dor "
+                    "e vantagem sob pressão. Pode apresentar desempenho cognitivo basal ligeiramente menor, "
+                    "mas melhor desempenho sob estresse."
                 ),
                 "score": 0.7,
             },
             "AG": {
                 "label": "Val/Met",
-                "nickname": "Balanced",
+                "nickname": "Equilibrado",
                 "interpretation": (
-                    "Intermediate COMT activity provides a balanced dopamine profile. "
-                    "You likely have a versatile cognitive style — adequate stress tolerance "
-                    "with good baseline cognitive flexibility. Most common genotype."
+                    "Atividade intermediária da COMT proporciona um perfil de dopamina equilibrado. "
+                    "Você provavelmente tem um estilo cognitivo versátil — tolerância adequada ao estresse "
+                    "com boa flexibilidade cognitiva basal. Genótipo mais comum."
                 ),
                 "score": 0.5,
             },
             "AA": {
                 "label": "Met/Met",
-                "nickname": "Worrier",
+                "nickname": "Preocupado",
                 "interpretation": (
-                    "Lower COMT enzyme activity means slower dopamine clearance, resulting in "
-                    "higher prefrontal dopamine levels. Associated with superior cognitive "
-                    "performance at baseline (better working memory, attention) but potentially "
-                    "more vulnerability to stress and anxiety under pressure."
+                    "Menor atividade da enzima COMT significa eliminação mais lenta de dopamina, resultando "
+                    "em níveis mais altos de dopamina pré-frontal. Associado a desempenho cognitivo superior "
+                    "no estado basal (melhor memória de trabalho, atenção), mas potencialmente maior "
+                    "vulnerabilidade ao estresse e ansiedade sob pressão."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "COMT Val158Met (rs4680) is one of the most-studied functional SNPs in behavioral "
-            "genetics. The Val allele (G) produces a high-activity enzyme that clears dopamine ~4x "
-            "faster than the Met allele (A). Meta-analyses confirm small but real effects on stress "
-            "response (d ≈ 0.15-0.25) and cognitive flexibility. The 'Warrior vs Worrier' model "
-            "(Goldman et al. 2005) captures the trade-off: Val/Val excels under stress but has "
-            "lower baseline prefrontal dopamine, while Met/Met excels at baseline cognition but "
-            "is more stress-sensitive."
+            "COMT Val158Met (rs4680) é um dos SNPs funcionais mais estudados na genética comportamental. "
+            "O alelo Val (G) produz uma enzima de alta atividade que elimina dopamina ~4x mais rápido "
+            "que o alelo Met (A). Meta-análises confirmam efeitos pequenos mas reais na resposta ao "
+            "estresse (d ≈ 0,15-0,25) e na flexibilidade cognitiva. O modelo 'Guerreiro vs Preocupado' "
+            "(Goldman et al. 2005) captura o trade-off: Val/Val se destaca sob estresse mas tem menor "
+            "dopamina pré-frontal basal, enquanto Met/Met se destaca na cognição basal mas é mais "
+            "sensível ao estresse."
         ),
         "references": [
             {"pmid": "16151010", "title": "The 'warrior' and 'worrier' model for COMT", "year": 2005},
             {"pmid": "29520078", "title": "COMT Val158Met and cognition meta-analysis", "year": 2018},
         ],
         "actionableInsights": [
-            "Val/Val: You may thrive in high-pressure environments — consider leveraging this in career choices",
-            "Met/Met: Mindfulness and stress-reduction practices may be especially beneficial for you",
-            "Regular exercise helps optimize dopamine levels regardless of genotype",
+            "Val/Val: Você pode prosperar em ambientes de alta pressão — considere aproveitar isso nas escolhas de carreira",
+            "Met/Met: Práticas de mindfulness e redução de estresse podem ser especialmente benéficas para você",
+            "Exercício físico regular ajuda a otimizar os níveis de dopamina independentemente do genótipo",
         ],
     },
     {
         "rsid": "rs17518584",
         "gene": "CADM2",
-        "name": "Risk Tolerance & Impulsivity",
+        "name": "Tolerância ao Risco e Impulsividade",
         "chromosome": "3",
         "position": 85890189,
         "effectSize": "moderate",
         "genotypes": {
             "CC": {
-                "label": "Typical",
-                "nickname": "Cautious",
+                "label": "Típico",
+                "nickname": "Cauteloso",
                 "interpretation": (
-                    "Reference genotype associated with typical risk tolerance levels. "
-                    "You likely have a balanced approach to risk-taking decisions."
+                    "Genótipo de referência associado a níveis típicos de tolerância ao risco. "
+                    "Você provavelmente tem uma abordagem equilibrada para decisões de risco."
                 ),
                 "score": 0.3,
             },
             "CT": {
-                "label": "Intermediate",
-                "nickname": "Moderate",
+                "label": "Intermediário",
+                "nickname": "Moderado",
                 "interpretation": (
-                    "One copy of the risk-associated allele. Slightly elevated tendency "
-                    "toward risk-taking behavior and novelty-seeking compared to CC carriers."
+                    "Uma cópia do alelo associado ao risco. Tendência ligeiramente elevada "
+                    "para comportamento de risco e busca por novidades em comparação com portadores CC."
                 ),
                 "score": 0.5,
             },
             "TT": {
-                "label": "Elevated",
-                "nickname": "Risk-taker",
+                "label": "Elevado",
+                "nickname": "Tomador de risco",
                 "interpretation": (
-                    "Two copies of the risk-associated allele. Associated with higher "
-                    "risk tolerance, novelty-seeking, and impulsivity in GWAS studies. "
-                    "Also linked to substance use tendencies in population studies."
+                    "Duas cópias do alelo associado ao risco. Associado a maior tolerância "
+                    "ao risco, busca por novidades e impulsividade em estudos GWAS. "
+                    "Também relacionado a tendências de uso de substâncias em estudos populacionais."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "CADM2 (Cell Adhesion Molecule 2) rs17518584 is one of the best-validated GWAS hits "
-            "for risk-taking behavior. Replicated across UK Biobank (n>400,000) and 23andMe "
-            "research cohorts. CADM2 is expressed in the brain and plays a role in synaptic "
-            "development. Effect sizes are small but consistent (Singh et al. 2023, Translational "
-            "Psychiatry). A 2023 Nature Human Behaviour study identified 27+ independent loci "
-            "for risk tolerance, with CADM2 among the strongest."
+            "CADM2 (Cell Adhesion Molecule 2) rs17518584 é um dos achados GWAS mais bem validados "
+            "para comportamento de risco. Replicado no UK Biobank (n>400.000) e nas coortes de pesquisa "
+            "da 23andMe. CADM2 é expresso no cérebro e desempenha um papel no desenvolvimento sináptico. "
+            "Os tamanhos de efeito são pequenos mas consistentes (Singh et al. 2023, Translational "
+            "Psychiatry). Um estudo de 2023 da Nature Human Behaviour identificou 27+ loci independentes "
+            "para tolerância ao risco, com CADM2 entre os mais fortes."
         ),
         "references": [
             {"pmid": "36658148", "title": "CADM2 implicated in impulsive personality by GWAS", "year": 2023},
             {"pmid": "30643258", "title": "Risk tolerance GWAS in UK Biobank", "year": 2019},
         ],
         "actionableInsights": [
-            "TT carriers: Being aware of elevated impulsivity tendencies can help in financial and health decisions",
-            "Consider structured decision-making frameworks for important life choices",
-            "Channel risk-taking tendencies constructively through entrepreneurship or sports",
+            "Portadores TT: Estar ciente das tendências elevadas de impulsividade pode ajudar em decisões financeiras e de saúde",
+            "Considere usar estruturas de tomada de decisão para escolhas importantes da vida",
+            "Canalize tendências de risco de forma construtiva através de empreendedorismo ou esportes",
         ],
     },
     {
         "rsid": "rs4925638",
         "gene": "MSRA",
-        "name": "Irritability & Behavioral Inhibition",
+        "name": "Irritabilidade e Inibição Comportamental",
         "chromosome": "8",
         "position": 10040702,
         "effectSize": "moderate",
         "genotypes": {
             "AA": {
-                "label": "Typical",
-                "nickname": "Even-tempered",
+                "label": "Típico",
+                "nickname": "Temperamento estável",
                 "interpretation": (
-                    "Reference genotype associated with typical emotional reactivity "
-                    "and behavioral inhibition levels."
+                    "Genótipo de referência associado a níveis típicos de reatividade emocional "
+                    "e inibição comportamental."
                 ),
                 "score": 0.3,
             },
             "AG": {
-                "label": "Intermediate",
-                "nickname": "Moderate reactivity",
+                "label": "Intermediário",
+                "nickname": "Reatividade moderada",
                 "interpretation": (
-                    "One copy of the variant allele. Slightly elevated emotional reactivity "
-                    "compared to AA carriers."
+                    "Uma cópia do alelo variante. Reatividade emocional ligeiramente elevada "
+                    "em comparação com portadores AA."
                 ),
                 "score": 0.5,
             },
             "GG": {
-                "label": "Elevated",
-                "nickname": "Higher reactivity",
+                "label": "Elevado",
+                "nickname": "Reatividade elevada",
                 "interpretation": (
-                    "Two copies of the variant allele. Associated with higher irritability "
-                    "and reduced behavioral inhibition in GWAS studies. MSRA plays a role "
-                    "in oxidative stress protection in the brain."
+                    "Duas cópias do alelo variante. Associado a maior irritabilidade "
+                    "e redução da inibição comportamental em estudos GWAS. MSRA desempenha um papel "
+                    "na proteção contra estresse oxidativo no cérebro."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "MSRA (Methionine Sulfoxide Reductase A) rs4925638 has been associated with "
-            "irritability, risk tolerance, and impulsivity in UK Biobank GWAS analyses. "
-            "MSRA protects proteins from oxidative damage — variants may affect neuronal "
-            "stress resilience and emotional regulation pathways. Replicated in Davies et al. "
-            "2017 (PMC5537199)."
+            "MSRA (Methionine Sulfoxide Reductase A) rs4925638 foi associado a irritabilidade, "
+            "tolerância ao risco e impulsividade em análises GWAS do UK Biobank. MSRA protege proteínas "
+            "contra danos oxidativos — variantes podem afetar a resiliência neuronal ao estresse e vias "
+            "de regulação emocional. Replicado em Davies et al. 2017 (PMC5537199)."
         ),
         "references": [
             {"pmid": "28696412", "title": "Replication of CADM2 and MSRA on human behavior", "year": 2017},
         ],
         "actionableInsights": [
-            "GG carriers: Antioxidant-rich diet (berries, leafy greens) may support MSRA function",
-            "Regular physical exercise is one of the strongest moderators of irritability",
-            "Cognitive behavioral techniques can help manage elevated emotional reactivity",
+            "Portadores GG: Dieta rica em antioxidantes (frutas vermelhas, folhas verdes) pode apoiar a função da MSRA",
+            "Exercício físico regular é um dos mais fortes moderadores da irritabilidade",
+            "Técnicas cognitivo-comportamentais podem ajudar a gerenciar a reatividade emocional elevada",
         ],
     },
     {
         "rsid": "rs1799971",
         "gene": "OPRM1",
-        "name": "Emotional Sensitivity & Reward Processing",
+        "name": "Sensibilidade Emocional e Processamento de Recompensa",
         "chromosome": "6",
         "position": 154360797,
         "effectSize": "moderate",
         "genotypes": {
             "AA": {
                 "label": "Asp/Asp",
-                "nickname": "Typical sensitivity",
+                "nickname": "Sensibilidade típica",
                 "interpretation": (
-                    "Reference genotype for the mu-opioid receptor. Standard pain sensitivity "
-                    "and typical placebo response. Most common genotype worldwide."
+                    "Genótipo de referência para o receptor mu-opioide. Sensibilidade à dor padrão "
+                    "e resposta placebo típica. Genótipo mais comum mundialmente."
                 ),
                 "score": 0.4,
             },
             "AG": {
                 "label": "Asp/Asn",
-                "nickname": "Enhanced sensitivity",
+                "nickname": "Sensibilidade aumentada",
                 "interpretation": (
-                    "One copy of the G allele (A118G). Associated with altered pain sensitivity, "
-                    "reduced placebo response, and potentially higher frustration sensitivity. "
-                    "May experience social rejection more intensely."
+                    "Uma cópia do alelo G (A118G). Associado a sensibilidade alterada à dor, "
+                    "resposta placebo reduzida e potencialmente maior sensibilidade à frustração. "
+                    "Pode vivenciar rejeição social de forma mais intensa."
                 ),
                 "score": 0.6,
             },
             "GG": {
                 "label": "Asn/Asn",
-                "nickname": "High sensitivity",
+                "nickname": "Alta sensibilidade",
                 "interpretation": (
-                    "Two copies of the variant allele. Higher emotional sensitivity to social "
-                    "interactions and potentially altered reward processing. Less responsive "
-                    "to placebo effects and may require different approaches to pain management."
+                    "Duas cópias do alelo variante. Maior sensibilidade emocional a interações "
+                    "sociais e processamento de recompensa potencialmente alterado. Menos responsivo "
+                    "a efeitos placebo e pode necessitar de abordagens diferentes para manejo da dor."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "OPRM1 A118G (rs1799971) affects the mu-opioid receptor, which mediates pain, "
-            "reward, and social bonding. The G allele reduces receptor expression and has been "
-            "linked to higher frustration sensitivity, reduced placebo response, and altered "
-            "social pain processing. Multiple neuroimaging studies show the G allele is associated "
-            "with greater neural responses to social rejection (Way et al. 2009, PNAS)."
+            "OPRM1 A118G (rs1799971) afeta o receptor mu-opioide, que medeia dor, recompensa e "
+            "vínculo social. O alelo G reduz a expressão do receptor e foi associado a maior "
+            "sensibilidade à frustração, resposta placebo reduzida e processamento alterado de "
+            "dor social. Múltiplos estudos de neuroimagem mostram que o alelo G está associado a "
+            "maiores respostas neurais à rejeição social (Way et al. 2009, PNAS)."
         ),
         "references": [
             {"pmid": "19622738", "title": "OPRM1 A118G and social rejection sensitivity", "year": 2009},
             {"pmid": "15583718", "title": "Functional effects of the OPRM1 A118G polymorphism", "year": 2005},
         ],
         "actionableInsights": [
-            "G carriers: Your heightened emotional sensitivity can be a strength in empathetic relationships",
-            "Be aware that pain perception and medication response may differ from population averages",
-            "Social connection and support networks may be especially important for G carriers",
+            "Portadores G: Sua sensibilidade emocional elevada pode ser uma força em relacionamentos empáticos",
+            "Esteja ciente de que a percepção de dor e a resposta a medicamentos podem diferir das médias populacionais",
+            "Conexão social e redes de apoio podem ser especialmente importantes para portadores G",
         ],
     },
     {
         "rsid": "rs53576",
         "gene": "OXTR",
-        "name": "Social Sensitivity & Empathy",
+        "name": "Sensibilidade Social e Empatia",
         "chromosome": "3",
         "position": 8804371,
         "effectSize": "weak",
         "genotypes": {
             "GG": {
                 "label": "GG",
-                "nickname": "Higher empathy tendency",
+                "nickname": "Maior tendência empática",
                 "interpretation": (
-                    "Associated with higher empathy scores, greater social sensitivity, "
-                    "and stronger emotional reactivity to social cues in early studies. "
-                    "Note: large-scale replications have shown mixed results — effect sizes "
-                    "are very small."
+                    "Associado a maiores escores de empatia, maior sensibilidade social "
+                    "e reatividade emocional mais forte a sinais sociais em estudos iniciais. "
+                    "Nota: replicações em larga escala mostraram resultados mistos — os tamanhos "
+                    "de efeito são muito pequenos."
                 ),
                 "score": 0.7,
             },
             "AG": {
                 "label": "AG",
-                "nickname": "Intermediate",
+                "nickname": "Intermediário",
                 "interpretation": (
-                    "Intermediate oxytocin receptor sensitivity. Typical social bonding "
-                    "tendencies. Most common genotype."
+                    "Sensibilidade intermediária do receptor de ocitocina. Tendências típicas "
+                    "de vínculo social. Genótipo mais comum."
                 ),
                 "score": 0.5,
             },
             "AA": {
                 "label": "AA",
-                "nickname": "Lower social sensitivity",
+                "nickname": "Menor sensibilidade social",
                 "interpretation": (
-                    "Associated with somewhat lower social sensitivity and empathy scores "
-                    "in some studies. However, large-scale replications in the UK Biobank "
-                    "(n>100,000) found weak and inconsistent effects."
+                    "Associado a sensibilidade social e escores de empatia ligeiramente menores "
+                    "em alguns estudos. No entanto, replicações em larga escala no UK Biobank "
+                    "(n>100.000) encontraram efeitos fracos e inconsistentes."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "OXTR rs53576 is the most-studied oxytocin receptor variant for social behavior. "
-            "Early studies linked the GG genotype to higher empathy and prosocial behavior. "
-            "However, a 2017 meta-analysis (n>10,000) found the association to be weak and "
-            "inconsistent (PMID 28343138). UK Biobank analyses show minimal effect. This SNP "
-            "is included for completeness but results should be interpreted with caution."
+            "OXTR rs53576 é a variante do receptor de ocitocina mais estudada para comportamento social. "
+            "Estudos iniciais associaram o genótipo GG a maior empatia e comportamento pró-social. "
+            "No entanto, uma meta-análise de 2017 (n>10.000) encontrou a associação fraca e "
+            "inconsistente (PMID 28343138). Análises do UK Biobank mostram efeito mínimo. Este SNP "
+            "é incluído por completude, mas os resultados devem ser interpretados com cautela."
         ),
         "references": [
             {"pmid": "28343138", "title": "Meta-analysis of OXTR rs53576 and empathy", "year": 2017},
             {"pmid": "21775986", "title": "OXTR and social behavior review", "year": 2011},
         ],
         "actionableInsights": [
-            "Social behavior is overwhelmingly shaped by environment and personal experience",
-            "Empathy is a skill that can be developed regardless of genotype",
-            "Strong social connections benefit everyone — invest in relationships",
+            "O comportamento social é predominantemente moldado pelo ambiente e experiências pessoais",
+            "Empatia é uma habilidade que pode ser desenvolvida independentemente do genótipo",
+            "Conexões sociais fortes beneficiam todos — invista em relacionamentos",
         ],
     },
     {
         "rsid": "rs2254298",
         "gene": "OXTR",
-        "name": "Social Bonding & Attachment",
+        "name": "Vínculo Social e Apego",
         "chromosome": "3",
         "position": 8798609,
         "effectSize": "weak",
         "genotypes": {
             "GG": {
                 "label": "GG",
-                "nickname": "Reference",
+                "nickname": "Referência",
                 "interpretation": (
-                    "Reference genotype for this OXTR variant. Typical attachment and "
-                    "social bonding patterns."
+                    "Genótipo de referência para esta variante do OXTR. Padrões típicos de "
+                    "apego e vínculo social."
                 ),
                 "score": 0.4,
             },
             "GA": {
                 "label": "GA",
-                "nickname": "Intermediate",
+                "nickname": "Intermediário",
                 "interpretation": (
-                    "One copy of the A allele. Some studies associate this with altered "
-                    "social bonding patterns, but findings are inconsistent across populations."
+                    "Uma cópia do alelo A. Alguns estudos associam a padrões alterados de "
+                    "vínculo social, mas os achados são inconsistentes entre populações."
                 ),
                 "score": 0.5,
             },
             "AA": {
                 "label": "AA",
-                "nickname": "Variant",
+                "nickname": "Variante",
                 "interpretation": (
-                    "Two copies of the A allele. Associated with altered attachment styles "
-                    "in some studies, particularly in East Asian populations. Limited "
-                    "replication in European-ancestry cohorts."
+                    "Duas cópias do alelo A. Associado a estilos de apego alterados "
+                    "em alguns estudos, particularmente em populações do leste asiático. Replicação "
+                    "limitada em coortes de ascendência europeia."
                 ),
                 "score": 0.6,
             },
         },
         "scientificBasis": (
-            "OXTR rs2254298 has been studied for associations with social bonding, attachment "
-            "security, and prosocial behavior. Results vary significantly by population — the "
-            "A allele shows stronger effects in East Asian studies than in European-ancestry "
-            "samples. Limited predictive value for individual-level social behavior."
+            "OXTR rs2254298 foi estudado para associações com vínculo social, segurança de apego "
+            "e comportamento pró-social. Os resultados variam significativamente por população — o "
+            "alelo A mostra efeitos mais fortes em estudos com populações do leste asiático do que em "
+            "amostras de ascendência europeia. Valor preditivo limitado para comportamento social individual."
         ),
         "references": [
             {"pmid": "21775986", "title": "OXTR polymorphisms and social behavior", "year": 2011},
         ],
         "actionableInsights": [
-            "Attachment styles are primarily formed by early caregiving experiences",
-            "Secure attachment can be developed at any age through therapy and relationships",
+            "Os estilos de apego são formados principalmente pelas experiências de cuidado na infância",
+            "O apego seguro pode ser desenvolvido em qualquer idade através de terapia e relacionamentos",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# SNP DATABASE: Mental Health & Stress Response
+# BANCO DE SNPs: Saúde Mental e Resposta ao Estresse
 # ---------------------------------------------------------------------------
 
 MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs1360780",
         "gene": "FKBP5",
-        "name": "Stress Response & HPA Axis Regulation",
+        "name": "Resposta ao Estresse e Regulação do Eixo HPA",
         "chromosome": "6",
         "position": 35639794,
         "effectSize": "strong",
         "genotypes": {
             "CC": {
                 "label": "CC",
-                "nickname": "Standard stress response",
+                "nickname": "Resposta ao estresse padrão",
                 "interpretation": (
-                    "Reference genotype. Normal FKBP5 expression and glucocorticoid receptor "
-                    "feedback. Standard cortisol stress response and recovery."
+                    "Genótipo de referência. Expressão normal de FKBP5 e feedback do receptor "
+                    "de glicocorticoides. Resposta e recuperação padrão do cortisol ao estresse."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "CT",
-                "nickname": "Moderately enhanced stress sensitivity",
+                "nickname": "Sensibilidade ao estresse moderadamente aumentada",
                 "interpretation": (
-                    "One copy of the T risk allele. Moderately increased FKBP5 expression "
-                    "after stress, which can slow cortisol feedback recovery. Mildly elevated "
-                    "sensitivity to stress, particularly in the context of adverse experiences."
+                    "Uma cópia do alelo T de risco. Expressão moderadamente aumentada de FKBP5 "
+                    "após estresse, o que pode desacelerar a recuperação do feedback de cortisol. "
+                    "Sensibilidade levemente elevada ao estresse, particularmente no contexto de "
+                    "experiências adversas."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "TT",
-                "nickname": "Enhanced stress sensitivity",
+                "nickname": "Sensibilidade ao estresse aumentada",
                 "interpretation": (
-                    "Two copies of the T allele (high-induction genotype). Significantly "
-                    "increased FKBP5 mRNA expression after stress exposure, impairing "
-                    "glucocorticoid receptor feedback and prolonging cortisol response. "
-                    "Most rigorously associated with PTSD and stress-related depression "
-                    "in the context of childhood adversity."
+                    "Duas cópias do alelo T (genótipo de alta indução). Aumento significativo "
+                    "na expressão do mRNA de FKBP5 após exposição ao estresse, prejudicando "
+                    "o feedback do receptor de glicocorticoides e prolongando a resposta do cortisol. "
+                    "Associação mais rigorosa com TEPT e depressão relacionada ao estresse "
+                    "no contexto de adversidade na infância."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "FKBP5 rs1360780 is one of the most robust single-SNP findings in stress-related "
-            "psychiatry. The T allele creates an allele-specific DNA methylation response to "
-            "stress that increases FKBP5 protein expression, which binds to and inhibits the "
-            "glucocorticoid receptor, disrupting cortisol feedback. A 2025 MDPI Genes review "
-            "(Zannas et al.) characterized behavioral phenotypes. The gene×environment "
-            "interaction with childhood maltreatment is well-replicated across multiple "
-            "independent cohorts. Effect sizes are modest but mechanistically compelling."
+            "FKBP5 rs1360780 é um dos achados mais robustos de SNP único na psiquiatria relacionada "
+            "ao estresse. O alelo T cria uma resposta de metilação de DNA alelo-específica ao estresse "
+            "que aumenta a expressão da proteína FKBP5, que se liga e inibe o receptor de glicocorticoides, "
+            "perturbando o feedback do cortisol. Uma revisão de 2025 da MDPI Genes (Zannas et al.) "
+            "caracterizou fenótipos comportamentais. A interação gene×ambiente com maus-tratos na "
+            "infância é bem replicada em múltiplas coortes independentes. Os tamanhos de efeito são "
+            "modestos mas mecanisticamente convincentes."
         ),
         "references": [
             {"pmid": "39856776", "title": "FKBP5 rs1360780: genetic variation and behavioral phenotypes", "year": 2025},
             {"pmid": "24029109", "title": "FKBP5 epigenetics and stress vulnerability", "year": 2013},
         ],
         "actionableInsights": [
-            "TT carriers: Stress management practices (meditation, exercise) may be especially important",
-            "Early intervention for stress-related symptoms is valuable for T allele carriers",
-            "Therapy approaches targeting stress reactivity (CBT, EMDR) are evidence-based options",
-            "This variant does NOT determine your mental health — environment and coping strategies matter enormously",
+            "Portadores TT: Práticas de manejo do estresse (meditação, exercício) podem ser especialmente importantes",
+            "Intervenção precoce para sintomas relacionados ao estresse é valiosa para portadores do alelo T",
+            "Abordagens terapêuticas que visam a reatividade ao estresse (TCC, EMDR) são opções baseadas em evidências",
+            "Esta variante NÃO determina sua saúde mental — ambiente e estratégias de enfrentamento importam enormemente",
         ],
     },
     {
         "rsid": "rs6265",
         "gene": "BDNF",
-        "name": "Neuroplasticity & Mood Regulation",
+        "name": "Neuroplasticidade e Regulação do Humor",
         "chromosome": "11",
         "position": 27658369,
         "effectSize": "moderate",
         "genotypes": {
             "CC": {
                 "label": "Val/Val",
-                "nickname": "Standard neuroplasticity",
+                "nickname": "Neuroplasticidade padrão",
                 "interpretation": (
-                    "Reference genotype (Val66). Normal BDNF secretion and activity-dependent "
-                    "release. Standard neuroplasticity and hippocampal function."
+                    "Genótipo de referência (Val66). Secreção normal de BDNF e liberação "
+                    "dependente de atividade. Neuroplasticidade e função hipocampal padrão."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "Val/Met",
-                "nickname": "Moderately altered",
+                "nickname": "Moderadamente alterado",
                 "interpretation": (
-                    "One copy of the Met allele. Reduced activity-dependent BDNF secretion. "
-                    "Subtle effects on memory and hippocampal volume in some studies. The "
-                    "association with depression per se is weak at the population level."
+                    "Uma cópia do alelo Met. Secreção reduzida de BDNF dependente de atividade. "
+                    "Efeitos sutis na memória e volume hipocampal em alguns estudos. A associação "
+                    "com depressão per se é fraca no nível populacional."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "Met/Met",
-                "nickname": "Reduced BDNF secretion",
+                "nickname": "Secreção reduzida de BDNF",
                 "interpretation": (
-                    "Two copies of the Met allele. Significantly reduced activity-dependent "
-                    "BDNF release. Associated with smaller hippocampal volume, altered memory "
-                    "consolidation, and in some studies, modestly elevated depression risk — "
-                    "particularly in males and elderly populations."
+                    "Duas cópias do alelo Met. Redução significativa na liberação de BDNF "
+                    "dependente de atividade. Associado a menor volume hipocampal, consolidação "
+                    "alterada de memória e, em alguns estudos, risco modestamente elevado de depressão — "
+                    "particularmente em homens e populações idosas."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "BDNF Val66Met (rs6265) affects activity-dependent secretion of brain-derived "
-            "neurotrophic factor, crucial for synaptic plasticity. A 2023 Frontiers in "
-            "Psychiatry meta-analysis found near-null overall effect for MDD (OR ~0.96). "
-            "However, the Met allele shows stronger associations in males (OR 1.27) and "
-            "geriatric depression (OR ~1.48). The strongest value is in neuroplasticity "
-            "and exercise biology — BDNF mediates many exercise-related cognitive benefits."
+            "BDNF Val66Met (rs6265) afeta a secreção dependente de atividade do fator neurotrófico "
+            "derivado do cérebro, crucial para a plasticidade sináptica. Uma meta-análise de 2023 da "
+            "Frontiers in Psychiatry encontrou efeito quase nulo para TDM (OR ~0,96). No entanto, o "
+            "alelo Met mostra associações mais fortes em homens (OR 1,27) e depressão geriátrica "
+            "(OR ~1,48). O maior valor está na neuroplasticidade e biologia do exercício — o BDNF "
+            "medeia muitos benefícios cognitivos relacionados ao exercício."
         ),
         "references": [
             {"pmid": "37398592", "title": "BDNF Val66Met and depression meta-analysis", "year": 2023},
             {"pmid": "15457404", "title": "BDNF Val66Met and hippocampal function", "year": 2004},
         ],
         "actionableInsights": [
-            "Exercise is the strongest known way to increase BDNF levels — especially important for Met carriers",
-            "Aerobic exercise (running, swimming, cycling) has the most evidence for BDNF elevation",
-            "Met carriers may particularly benefit from cognitive training and novel learning experiences",
+            "Exercício é a forma mais conhecida de aumentar os níveis de BDNF — especialmente importante para portadores Met",
+            "Exercício aeróbico (corrida, natação, ciclismo) tem mais evidências para elevação de BDNF",
+            "Portadores Met podem se beneficiar particularmente de treinamento cognitivo e experiências de aprendizado novas",
         ],
     },
     {
         "rsid": "rs1801133",
         "gene": "MTHFR",
-        "name": "Folate Metabolism & Mood",
+        "name": "Metabolismo do Folato e Humor",
         "chromosome": "1",
         "position": 11856378,
         "effectSize": "moderate",
         "genotypes": {
             "GG": {
                 "label": "CC (normal)",
-                "nickname": "Full enzyme activity",
+                "nickname": "Atividade enzimática plena",
                 "interpretation": (
-                    "Normal MTHFR enzyme activity (~100%). Efficient folate metabolism "
-                    "and methylation cycle. No folate-related mood concerns."
+                    "Atividade normal da enzima MTHFR (~100%). Metabolismo eficiente do folato "
+                    "e ciclo de metilação. Sem preocupações de humor relacionadas ao folato."
                 ),
                 "score": 0.2,
             },
             "AG": {
-                "label": "CT (heterozygous)",
-                "nickname": "Reduced activity (~65%)",
+                "label": "CT (heterozigoto)",
+                "nickname": "Atividade reduzida (~65%)",
                 "interpretation": (
-                    "One copy of the T allele (C677T). MTHFR enzyme activity reduced to "
-                    "approximately 65% of normal. Generally clinically insignificant, but "
-                    "adequate folate intake is advisable."
+                    "Uma cópia do alelo T (C677T). Atividade da enzima MTHFR reduzida para "
+                    "aproximadamente 65% do normal. Geralmente clinicamente insignificante, mas "
+                    "a ingestão adequada de folato é aconselhável."
                 ),
                 "score": 0.5,
             },
             "AA": {
-                "label": "TT (homozygous)",
-                "nickname": "Significantly reduced (~30%)",
+                "label": "TT (homozigoto)",
+                "nickname": "Significativamente reduzida (~30%)",
                 "interpretation": (
-                    "Two copies of the T allele. MTHFR enzyme activity reduced to approximately "
-                    "30% of normal. Meta-analysis of 30 studies finds OR = 1.20 for depression "
-                    "(TT vs CC). Effect concentrated in Asian populations. TT prevalence in "
-                    "Brazil is approximately 10%. The actionable value is high: methylfolate "
-                    "supplementation for TT carriers is widely accepted clinically."
+                    "Duas cópias do alelo T. Atividade da enzima MTHFR reduzida para aproximadamente "
+                    "30% do normal. Meta-análise de 30 estudos encontra OR = 1,20 para depressão "
+                    "(TT vs CC). Efeito concentrado em populações asiáticas. A prevalência de TT no "
+                    "Brasil é de aproximadamente 10%. O valor acionável é alto: suplementação de "
+                    "metilfolato para portadores TT é amplamente aceita clinicamente."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "MTHFR C677T (rs1801133) reduces methylenetetrahydrofolate reductase activity, "
-            "affecting the one-carbon metabolism cycle that produces SAMe (the primary methyl "
-            "donor for neurotransmitter synthesis). TT homozygotes have ~30% enzyme activity "
-            "and may develop mild hyperhomocysteinemia. Meta-analysis shows modest depression "
-            "association (OR = 1.20, p=0.0004) concentrated in Asian populations. The strongest "
-            "clinical value is actionability: folate/methylfolate supplementation."
+            "MTHFR C677T (rs1801133) reduz a atividade da metilenotetrahidrofolato redutase, "
+            "afetando o ciclo de metabolismo de um carbono que produz SAMe (o principal doador de "
+            "metil para síntese de neurotransmissores). Homozigotos TT têm ~30% de atividade "
+            "enzimática e podem desenvolver hiperhomocisteinemia leve. Meta-análise mostra associação "
+            "modesta com depressão (OR = 1,20, p=0,0004) concentrada em populações asiáticas. O maior "
+            "valor clínico é a acionabilidade: suplementação de folato/metilfolato."
         ),
         "references": [
             {"pmid": "23212058", "title": "MTHFR C677T and depression meta-analysis", "year": 2013},
             {"pmid": "15166018", "title": "MTHFR and psychiatric disorders review", "year": 2004},
         ],
         "actionableInsights": [
-            "TT carriers: Consider L-methylfolate supplementation (consult a healthcare provider)",
-            "Ensure adequate dietary folate: leafy greens, legumes, fortified foods",
-            "TT carriers should monitor homocysteine levels with their doctor",
-            "B12 and B6 are important cofactors — ensure adequate intake",
+            "Portadores TT: Considere suplementação de L-metilfolato (consulte um profissional de saúde)",
+            "Garanta ingestão adequada de folato na dieta: folhas verdes, leguminosas, alimentos fortificados",
+            "Portadores TT devem monitorar os níveis de homocisteína com seu médico",
+            "B12 e B6 são cofatores importantes — garanta ingestão adequada",
         ],
     },
     {
         "rsid": "rs1006737",
         "gene": "CACNA1C",
-        "name": "Calcium Channel & Mood Stability",
+        "name": "Canal de Cálcio e Estabilidade do Humor",
         "chromosome": "12",
         "position": 2345295,
         "effectSize": "strong",
         "genotypes": {
             "GG": {
                 "label": "GG",
-                "nickname": "Reference",
+                "nickname": "Referência",
                 "interpretation": (
-                    "Reference genotype. Standard L-type calcium channel function and "
-                    "neuronal excitability."
+                    "Genótipo de referência. Função padrão do canal de cálcio tipo L e "
+                    "excitabilidade neuronal."
                 ),
                 "score": 0.2,
             },
             "AG": {
                 "label": "AG",
-                "nickname": "One risk allele",
+                "nickname": "Um alelo de risco",
                 "interpretation": (
-                    "One copy of the A risk allele. Slightly altered calcium channel "
-                    "expression. Modestly elevated cross-disorder risk for mood conditions "
-                    "(bipolar, depression, schizophrenia) — OR approximately 1.07."
+                    "Uma cópia do alelo A de risco. Expressão ligeiramente alterada do canal de "
+                    "cálcio. Risco transdiagnóstico modestamente elevado para condições de humor "
+                    "(bipolar, depressão, esquizofrenia) — OR aproximadamente 1,07."
                 ),
                 "score": 0.5,
             },
             "AA": {
                 "label": "AA",
-                "nickname": "Two risk alleles",
+                "nickname": "Dois alelos de risco",
                 "interpretation": (
-                    "Two copies of the A allele. The most consistently replicated genetic "
-                    "risk variant for bipolar disorder (OR ~1.14). This is a transdiagnostic "
-                    "variant — it confers small risk increases across multiple mood and "
-                    "psychotic conditions. Most carriers never develop any condition."
+                    "Duas cópias do alelo A. A variante de risco genético mais consistentemente "
+                    "replicada para transtorno bipolar (OR ~1,14). Esta é uma variante transdiagnóstica "
+                    "— confere pequenos aumentos de risco em múltiplas condições de humor e "
+                    "psicóticas. A maioria dos portadores nunca desenvolve qualquer condição."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "CACNA1C rs1006737 is the most consistently replicated bipolar disorder risk SNP "
-            "across all PGC meta-analyses (OR ~1.14, p = 9.78×10⁻¹⁰). It encodes the alpha-1C "
-            "subunit of the L-type voltage-gated calcium channel, critical for neuronal "
-            "excitability and synaptic plasticity. Importantly, this is a transdiagnostic "
-            "variant — it also increases risk for schizophrenia and recurrent depression. "
-            "The 2025 PGC4 trans-ancestry study found 93 bipolar loci (23 novel), with "
-            "CACNA1C remaining among the strongest."
+            "CACNA1C rs1006737 é o SNP de risco para transtorno bipolar mais consistentemente replicado "
+            "em todas as meta-análises do PGC (OR ~1,14, p = 9,78×10⁻¹⁰). Codifica a subunidade alfa-1C "
+            "do canal de cálcio tipo L dependente de voltagem, crítico para excitabilidade neuronal "
+            "e plasticidade sináptica. Importante: esta é uma variante transdiagnóstica — também aumenta "
+            "o risco para esquizofrenia e depressão recorrente. O estudo PGC4 trans-ancestral de 2025 "
+            "encontrou 93 loci bipolares (23 novos), com CACNA1C permanecendo entre os mais fortes."
         ),
         "references": [
             {"pmid": "34002096", "title": "PGC Bipolar GWAS identifies 64 loci", "year": 2021},
             {"pmid": "21926972", "title": "CACNA1C and psychiatric phenotypes", "year": 2011},
         ],
         "actionableInsights": [
-            "AA carriers: Mood tracking can help identify patterns early",
-            "Regular sleep schedules are particularly important for mood stability",
-            "This variant increases risk slightly — most carriers never develop mood disorders",
-            "If you have family history of bipolar disorder, discuss with your doctor",
+            "Portadores AA: Monitoramento do humor pode ajudar a identificar padrões precocemente",
+            "Horários regulares de sono são particularmente importantes para a estabilidade do humor",
+            "Esta variante aumenta o risco ligeiramente — a maioria dos portadores nunca desenvolve transtornos de humor",
+            "Se você tem histórico familiar de transtorno bipolar, converse com seu médico",
         ],
     },
     {
         "rsid": "rs4606",
         "gene": "RGS2",
-        "name": "Anxiety Sensitivity & Stress Reactivity",
+        "name": "Sensibilidade à Ansiedade e Reatividade ao Estresse",
         "chromosome": "1",
         "position": 192839582,
         "effectSize": "moderate",
         "genotypes": {
             "CC": {
                 "label": "CC",
-                "nickname": "Reference",
+                "nickname": "Referência",
                 "interpretation": (
-                    "Reference genotype. Standard RGS2 expression and G-protein signaling "
-                    "regulation. Typical anxiety response levels."
+                    "Genótipo de referência. Expressão padrão de RGS2 e regulação da sinalização "
+                    "de proteína G. Níveis típicos de resposta à ansiedade."
                 ),
                 "score": 0.3,
             },
             "CG": {
                 "label": "CG",
-                "nickname": "Intermediate",
+                "nickname": "Intermediário",
                 "interpretation": (
-                    "One copy of the G allele. Potentially reduced RGS2 expression, which "
-                    "may subtly increase stress hormone signaling downstream of CRH receptors."
+                    "Uma cópia do alelo G. Expressão potencialmente reduzida de RGS2, o que "
+                    "pode aumentar sutilmente a sinalização de hormônios do estresse a jusante "
+                    "dos receptores de CRH."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "GG",
-                "nickname": "Elevated anxiety sensitivity",
+                "nickname": "Sensibilidade à ansiedade elevada",
                 "interpretation": (
-                    "Two copies of the G allele. Associated with higher anxiety sensitivity "
-                    "and stress reactivity in multiple studies. RGS2 dampens G-protein "
-                    "signaling — reduced RGS2 may lead to enhanced stress hormone response."
+                    "Duas cópias do alelo G. Associado a maior sensibilidade à ansiedade "
+                    "e reatividade ao estresse em múltiplos estudos. RGS2 amortece a sinalização "
+                    "de proteína G — RGS2 reduzido pode levar a resposta aumentada de hormônios "
+                    "do estresse."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "RGS2 (Regulator of G-protein Signaling 2) rs4606 modulates downstream signaling "
-            "of corticotropin-releasing hormone (CRH) receptors. The G allele has been "
-            "associated with anxiety and stress reactivity in multiple independent studies "
-            "(2008-2024). Effect sizes are small but the finding has replicated. A landmark "
-            "2025 Nature Genetics anxiety GWAS (n=122,341) identified 58 loci, further "
-            "supporting GABAergic and stress-signaling pathway involvement."
+            "RGS2 (Regulator of G-protein Signaling 2) rs4606 modula a sinalização a jusante "
+            "dos receptores de hormônio liberador de corticotrofina (CRH). O alelo G foi associado "
+            "a ansiedade e reatividade ao estresse em múltiplos estudos independentes (2008-2024). "
+            "Os tamanhos de efeito são pequenos mas o achado foi replicado. Um GWAS de ansiedade "
+            "marco de 2025 da Nature Genetics (n=122.341) identificou 58 loci, apoiando ainda mais "
+            "o envolvimento de vias GABAérgicas e de sinalização de estresse."
         ),
         "references": [
             {"pmid": "18266781", "title": "RGS2 and anxiety disorders", "year": 2008},
         ],
         "actionableInsights": [
-            "GG carriers: Structured relaxation techniques (progressive muscle relaxation, deep breathing) may be especially helpful",
-            "Regular physical exercise is one of the strongest anxiolytic interventions",
-            "Consider whether anxiety-management strategies would benefit your daily routine",
+            "Portadores GG: Técnicas estruturadas de relaxamento (relaxamento muscular progressivo, respiração profunda) podem ser especialmente úteis",
+            "Exercício físico regular é uma das intervenções ansiolíticas mais fortes",
+            "Considere se estratégias de manejo da ansiedade beneficiariam sua rotina diária",
         ],
     },
     {
         "rsid": "rs3746544",
         "gene": "SNAP25",
-        "name": "Synaptic Signaling & Attention",
+        "name": "Sinalização Sináptica e Atenção",
         "chromosome": "20",
         "position": 10284862,
         "effectSize": "weak",
         "genotypes": {
             "TT": {
                 "label": "TT",
-                "nickname": "Reference",
+                "nickname": "Referência",
                 "interpretation": (
-                    "Reference genotype. Standard SNAP25 protein function and synaptic "
-                    "vesicle release."
+                    "Genótipo de referência. Função padrão da proteína SNAP25 e liberação "
+                    "de vesículas sinápticas."
                 ),
                 "score": 0.3,
             },
             "TG": {
                 "label": "TG",
-                "nickname": "Intermediate",
+                "nickname": "Intermediário",
                 "interpretation": (
-                    "One copy of the G allele. Subtle effects on synaptic transmission "
-                    "efficiency. Some ADHD association studies show modest risk elevation."
+                    "Uma cópia do alelo G. Efeitos sutis na eficiência da transmissão sináptica. "
+                    "Alguns estudos de associação com TDAH mostram elevação modesta de risco."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "GG",
-                "nickname": "Variant",
+                "nickname": "Variante",
                 "interpretation": (
-                    "Two copies of the G allele. Associated with ADHD tendencies in some "
-                    "studies, though effect sizes are small. SNAP25 is involved in synaptic "
-                    "vesicle exocytosis and neurotransmitter release."
+                    "Duas cópias do alelo G. Associado a tendências de TDAH em alguns "
+                    "estudos, embora os tamanhos de efeito sejam pequenos. SNAP25 está envolvido na "
+                    "exocitose de vesículas sinápticas e liberação de neurotransmissores."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "SNAP25 (Synaptosomal-Associated Protein 25kDa) rs3746544 is a candidate gene "
-            "for ADHD. SNAP25 is essential for synaptic vesicle fusion and neurotransmitter "
-            "release. Effect sizes are small. The major classic ADHD candidate genes (DRD4, "
-            "DAT1 VNTRs) are not available in consumer DNA chips. The PGC ADHD GWAS (2023, "
-            "PMC10914347) identified 27 genome-wide significant loci through GWAS approaches."
+            "SNAP25 (Synaptosomal-Associated Protein 25kDa) rs3746544 é um gene candidato "
+            "para TDAH. SNAP25 é essencial para a fusão de vesículas sinápticas e liberação de "
+            "neurotransmissores. Os tamanhos de efeito são pequenos. Os principais genes candidatos "
+            "clássicos para TDAH (DRD4, DAT1 VNTRs) não estão disponíveis em chips de DNA do "
+            "consumidor. O GWAS de TDAH do PGC (2023, PMC10914347) identificou 27 loci com "
+            "significância genômica ampla através de abordagens GWAS."
         ),
         "references": [
             {"pmid": "15742474", "title": "SNAP25 and ADHD association", "year": 2005},
         ],
         "actionableInsights": [
-            "Attention and focus are highly trainable skills regardless of genotype",
-            "Structured routines and environment design can support attention",
-            "If you suspect attention difficulties, professional evaluation is recommended",
+            "Atenção e foco são habilidades altamente treináveis independentemente do genótipo",
+            "Rotinas estruturadas e organização do ambiente podem apoiar a atenção",
+            "Se você suspeita de dificuldades de atenção, avaliação profissional é recomendada",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# SNP DATABASE: Spiritual Sensitivity & Mediumship
+# BANCO DE SNPs: Sensibilidade Espiritual e Mediunidade
 # ---------------------------------------------------------------------------
 
 SPIRITUAL_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs6313",
         "gene": "HTR2A",
-        "name": "Serotonin 2A Receptor & Mystical Experience Intensity",
+        "name": "Receptor de Serotonina 2A e Intensidade de Experiências Místicas",
         "chromosome": "13",
         "position": 47471478,
         "effectSize": "moderate",
         "genotypes": {
             "CC": {
                 "label": "C/C (102C)",
-                "nickname": "Higher receptor density",
+                "nickname": "Maior densidade de receptores",
                 "interpretation": (
-                    "Reference genotype associated with higher 5-HT2A receptor density in "
-                    "the cortex. Standard intensity of transcendent or mystical experiences. "
-                    "This is the most common genotype."
+                    "Genótipo de referência associado a maior densidade de receptores 5-HT2A no "
+                    "córtex. Intensidade padrão de experiências transcendentes ou místicas. "
+                    "Este é o genótipo mais comum."
                 ),
                 "score": 0.3,
             },
             "CT": {
-                "label": "C/T (heterozygous)",
-                "nickname": "Intermediate receptor density",
+                "label": "C/T (heterozigoto)",
+                "nickname": "Densidade intermediária de receptores",
                 "interpretation": (
-                    "One copy of the T allele (T102C). Intermediate 5-HT2A receptor density. "
-                    "Potentially moderate sensitivity to transcendent or altered states of "
-                    "consciousness. Psilocybin research shows intermediate mystical experience "
-                    "intensity with this genotype."
+                    "Uma cópia do alelo T (T102C). Densidade intermediária de receptores 5-HT2A. "
+                    "Sensibilidade potencialmente moderada a estados transcendentes ou alterados de "
+                    "consciência. Pesquisas com psilocibina mostram intensidade intermediária de "
+                    "experiências místicas com este genótipo."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "T/T (102T)",
-                "nickname": "Lower receptor density",
+                "nickname": "Menor densidade de receptores",
                 "interpretation": (
-                    "Two copies of the T allele. Associated with lower 5-HT2A receptor density "
-                    "in the cortex. Paradoxically, studies show that individuals with fewer "
-                    "5-HT2A receptors report MORE intense mystical experiences during psilocybin "
-                    "administration. This suggests a compensatory sensitivity mechanism — fewer "
-                    "receptors but higher individual receptor sensitivity."
+                    "Duas cópias do alelo T. Associado a menor densidade de receptores 5-HT2A "
+                    "no córtex. Paradoxalmente, estudos mostram que indivíduos com menos receptores "
+                    "5-HT2A relatam experiências místicas MAIS intensas durante a administração de "
+                    "psilocibina. Isso sugere um mecanismo de sensibilidade compensatória — menos "
+                    "receptores, mas maior sensibilidade individual de cada receptor."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "HTR2A (5-HT2A serotonin receptor) is the primary target of classical psychedelics "
-            "and plays a central role in consciousness, perception, and mystical experiences. "
-            "A 2021 study (PMID 33501857) found that brain 5-HT2A receptor binding predicts "
-            "the intensity of mystical effects during psilocybin administration — people with "
-            "fewer receptors (TT genotype) paradoxically report MORE intense experiences. "
-            "rs6313 (T102C) is a synonymous variant in strong linkage disequilibrium with "
-            "the promoter variant rs6311 (A-1438G). The 5-HT2A receptor is also implicated "
-            "in absorption — the psychological trait most consistently linked to reported "
-            "spiritual and mediumistic experiences."
+            "HTR2A (receptor de serotonina 5-HT2A) é o alvo principal dos psicodélicos clássicos "
+            "e desempenha papel central na consciência, percepção e experiências místicas. "
+            "Um estudo de 2021 (PMID 33501857) descobriu que a ligação cerebral do receptor 5-HT2A "
+            "prediz a intensidade dos efeitos místicos durante a administração de psilocibina — "
+            "pessoas com menos receptores (genótipo TT) paradoxalmente relatam experiências MAIS "
+            "intensas. rs6313 (T102C) é uma variante sinônima em forte desequilíbrio de ligação "
+            "com a variante promotora rs6311 (A-1438G). O receptor 5-HT2A também está implicado na "
+            "absorção — o traço psicológico mais consistentemente associado a experiências espirituais "
+            "e mediúnicas relatadas."
         ),
         "references": [
             {"pmid": "33501857", "title": "Brain 5-HT2A receptor binding predicts mystical experiences", "year": 2021},
             {"pmid": "17606772", "title": "HTR2A polymorphisms and hallucinogen response", "year": 2007},
         ],
         "actionableInsights": [
-            "TT carriers: You may have heightened sensitivity to contemplative practices (meditation, prayer)",
-            "Mindfulness and meditation practices may produce particularly vivid experiences for TT carriers",
-            "This variant relates to consciousness and perception — not to any specific spiritual ability",
+            "Portadores TT: Você pode ter sensibilidade aumentada a práticas contemplativas (meditação, oração)",
+            "Práticas de mindfulness e meditação podem produzir experiências particularmente vívidas para portadores TT",
+            "Esta variante se relaciona com consciência e percepção — não com qualquer habilidade espiritual específica",
         ],
     },
     {
         "rsid": "rs6311",
         "gene": "HTR2A",
-        "name": "Serotonin 2A Promoter & Transcendent Experiences",
+        "name": "Promotor de Serotonina 2A e Experiências Transcendentes",
         "chromosome": "13",
         "position": 47471867,
         "effectSize": "moderate",
         "genotypes": {
             "GG": {
                 "label": "G/G (A-1438)",
-                "nickname": "Reference promoter",
+                "nickname": "Promotor de referência",
                 "interpretation": (
-                    "Reference genotype for the HTR2A promoter. Standard 5-HT2A receptor "
-                    "transcription and expression levels."
+                    "Genótipo de referência para o promotor do HTR2A. Níveis padrão de "
+                    "transcrição e expressão do receptor 5-HT2A."
                 ),
                 "score": 0.3,
             },
             "GA": {
-                "label": "G/A (heterozygous)",
-                "nickname": "Intermediate expression",
+                "label": "G/A (heterozigoto)",
+                "nickname": "Expressão intermediária",
                 "interpretation": (
-                    "One copy of the A allele. Altered promoter activity affecting 5-HT2A "
-                    "expression. Intermediate phenotype for serotonergic sensitivity."
+                    "Uma cópia do alelo A. Atividade alterada do promotor afetando a expressão "
+                    "de 5-HT2A. Fenótipo intermediário para sensibilidade serotoninérgica."
                 ),
                 "score": 0.5,
             },
             "AA": {
                 "label": "A/A (-1438G>A)",
-                "nickname": "Altered expression",
+                "nickname": "Expressão alterada",
                 "interpretation": (
-                    "Two copies of the A allele. This promoter variant alters HTR2A "
-                    "transcription. In linkage disequilibrium with rs6313 — together they "
-                    "modulate the serotonergic system's role in consciousness and perception. "
-                    "Associated with altered response to serotonergic stimuli."
+                    "Duas cópias do alelo A. Esta variante do promotor altera a transcrição "
+                    "de HTR2A. Em desequilíbrio de ligação com rs6313 — juntos, modulam o papel "
+                    "do sistema serotoninérgico na consciência e percepção. Associado a resposta "
+                    "alterada a estímulos serotoninérgicos."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "HTR2A rs6311 (A-1438G) is a promoter polymorphism in strong linkage disequilibrium "
-            "with rs6313 (T102C). Together, they modulate 5-HT2A receptor density and function. "
-            "The serotonin 2A receptor is the primary mediator of psychedelic and mystical "
-            "experiences, and variations in this receptor system have been linked to individual "
-            "differences in absorption, openness to experience, and self-transcendence. "
-            "Twin studies show 40-50% heritability for self-transcendence (Bouchard et al.)."
+            "HTR2A rs6311 (A-1438G) é um polimorfismo do promotor em forte desequilíbrio de ligação "
+            "com rs6313 (T102C). Juntos, modulam a densidade e função do receptor 5-HT2A. O receptor "
+            "de serotonina 2A é o principal mediador de experiências psicodélicas e místicas, e "
+            "variações neste sistema receptor foram associadas a diferenças individuais em absorção, "
+            "abertura a experiências e autotranscendência. Estudos com gêmeos mostram 40-50% de "
+            "herdabilidade para autotranscendência (Bouchard et al.)."
         ),
         "references": [
             {"pmid": "11779785", "title": "HTR2A promoter polymorphism and receptor density", "year": 2002},
         ],
         "actionableInsights": [
-            "Combined with rs6313, these variants shape your serotonergic system's sensitivity profile",
-            "Contemplative traditions across cultures describe phenomena consistent with serotonergic variation",
+            "Combinadas com rs6313, essas variantes moldam o perfil de sensibilidade do seu sistema serotoninérgico",
+            "Tradições contemplativas de diversas culturas descrevem fenômenos consistentes com variação serotoninérgica",
         ],
     },
     {
         "rsid": "rs4570625",
         "gene": "SLC18A2",
-        "name": "Vesicular Monoamine Transport & Self-Transcendence",
+        "name": "Transporte Vesicular de Monoaminas e Autotranscendência",
         "chromosome": "10",
         "position": 119003566,
         "effectSize": "preliminary",
         "genotypes": {
             "GG": {
                 "label": "GG",
-                "nickname": "Reference",
+                "nickname": "Referência",
                 "interpretation": (
-                    "Reference genotype for the VMAT2 region. Standard vesicular monoamine "
-                    "transporter function and neurotransmitter packaging."
+                    "Genótipo de referência para a região VMAT2. Função padrão do transportador "
+                    "vesicular de monoaminas e empacotamento de neurotransmissores."
                 ),
                 "score": 0.3,
             },
             "GT": {
                 "label": "GT",
-                "nickname": "Intermediate",
+                "nickname": "Intermediário",
                 "interpretation": (
-                    "One copy of the T allele. In Dean Hamer's 2004 'God Gene' hypothesis, "
-                    "the T allele was associated with higher self-transcendence scores on "
-                    "Cloninger's TCI personality inventory. This finding has NOT been "
-                    "replicated in large-scale GWAS. Interpret with extreme caution."
+                    "Uma cópia do alelo T. Na hipótese do 'Gene de Deus' de Dean Hamer (2004), "
+                    "o alelo T foi associado a maiores escores de autotranscendência no inventário "
+                    "de personalidade TCI de Cloninger. Este achado NÃO foi replicado em GWAS "
+                    "de larga escala. Interprete com extrema cautela."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "TT",
-                "nickname": "Variant",
+                "nickname": "Variante",
                 "interpretation": (
-                    "Two copies of the T allele. Hamer's original study (n~1,000) suggested "
-                    "higher self-transcendence. However, the 'God Gene' hypothesis has NOT "
-                    "been replicated in large-scale studies. VMAT2 is a real monoamine "
-                    "transporter involved in packaging dopamine, serotonin, and norepinephrine "
-                    "into vesicles — but linking it specifically to spirituality remains "
-                    "scientifically unvalidated."
+                    "Duas cópias do alelo T. O estudo original de Hamer (n~1.000) sugeriu "
+                    "maior autotranscendência. No entanto, a hipótese do 'Gene de Deus' NÃO "
+                    "foi replicada em estudos de larga escala. VMAT2 é um transportador real de "
+                    "monoaminas envolvido no empacotamento de dopamina, serotonina e norepinefrina "
+                    "em vesículas — mas vinculá-lo especificamente à espiritualidade permanece "
+                    "cientificamente não validado."
                 ),
                 "score": 0.6,
             },
         },
         "scientificBasis": (
-            "VMAT2 (SLC18A2) was proposed as the 'God Gene' by Dean Hamer in 2004. The "
-            "rs4570625 variant was associated with self-transcendence scores in a small sample "
-            "(n~1,000). VMAT2 packages monoamines (dopamine, serotonin, norepinephrine) into "
-            "synaptic vesicles — it has a genuine role in neurotransmission. However, the "
-            "'God Gene' hypothesis has NOT been replicated in large-scale GWAS. Scientific "
-            "consensus considers this speculative. We include it for completeness and cultural "
-            "interest, clearly marked as preliminary evidence."
+            "VMAT2 (SLC18A2) foi proposto como o 'Gene de Deus' por Dean Hamer em 2004. A variante "
+            "rs4570625 foi associada a escores de autotranscendência em uma amostra pequena "
+            "(n~1.000). VMAT2 empacota monoaminas (dopamina, serotonina, norepinefrina) em vesículas "
+            "sinápticas — tem um papel genuíno na neurotransmissão. No entanto, a hipótese do 'Gene "
+            "de Deus' NÃO foi replicada em GWAS de larga escala. O consenso científico considera isso "
+            "especulativo. Incluímos por completude e interesse cultural, claramente marcado como "
+            "evidência preliminar."
         ),
         "references": [
             {"pmid": "15520385", "title": "Hamer: The God Gene (book review)", "year": 2004},
         ],
         "actionableInsights": [
-            "Self-transcendence is a validated personality dimension regardless of its genetic basis",
-            "Contemplative practices (meditation, prayer, nature immersion) cultivate transcendence in all people",
-            "The 'God Gene' is a cultural concept, not an established scientific finding",
+            "Autotranscendência é uma dimensão de personalidade validada independentemente de sua base genética",
+            "Práticas contemplativas (meditação, oração, imersão na natureza) cultivam a transcendência em todas as pessoas",
+            "O 'Gene de Deus' é um conceito cultural, não um achado científico estabelecido",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# USP MEDIUMSHIP STUDY CONTEXT
+# CONTEXTO DO ESTUDO DA USP SOBRE MEDIUNIDADE
 # ---------------------------------------------------------------------------
 
 USP_STUDY_CONTEXT = (
-    "In January 2025, researchers affiliated with USP (Universidade de São Paulo) and "
-    "IPq (Instituto de Psiquiatria) published a landmark study in the Brazilian Journal "
+    "Em janeiro de 2025, pesquisadores afiliados à USP (Universidade de São Paulo) e ao "
+    "IPq (Instituto de Psiquiatria) publicaram um estudo marco no Brazilian Journal "
     "of Psychiatry (PMID 39874024): 'Candidate genes related to spiritual mediumship: "
-    "a whole-exome sequencing analysis of highly gifted mediums.' The study compared "
-    "whole-exome sequencing of 54 highly gifted mediums (10+ years of practice) against "
-    "53 first-degree non-medium relatives. Key findings: 15,669 genetic variants were "
-    "found exclusively in mediums, with 33 genes altered in ≥1/3 of mediums but in none "
-    "of their relatives. The most affected biological pathway was inflammatory and immune "
-    "system (43.9%), with ZAP-70 translocation to the immunological synapse as the top "
-    "finding.\n\n"
-    "IMPORTANT SCIENTIFIC CONTEXT: This study has been criticized by Natália Pasternak "
-    "(Instituto Questão de Ciência) and Wellington Zangari (USP Psychology Institute) for "
-    "a fundamental design flaw — using first-degree relatives as controls inflates false "
-    "positives since they share 50% of DNA. The phenotype definition (self-reported "
-    "mediumship) lacks objective biological criteria. No independent replication exists. "
-    "The authors themselves state replication is 'warranted and necessary.' This research "
-    "is preliminary and should be interpreted as an intriguing early exploration, not "
-    "validated science."
+    "a whole-exome sequencing analysis of highly gifted mediums.' O estudo comparou o "
+    "sequenciamento completo do exoma de 54 médiuns altamente experientes (10+ anos de prática) "
+    "contra 53 parentes de primeiro grau não-médiuns. Principais achados: 15.669 variantes "
+    "genéticas foram encontradas exclusivamente em médiuns, com 33 genes alterados em ≥1/3 "
+    "dos médiuns mas em nenhum de seus parentes. A via biológica mais afetada foi a do sistema "
+    "inflamatório e imune (43,9%), com a translocação de ZAP-70 para a sinapse imunológica "
+    "como o principal achado.\n\n"
+    "CONTEXTO CIENTÍFICO IMPORTANTE: Este estudo foi criticado por Natália Pasternak "
+    "(Instituto Questão de Ciência) e Wellington Zangari (Instituto de Psicologia da USP) por "
+    "uma falha fundamental de desenho — usar parentes de primeiro grau como controles infla "
+    "falsos positivos, já que eles compartilham 50% do DNA. A definição do fenótipo (mediunidade "
+    "autorrelatada) carece de critérios biológicos objetivos. Não existe replicação independente. "
+    "Os próprios autores afirmam que replicação é 'necessária e indispensável.' Esta pesquisa "
+    "é preliminar e deve ser interpretada como uma exploração inicial intrigante, não como "
+    "ciência validada."
 )
 
 NEUROIMAGING_CONTEXT = (
-    "Brazilian research groups have produced significant neuroimaging studies of Spiritist "
-    "mediums during trance states:\n\n"
-    "• SPECT studies (PLoS ONE 2012) of experienced Brazilian Spiritist mediums showed "
-    "frontal lobe deactivation during psychography (automatic writing) — consistent with "
-    "intentional inhibition of executive control rather than pathological dissociation.\n\n"
-    "• EEG studies (SciELO 2016) found greater theta and beta power during anomalous "
-    "sensorial experience vs. controls. Gamma and beta waves distinguished mediumistic "
-    "communication states from ordinary mental tasks.\n\n"
-    "• A consistent finding across studies: mediumistic trance is a measurable altered "
-    "state of consciousness distinct from ordinary waking — not feigned. Mental health "
-    "studies of Brazilian Spiritist mediums consistently find below-average rates of "
-    "psychiatric disorders and above-average socio-educational levels, suggesting "
-    "mediumistic practice in structured religious contexts is psychologically adaptive.\n\n"
-    "• The serotonin 2A receptor (HTR2A) — analyzed in this report — is the primary "
-    "mediator of altered states of consciousness across both pharmacological (psilocybin) "
-    "and non-pharmacological (meditation, trance) contexts."
+    "Grupos de pesquisa brasileiros produziram estudos significativos de neuroimagem de médiuns "
+    "espíritas durante estados de transe:\n\n"
+    "• Estudos de SPECT (PLoS ONE 2012) de médiuns espíritas brasileiros experientes mostraram "
+    "desativação do lobo frontal durante a psicografia (escrita automática) — consistente com "
+    "inibição intencional do controle executivo, e não dissociação patológica.\n\n"
+    "• Estudos de EEG (SciELO 2016) encontraram maior potência theta e beta durante experiências "
+    "sensoriais anômalas vs. controles. Ondas gama e beta distinguiram estados de comunicação "
+    "mediúnica de tarefas mentais comuns.\n\n"
+    "• Um achado consistente entre os estudos: o transe mediúnico é um estado alterado de "
+    "consciência mensurável, distinto da vigília comum — não fingido. Estudos de saúde mental "
+    "de médiuns espíritas brasileiros consistentemente encontram taxas abaixo da média de "
+    "transtornos psiquiátricos e níveis socioeducacionais acima da média, sugerindo que a "
+    "prática mediúnica em contextos religiosos estruturados é psicologicamente adaptativa.\n\n"
+    "• O receptor de serotonina 2A (HTR2A) — analisado neste relatório — é o principal "
+    "mediador de estados alterados de consciência tanto em contextos farmacológicos (psilocibina) "
+    "quanto não farmacológicos (meditação, transe)."
 )
 
 CULTURAL_CONTEXT = (
-    "Brazil has a uniquely favorable cultural context for exploring the intersection of "
-    "genetics and spiritual experiences:\n\n"
-    "• 2022 IBGE Census: 1.84% of Brazilians identify as Spiritist (~3.2 million), but "
-    "a much larger population across Catholic, Umbanda, Candomblé, and evangelical "
-    "traditions engages with mediumship culturally.\n\n"
-    "• Brazil is widely described as the world's largest Spiritist country, with 12,000+ "
-    "Spiritist institutions.\n\n"
-    "• Spiritist demographic profile: 60.6% female, 48% with university degrees, 96.6% "
-    "internet access — a premium, tech-literate consumer segment.\n\n"
-    "• The NUPES research center (Prof. Alexander Moreira-Almeida, UFJF) has worked for "
-    "decades to legitimize scientific study of spiritual experiences in Brazil.\n\n"
-    "• The 2025 USP study generated major media coverage (CNN Brasil, Estado de Minas), "
-    "demonstrating significant public appetite for science-meets-spirituality content."
+    "O Brasil tem um contexto cultural singularmente favorável para explorar a interseção "
+    "entre genética e experiências espirituais:\n\n"
+    "• Censo IBGE 2022: 1,84% dos brasileiros se identificam como espíritas (~3,2 milhões), mas "
+    "uma população muito maior entre tradições católicas, de Umbanda, Candomblé e evangélicas "
+    "se envolve com a mediunidade culturalmente.\n\n"
+    "• O Brasil é amplamente descrito como o maior país espírita do mundo, com mais de 12.000 "
+    "instituições espíritas.\n\n"
+    "• Perfil demográfico espírita: 60,6% feminino, 48% com diploma universitário, 96,6% "
+    "com acesso à internet — um segmento de consumidores premium e letrados digitalmente.\n\n"
+    "• O centro de pesquisa NUPES (Prof. Alexander Moreira-Almeida, UFJF) trabalha há "
+    "décadas para legitimar o estudo científico de experiências espirituais no Brasil.\n\n"
+    "• O estudo da USP de 2025 gerou grande cobertura da mídia (CNN Brasil, Estado de Minas), "
+    "demonstrando significativo apetite público por conteúdo que une ciência e espiritualidade."
 )
 
 
 # ---------------------------------------------------------------------------
-# DISCLAIMERS
+# AVISOS LEGAIS
 # ---------------------------------------------------------------------------
 
 DISCLAIMERS = {
     "personality": (
-        "This report provides educational information about genetic variants that scientific "
-        "research has associated with personality tendencies. Personality is shaped by a "
-        "complex interaction of genetic, environmental, cultural, and experiential factors. "
-        "These results describe probabilistic tendencies based on population-level research — "
-        "they do not determine who you are or how you will behave. Effect sizes are generally "
-        "small, and genetic variants explain only a fraction of the variation in personality "
-        "traits. This is not a medical or psychological diagnosis."
+        "Este relatório fornece informações educativas sobre variantes genéticas que pesquisas "
+        "científicas associaram a tendências de personalidade. A personalidade é moldada por uma "
+        "interação complexa de fatores genéticos, ambientais, culturais e experienciais. "
+        "Estes resultados descrevem tendências probabilísticas baseadas em pesquisas no nível "
+        "populacional — eles não determinam quem você é ou como você vai se comportar. Os tamanhos "
+        "de efeito são geralmente pequenos, e variantes genéticas explicam apenas uma fração da "
+        "variação nos traços de personalidade. Isto não é um diagnóstico médico ou psicológico."
     ),
     "mentalHealth": (
         "Este relatório descreve variantes genéticas que pesquisas científicas associaram a "
@@ -991,21 +993,21 @@ DISCLAIMERS = {
         "CVV - Centro de Valorização da Vida: ligue 188 (24h)."
     ),
     "spiritualSensitivity": (
-        "This report explores emerging scientific research on the genetics of spiritual "
-        "experiences, absorption, and transcendent states. The 2025 USP/BJPsych study "
-        "(PMID 39874024) identified candidate genes potentially associated with mediumship "
-        "in Spiritist practitioners — this research is preliminary and has not been "
-        "independently replicated. No validated genetic test for mediumship or spiritual "
-        "ability exists. This report reflects current scientific hypotheses and should be "
-        "interpreted as a cultural and scientific exploration, not a predictive or diagnostic "
-        "tool. GeneHealth respects all spiritual traditions and presents this information "
-        "in the spirit of scientific curiosity and cultural appreciation."
+        "Este relatório explora pesquisas científicas emergentes sobre a genética de experiências "
+        "espirituais, absorção e estados transcendentes. O estudo USP/BJPsych de 2025 "
+        "(PMID 39874024) identificou genes candidatos potencialmente associados à mediunidade "
+        "em praticantes espíritas — esta pesquisa é preliminar e não foi replicada "
+        "independentemente. Nenhum teste genético validado para mediunidade ou habilidade espiritual "
+        "existe. Este relatório reflete hipóteses científicas atuais e deve ser interpretado "
+        "como uma exploração cultural e científica, não como uma ferramenta preditiva ou "
+        "diagnóstica. O GeneHealth respeita todas as tradições espirituais e apresenta estas "
+        "informações no espírito de curiosidade científica e apreciação cultural."
     ),
 }
 
 
 # ---------------------------------------------------------------------------
-# ANALYSIS FUNCTIONS
+# FUNÇÕES DE ANÁLISE
 # ---------------------------------------------------------------------------
 
 def _lookup_snp(variants: Dict[str, Tuple[str, str, str]], rsid: str) -> Optional[str]:
@@ -1036,11 +1038,11 @@ def _analyze_snp_category(
                 "name": snp_info["name"],
                 "gene": snp_info["gene"],
                 "rsid": rsid,
-                "genotype": "Not available",
+                "genotype": "Não disponível",
                 "interpretation": (
-                    f"This SNP ({rsid}) was not found in your DNA data file. "
-                    f"This may be because your genotyping provider's chip does not "
-                    f"include this variant."
+                    f"Este SNP ({rsid}) não foi encontrado no seu arquivo de DNA. "
+                    f"Isso pode ocorrer porque o chip de genotipagem do seu provedor não "
+                    f"inclui esta variante."
                 ),
                 "effectSize": snp_info["effectSize"],
                 "scientificBasis": snp_info["scientificBasis"],
@@ -1066,9 +1068,9 @@ def _analyze_snp_category(
                 "rsid": rsid,
                 "genotype": genotype_upper,
                 "interpretation": (
-                    f"Your genotype ({genotype_upper}) for {snp_info['gene']} {rsid} "
-                    f"is not in our standard interpretation database. This may represent "
-                    f"a rare variant or a strand orientation difference."
+                    f"Seu genótipo ({genotype_upper}) para {snp_info['gene']} {rsid} "
+                    f"não está no nosso banco de interpretações padrão. Isso pode representar "
+                    f"uma variante rara ou uma diferença de orientação de fita."
                 ),
                 "effectSize": snp_info["effectSize"],
                 "scientificBasis": snp_info["scientificBasis"],
@@ -1098,10 +1100,10 @@ def _analyze_snp_category(
 
 def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> str:
     """Generate a summary paragraph for a category based on analyzed traits."""
-    analyzed = [t for t in traits if t["genotype"] != "Not available" and t.get("score") is not None]
+    analyzed = [t for t in traits if t["genotype"] != "Não disponível" and t.get("score") is not None]
 
     if not analyzed:
-        return f"No {category} SNPs were found in your DNA data. Your genotyping chip may not include these variants."
+        return f"Nenhum SNP de {category} foi encontrado nos seus dados de DNA. Seu chip de genotipagem pode não incluir essas variantes."
 
     avg_score = sum(t["score"] for t in analyzed) / len(analyzed)
     count = len(analyzed)
@@ -1110,50 +1112,49 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
     if category == "personality":
         if avg_score >= 0.6:
             return (
-                f"Based on {count} of {total} analyzed personality variants, your genetic "
-                f"profile suggests elevated tendencies toward emotional sensitivity and "
-                f"risk-taking. Remember that personality is primarily shaped by life "
-                f"experience, culture, and personal choice — genetics provides only a "
-                f"small piece of the picture."
+                f"Com base em {count} de {total} variantes de personalidade analisadas, seu perfil "
+                f"genético sugere tendências elevadas para sensibilidade emocional e tomada de risco. "
+                f"Lembre-se de que a personalidade é moldada principalmente pela experiência de vida, "
+                f"cultura e escolha pessoal — a genética fornece apenas uma pequena parte do quadro."
             )
         elif avg_score >= 0.4:
             return (
-                f"Based on {count} of {total} analyzed personality variants, your genetic "
-                f"profile shows a balanced mix of traits. You carry a typical combination "
-                f"of personality-related variants. Personality is overwhelmingly shaped "
-                f"by environment and experience."
+                f"Com base em {count} de {total} variantes de personalidade analisadas, seu perfil "
+                f"genético mostra uma combinação equilibrada de traços. Você carrega uma combinação "
+                f"típica de variantes relacionadas à personalidade. A personalidade é predominantemente "
+                f"moldada pelo ambiente e experiência."
             )
         else:
             return (
-                f"Based on {count} of {total} analyzed personality variants, your genetic "
-                f"profile suggests typical emotional regulation and moderate risk tolerance. "
-                f"These are population-level tendencies — your actual personality is shaped "
-                f"primarily by your unique life experiences."
+                f"Com base em {count} de {total} variantes de personalidade analisadas, seu perfil "
+                f"genético sugere regulação emocional típica e tolerância moderada ao risco. "
+                f"Estas são tendências no nível populacional — sua personalidade real é moldada "
+                f"principalmente por suas experiências de vida únicas."
             )
 
     elif category == "mentalHealth":
         if avg_score >= 0.6:
             return (
-                f"Based on {count} of {total} analyzed stress-response variants, your "
-                f"genetic profile shows some variants associated with enhanced stress "
-                f"sensitivity. This is informational only — most people with these variants "
-                f"never develop mental health conditions. Proactive stress management, "
-                f"regular exercise, and strong social support are beneficial for everyone. "
-                f"Consult a healthcare provider for any mental health concerns."
+                f"Com base em {count} de {total} variantes de resposta ao estresse analisadas, seu "
+                f"perfil genético mostra algumas variantes associadas a sensibilidade aumentada ao "
+                f"estresse. Isso é apenas informativo — a maioria das pessoas com essas variantes "
+                f"nunca desenvolve condições de saúde mental. Manejo proativo do estresse, exercício "
+                f"regular e forte apoio social são benéficos para todos. Consulte um profissional "
+                f"de saúde para qualquer preocupação de saúde mental."
             )
         elif avg_score >= 0.4:
             return (
-                f"Based on {count} of {total} analyzed variants, your stress-response "
-                f"genetic profile is within typical ranges. You carry a common mix of "
-                f"protective and sensitivity variants. Mental health is shaped by many "
-                f"factors beyond genetics."
+                f"Com base em {count} de {total} variantes analisadas, seu perfil genético de "
+                f"resposta ao estresse está dentro de faixas típicas. Você carrega uma combinação "
+                f"comum de variantes protetoras e de sensibilidade. A saúde mental é moldada por "
+                f"muitos fatores além da genética."
             )
         else:
             return (
-                f"Based on {count} of {total} analyzed variants, your genetic profile "
-                f"shows predominantly protective variants for stress response. This is "
-                f"encouraging but does not guarantee mental health outcomes — environment, "
-                f"lifestyle, and life events play major roles."
+                f"Com base em {count} de {total} variantes analisadas, seu perfil genético "
+                f"mostra variantes predominantemente protetoras para resposta ao estresse. Isso é "
+                f"encorajador, mas não garante resultados de saúde mental — ambiente, estilo de "
+                f"vida e eventos da vida desempenham papéis importantes."
             )
 
     else:  # spiritualSensitivity
@@ -1162,28 +1163,28 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
 
         if htr2a_score >= 0.6:
             return (
-                f"Based on {count} of {total} analyzed variants, your serotonergic profile "
-                f"suggests potentially heightened sensitivity to transcendent and contemplative "
-                f"experiences. Your HTR2A (serotonin 2A receptor) variants are associated with "
-                f"altered receptor density — research shows this correlates with the intensity "
-                f"of mystical experiences. This is a genetic tendency, not a spiritual diagnosis. "
-                f"The 2025 USP study explored similar themes through a different lens (immune "
-                f"system genetics in mediums), and both lines of research point to the complex "
-                f"biology underlying spiritual experiences."
+                f"Com base em {count} de {total} variantes analisadas, seu perfil serotoninérgico "
+                f"sugere sensibilidade potencialmente aumentada a experiências transcendentes e "
+                f"contemplativas. Suas variantes de HTR2A (receptor de serotonina 2A) estão associadas "
+                f"a densidade alterada de receptores — pesquisas mostram que isso correlaciona com a "
+                f"intensidade de experiências místicas. Esta é uma tendência genética, não um diagnóstico "
+                f"espiritual. O estudo da USP de 2025 explorou temas semelhantes através de uma lente "
+                f"diferente (genética do sistema imune em médiuns), e ambas as linhas de pesquisa "
+                f"apontam para a biologia complexa subjacente às experiências espirituais."
             )
         elif htr2a_score >= 0.4:
             return (
-                f"Based on {count} of {total} analyzed variants, your serotonergic profile "
-                f"shows an intermediate sensitivity pattern. Your HTR2A variants suggest "
-                f"typical receptor density and sensitivity to altered states. Spiritual "
-                f"experiences are shaped by practice, culture, belief, and biology together."
+                f"Com base em {count} de {total} variantes analisadas, seu perfil serotoninérgico "
+                f"mostra um padrão de sensibilidade intermediário. Suas variantes de HTR2A sugerem "
+                f"densidade e sensibilidade típicas de receptores a estados alterados. Experiências "
+                f"espirituais são moldadas por prática, cultura, crença e biologia em conjunto."
             )
         else:
             return (
-                f"Based on {count} of {total} analyzed variants, your serotonergic profile "
-                f"shows a standard sensitivity pattern. Spiritual and contemplative experiences "
-                f"are accessible to all people regardless of genetic profile — practice and "
-                f"intention are the primary drivers."
+                f"Com base em {count} de {total} variantes analisadas, seu perfil serotoninérgico "
+                f"mostra um padrão de sensibilidade padrão. Experiências espirituais e contemplativas "
+                f"são acessíveis a todas as pessoas independentemente do perfil genético — prática e "
+                f"intenção são os principais impulsionadores."
             )
 
 
@@ -1191,25 +1192,25 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
     """Generate a one-line overall profile label."""
     analyzed = [t for t in traits if t.get("score") is not None]
     if not analyzed:
-        return "Insufficient data"
+        return "Dados insuficientes"
 
     avg = sum(t["score"] for t in analyzed) / len(analyzed)
 
     profiles = {
         "personality": {
-            0.6: "Sensitive & Exploratory",
-            0.4: "Balanced & Adaptive",
-            0.0: "Steady & Measured",
+            0.6: "Sensível e Explorador",
+            0.4: "Equilibrado e Adaptável",
+            0.0: "Estável e Comedido",
         },
         "mentalHealth": {
-            0.6: "Enhanced Stress Sensitivity",
-            0.4: "Typical Stress Response",
-            0.0: "Resilient Profile",
+            0.6: "Sensibilidade Aumentada ao Estresse",
+            0.4: "Resposta ao Estresse Típica",
+            0.0: "Perfil Resiliente",
         },
         "spiritualSensitivity": {
-            0.6: "Heightened Transcendent Sensitivity",
-            0.4: "Intermediate Sensitivity",
-            0.0: "Standard Sensitivity",
+            0.6: "Sensibilidade Transcendente Elevada",
+            0.4: "Sensibilidade Intermediária",
+            0.0: "Sensibilidade Padrão",
         },
     }
 
@@ -1217,11 +1218,11 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
     for threshold in sorted(cat_profiles.keys(), reverse=True):
         if avg >= threshold:
             return cat_profiles[threshold]
-    return "Typical"
+    return "Típico"
 
 
 # ---------------------------------------------------------------------------
-# MAIN ANALYSIS FUNCTION
+# FUNÇÃO PRINCIPAL DE ANÁLISE
 # ---------------------------------------------------------------------------
 
 def analyze_mind_spirit(
@@ -1248,14 +1249,14 @@ def analyze_mind_spirit(
         if t["rsid"] == "rs53576":
             oxtr_in_spiritual = {
                 **t,
-                "name": "Absorption & Empathic Sensitivity (Spiritual Context)",
+                "name": "Absorção e Sensibilidade Empática (Contexto Espiritual)",
                 "scientificBasis": (
-                    t["scientificBasis"] + " In the context of spiritual experiences, "
-                    "OXTR variants have been linked to the psychological construct of "
-                    "'absorption' — the tendency to become deeply immersed in experiences. "
-                    "Absorption has ~50% heritability from twin studies and is the personality "
-                    "trait most consistently associated with reported mediumistic and mystical "
-                    "experiences across cultures."
+                    t["scientificBasis"] + " No contexto de experiências espirituais, "
+                    "variantes de OXTR foram associadas ao constructo psicológico de "
+                    "'absorção' — a tendência de se tornar profundamente imerso em experiências. "
+                    "A absorção tem ~50% de herdabilidade em estudos com gêmeos e é o traço de "
+                    "personalidade mais consistentemente associado a experiências mediúnicas e "
+                    "místicas relatadas em diversas culturas."
                 ),
             }
             break
