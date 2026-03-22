@@ -24,6 +24,7 @@ from .haplogroup_analyzer import analyze_haplogroup, generate_haplogroup_json
 from .roh_analyzer import analyze_roh, generate_roh_json
 from .immune_microbiome_analyzer import analyze_immune_microbiome, generate_immune_microbiome_json
 from .historical_connections_analyzer import analyze_historical_connections, generate_historical_connections_json
+from .mind_spirit_analyzer import analyze_mind_spirit, generate_mind_spirit_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -306,6 +307,17 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Historical connections: Y={y_hg}, mt={mt_hg}, {y_matches} Y-DNA matches, {mt_matches} mtDNA matches")
     except Exception as e:
         print(f"Historical connections analysis failed: {e}")
+
+    # Run mind & spirit analysis (personality, mental health, spiritual sensitivity)
+    try:
+        ms_result = analyze_mind_spirit(variants)
+        reports["mind_spirit"] = json.dumps(generate_mind_spirit_json(ms_result))
+        p_count = len([t for t in ms_result['personality_traits'] if t['genotype'] != 'Not available'])
+        m_count = len([t for t in ms_result['mental_health_traits'] if t['genotype'] != 'Not available'])
+        s_count = len([t for t in ms_result['spiritual_traits'] if t['genotype'] != 'Not available'])
+        print(f"Mind & Spirit: {p_count} personality, {m_count} mental health, {s_count} spiritual SNPs found")
+    except Exception as e:
+        print(f"Mind & Spirit analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
