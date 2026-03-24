@@ -321,6 +321,7 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Mind & Spirit analysis failed: {e}")
 
     # Run dream & sleep architecture analysis
+    print("Starting dream & sleep analysis...")
     try:
         ds_result = analyze_dream_sleep(variants)
         reports["dream_sleep"] = json.dumps(generate_dream_sleep_json(ds_result))
