@@ -25,6 +25,7 @@ from .roh_analyzer import analyze_roh, generate_roh_json
 from .immune_microbiome_analyzer import analyze_immune_microbiome, generate_immune_microbiome_json
 from .historical_connections_analyzer import analyze_historical_connections, generate_historical_connections_json
 from .mind_spirit_analyzer import analyze_mind_spirit, generate_mind_spirit_json
+from .dream_sleep_analyzer import analyze_dream_sleep, generate_dream_sleep_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -318,6 +319,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Mind & Spirit: {p_count} personality, {m_count} mental health, {s_count} spiritual SNPs found")
     except Exception as e:
         print(f"Mind & Spirit analysis failed: {e}")
+
+    # Run dream & sleep architecture analysis
+    try:
+        ds_result = analyze_dream_sleep(variants)
+        reports["dream_sleep"] = json.dumps(generate_dream_sleep_json(ds_result))
+        dv_count = len([t for t in ds_result.get('dream_vividness', []) if t.get('found')])
+        sa_count = len([t for t in ds_result.get('sleep_architecture', []) if t.get('found')])
+        ch_count = len([t for t in ds_result.get('chronotype', []) if t.get('found')])
+        np_count = len([t for t in ds_result.get('nocturnal_phenomena', []) if t.get('found')])
+        print(f"Dream & Sleep: {dv_count} dream vividness, {sa_count} sleep architecture, {ch_count} chronotype, {np_count} nocturnal phenomena SNPs found")
+    except Exception as e:
+        print(f"Dream & Sleep analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
