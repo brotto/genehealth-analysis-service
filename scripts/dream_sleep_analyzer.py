@@ -71,7 +71,13 @@ def _analyze_snp_list(
     results = []
     for snp in snp_list:
         rsid = snp["rsid"].lower()
-        chrom, pos, genotype = variants.get(rsid, (None, None, None))
+        raw = variants.get(rsid)
+        if raw is None:
+            chrom, pos, genotype = None, None, None
+        elif isinstance(raw, str):
+            chrom, pos, genotype = None, None, raw
+        else:
+            chrom, pos, genotype = raw
 
         if genotype:
             genotype = genotype.upper().replace("-", "")

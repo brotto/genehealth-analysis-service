@@ -1017,7 +1017,11 @@ def _lookup_snp(variants: Dict[str, Tuple[str, str, str]], rsid: str) -> Optiona
     The variants dict maps rsid -> (chromosome, position, genotype).
     """
     if rsid in variants:
-        return variants[rsid][2]  # genotype is the third element
+        val = variants[rsid]
+        # Support both formats: plain genotype string or (chr, pos, genotype) tuple
+        if isinstance(val, str):
+            return val
+        return val[2]  # genotype is the third element
     return None
 
 
