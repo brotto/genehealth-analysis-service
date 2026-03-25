@@ -1,45 +1,45 @@
 """
-Analisador de Sonhos & Arquitetura do Sono
-Analisa variantes genéticas associadas à vivacidade dos sonhos, arquitetura
-do sono REM, cronótipo circadiano e fenômenos noturnos (paralisia do sono,
-hipnagogia, propensão a sonhos lúcidos).
+Dream & Sleep Architecture Analyzer
+Analyzes genetic variants associated with dream vividness, REM sleep architecture,
+circadian chronotype, and nocturnal phenomena (sleep paralysis, hypnagogia,
+lucid dream propensity).
 
-QUATRO CATEGORIAS:
-  1. Vivacidade & Memória dos Sonhos  — HTR2A, DRD4, FAAH, BDNF (cross-ref)
-  2. Arquitetura do Sono               — PER3, ADORA2A, NRXN1
-  3. Cronótipo & Ritmo Circadiano      — CLOCK, CRY1, PER1, PER2, ARNTL
-  4. Fenômenos Noturnos                — HTR2A (contexto paralisia/hipnagogia),
-                                         COMT (cross-ref), DRD4 (sonhos lúcidos)
+FOUR CATEGORIES:
+  1. Dream Vividness & Memory        — HTR2A, DRD4, FAAH, BDNF (cross-ref)
+  2. Sleep Architecture               — PER3, ADORA2A, NRXN1
+  3. Chronotype & Circadian Rhythm    — CLOCK, CRY1, PER1, PER2, ARNTL
+  4. Nocturnal Phenomena              — HTR2A (sleep paralysis/hypnagogia context),
+                                        COMT (cross-ref), DRD4 (lucid dreams)
 
-BASE CIENTÍFICA:
-  - Sonhos & HTR2A: Nichols (2004) Pharmacol Ther — receptores 5-HT2A e conteúdo onírico
-  - HTR2A rs6311: Berger et al. (2003) Neuropsychobiology — densidade de receptores e REM
-  - DRD4 rs1800955: Schmack et al. (2013) PLOS ONE — dopamina e conteúdo dos sonhos
-  - FAAH rs324420: Fezza et al. (2014) Molecules — endocannabinoides e sono REM
-  - PER3 VNTR / rs228697: Viola et al. (2007) Current Biology — arquitetura do sono
-  - ADORA2A rs5751876: Rétey et al. (2005) PNAS — pressão do sono e adenosina
-  - CLOCK rs1801260: Mishima et al. (2005) Sleep — ritmo circadiano e atraso de fase
-  - CRY1 rs2287161: Patke et al. (2017) Cell — período circadiano +~50 min (DSPD)
-  - PER1 rs2735611: Katzenberg et al. (1998) / Carpen et al. (2006) — matutinidade
-  - PER2 rs2304672: Archer et al. (2003) Sleep — cronótipo vespertino/matutino
+SCIENTIFIC BASIS:
+  - Dreams & HTR2A: Nichols (2004) Pharmacol Ther — 5-HT2A receptors and dream content
+  - HTR2A rs6311: Berger et al. (2003) Neuropsychobiology — receptor density and REM
+  - DRD4 rs1800955: Schmack et al. (2013) PLOS ONE — dopamine and dream content
+  - FAAH rs324420: Fezza et al. (2014) Molecules — endocannabinoids and REM sleep
+  - PER3 VNTR / rs228697: Viola et al. (2007) Current Biology — sleep architecture
+  - ADORA2A rs5751876: Retey et al. (2005) PNAS — sleep pressure and adenosine
+  - CLOCK rs1801260: Mishima et al. (2005) Sleep — circadian rhythm and phase delay
+  - CRY1 rs2287161: Patke et al. (2017) Cell — circadian period +~50 min (DSPD)
+  - PER1 rs2735611: Katzenberg et al. (1998) / Carpen et al. (2006) — morningness
+  - PER2 rs2304672: Archer et al. (2003) Sleep — evening/morning chronotype
 
-CONEXÃO ESPIRITUAL (identidade GeneHealth):
-  - HTR2A está no centro tanto dos sonhos vívidos quanto da sensibilidade espiritual
-  - Paralisia do sono e hipnagogia são frequentemente reportadas como experiências
-    espirituais em diversas culturas (visões, sensação de presença, viagens astrais)
-  - Sonhos lúcidos têm base neurobiológica em dopamina prefrontal (DRD4, COMT)
+SPIRITUAL CONNECTION (GeneHealth identity):
+  - HTR2A is at the center of both vivid dreams and spiritual sensitivity
+  - Sleep paralysis and hypnagogia are frequently reported as spiritual experiences
+    across cultures (visions, sense of presence, astral travel)
+  - Lucid dreams have a neurobiological basis in prefrontal dopamine (DRD4, COMT)
 
-RESSALVAS:
-  - Todas as associações são probabilísticas (cada SNP explica <2% da variância)
-  - Ambiente, higiene do sono e substâncias modificam fortemente qualquer tendência
-  - Não diagnóstico — para distúrbios do sono, consulte um especialista em medicina do sono
+CAVEATS:
+  - All associations are probabilistic (each SNP explains <2% of variance)
+  - Environment, sleep hygiene, and substances strongly modify any tendency
+  - Not a diagnosis — for sleep disorders, consult a sleep medicine specialist
 """
 
 from typing import Dict, List, Tuple, Any, Optional
 
 
 # ---------------------------------------------------------------------------
-# UTILITÁRIOS
+# UTILITIES
 # ---------------------------------------------------------------------------
 
 COMPLEMENT: Dict[str, str] = {"A": "T", "T": "A", "C": "G", "G": "C"}
@@ -50,7 +50,7 @@ def _complement(allele: str) -> str:
 
 
 def _count_allele(genotype: str, allele: str) -> int:
-    """Conta ocorrências de um alelo no genótipo com handling de strand flip."""
+    """Count occurrences of an allele in the genotype with strand flip handling."""
     genotype = genotype.upper().replace("-", "")
     allele = allele.upper()
     comp = _complement(allele)
@@ -65,8 +65,8 @@ def _analyze_snp_list(
     snp_list: List[Dict[str, Any]],
 ) -> List[Dict[str, Any]]:
     """
-    Processa uma lista de SNPs contra o dicionário de variantes do usuário.
-    Retorna lista de resultados enriquecidos com genótipo e interpretação.
+    Processes a list of SNPs against the user's variant dictionary.
+    Returns a list of enriched results with genotype and interpretation.
     """
     results = []
     for snp in snp_list:
@@ -83,11 +83,11 @@ def _analyze_snp_list(
             genotype = genotype.upper().replace("-", "")
             geno_data = snp["genotypes"].get(genotype)
 
-            # Tenta complemento se não encontrado diretamente
+            # Try complement if not found directly
             if not geno_data:
                 comp_geno = "".join(_complement(a) for a in genotype)
                 geno_data = snp["genotypes"].get(comp_geno)
-                # Tenta ordem inversa
+                # Try reverse order
                 if not geno_data and len(genotype) == 2:
                     geno_data = snp["genotypes"].get(genotype[::-1])
                 if not geno_data:
@@ -95,13 +95,13 @@ def _analyze_snp_list(
                     geno_data = snp["genotypes"].get(rev_comp)
 
             if not geno_data:
-                # Fallback: genótipo encontrado mas não mapeado
+                # Fallback: genotype found but not mapped
                 geno_data = {
                     "label": genotype,
-                    "nickname": "Variante não catalogada",
+                    "nickname": "Uncatalogued variant",
                     "interpretation": (
-                        f"Seu genótipo {genotype} foi detectado mas não está "
-                        "catalogado neste SNP. Pode ser um alelo raro."
+                        f"Your genotype {genotype} was detected but is not "
+                        "catalogued for this SNP. It may be a rare allele."
                     ),
                     "score": 0.3,
                 }
@@ -117,11 +117,11 @@ def _analyze_snp_list(
                 **snp,
                 "genotype": "Not available",
                 "genotypeData": {
-                    "label": "N/D",
-                    "nickname": "Não disponível",
+                    "label": "N/A",
+                    "nickname": "Not available",
                     "interpretation": (
-                        "Este SNP não foi encontrado no seu arquivo genômico. "
-                        "Kits de diferentes empresas cobrem conjuntos distintos de variantes."
+                        "This SNP was not found in your genomic file. "
+                        "Kits from different companies cover distinct sets of variants."
                     ),
                     "score": None,
                 },
@@ -134,81 +134,80 @@ def _analyze_snp_list(
 
 
 # ---------------------------------------------------------------------------
-# BANCO DE SNPs: Vivacidade & Memória dos Sonhos
+# SNP DATABASE: Dream Vividness & Memory
 # ---------------------------------------------------------------------------
 
 DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs6311",
         "gene": "HTR2A",
-        "name": "Vivacidade dos Sonhos e Densidade REM",
+        "name": "Dream Vividness and REM Density",
         "chromosome": "13",
         "position": 46897343,
         "effectSize": "moderate",
         "category": "dreamVividness",
         "genotypes": {
             "GG": {
-                "label": "G/G (−1438G)",
-                "nickname": "Sonhador Intenso",
+                "label": "G/G (-1438G)",
+                "nickname": "Intense Dreamer",
                 "interpretation": (
-                    "Duas cópias do alelo G associado a maior expressão do receptor 5-HT2A no "
-                    "córtex. Receptores 5-HT2A mais densos estão vinculados a sonhos mais vívidos, "
-                    "emocionalmente intensos e memoráveis — o mesmo mecanismo que explica os efeitos "
-                    "oníricos de substâncias psicodélicas (que ativam exatamente este receptor). "
-                    "Você pode ter uma vida onírica naturalmente rica e intensa."
+                    "Two copies of the G allele associated with higher 5-HT2A receptor expression "
+                    "in the cortex. Denser 5-HT2A receptors are linked to more vivid, emotionally "
+                    "intense, and memorable dreams — the same mechanism that explains the dream-like "
+                    "effects of psychedelic substances (which activate exactly this receptor). "
+                    "You may have a naturally rich and intense dream life."
                 ),
                 "score": 0.8,
             },
             "AG": {
                 "label": "A/G",
-                "nickname": "Sonhador Moderado",
+                "nickname": "Moderate Dreamer",
                 "interpretation": (
-                    "Genótipo heterozigoto para o promotor do HTR2A. Expressão de 5-HT2A "
-                    "intermediária. Você provavelmente experimenta sonhos com intensidade variável "
-                    "— às vezes muito vívidos, outras vezes mais difusos. A qualidade dos sonhos "
-                    "pode ser sensível a fatores como estresse, alimentação e uso de substâncias."
+                    "Heterozygous genotype for the HTR2A promoter. Intermediate 5-HT2A expression. "
+                    "You likely experience dreams of varying intensity — sometimes very vivid, "
+                    "other times more diffuse. Dream quality may be sensitive to factors such as "
+                    "stress, diet, and substance use."
                 ),
                 "score": 0.5,
             },
             "AA": {
-                "label": "A/A (−1438A)",
-                "nickname": "Sonhador Sereno",
+                "label": "A/A (-1438A)",
+                "nickname": "Serene Dreamer",
                 "interpretation": (
-                    "Duas cópias do alelo A. Expressão levemente reduzida do receptor 5-HT2A. "
-                    "Seus sonhos tendem a ser menos intrusivos emocionalmente. Você pode lembrar "
-                    "menos dos sonhos ao acordar, mas pode desfrutar de um sono REM mais tranquilo "
-                    "e reparador."
+                    "Two copies of the A allele. Slightly reduced 5-HT2A receptor expression. "
+                    "Your dreams tend to be less emotionally intrusive. You may recall fewer "
+                    "dreams upon waking, but you may enjoy quieter and more restorative REM sleep."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "HTR2A rs6311 (C−1438T/A) está no promotor do gene do receptor de serotonina 2A. "
-            "O alelo G aumenta a transcrição de HTR2A em ~30% comparado ao alelo A (Polesskaya & "
-            "Sokolov, 2002). No sono, os receptores 5-HT2A são ativos durante a vigília e REM, "
-            "regulando a intensidade e o conteúdo emocional dos sonhos. Berger et al. (2003) "
-            "(Neuropsychobiology 47:2) demonstraram correlação entre variantes promotoras do HTR2A "
-            "e a arquitetura do sono REM. A conexão é mecanisticamente clara: psicodélicos clássicos "
-            "(LSD, psilocibina) que produzem experiências oníricas intensas agem como agonistas "
-            "exatamente neste receptor. Este SNP também está presente no mind_spirit_analyzer da "
-            "GeneHealth no contexto de sensibilidade espiritual — a mesma variante que amplia a "
-            "experiência onírica tende a ampliar a sensibilidade transcendente na vigília."
+            "HTR2A rs6311 (C-1438T/A) is in the promoter of the serotonin 2A receptor gene. "
+            "The G allele increases HTR2A transcription by ~30% compared to the A allele (Polesskaya & "
+            "Sokolov, 2002). During sleep, 5-HT2A receptors are active during wakefulness and REM, "
+            "regulating the intensity and emotional content of dreams. Berger et al. (2003) "
+            "(Neuropsychobiology 47:2) demonstrated a correlation between HTR2A promoter variants "
+            "and REM sleep architecture. The connection is mechanistically clear: classic psychedelics "
+            "(LSD, psilocybin) that produce intense dream-like experiences act as agonists at "
+            "exactly this receptor. This SNP is also present in GeneHealth's mind_spirit_analyzer "
+            "in the context of spiritual sensitivity — the same variant that amplifies the dream "
+            "experience tends to amplify transcendent sensitivity during wakefulness."
         ),
         "references": [
             {"pmid": "12566938", "title": "HTR2A promoter polymorphism and receptor expression", "year": 2003},
             {"pmid": "15163253", "title": "Serotonin 2A receptor and sleep architecture", "year": 2004},
         ],
         "actionableInsights": [
-            "Portadores G/G: Evite telas brilhantes 2h antes de dormir — a estimulação serotonérgica pode intensificar demais os sonhos",
-            "Meditação noturna pode ajudar a 'preparar' o espaço mental para sonhos mais integrativos",
-            "Se os sonhos forem perturbadores, estratégias de processamento onírico (journaling) são especialmente valiosas para você",
-            "Portadores A/A: Técnicas de indução de sonhos lúcidos (MILD, WILD) podem ser necessárias para aumentar a recall de sonhos",
+            "G/G carriers: Avoid bright screens 2h before bed — serotonergic stimulation may over-intensify dreams",
+            "Evening meditation can help 'prepare' the mental space for more integrative dreams",
+            "If dreams are disturbing, dream processing strategies (journaling) are especially valuable for you",
+            "A/A carriers: Lucid dream induction techniques (MILD, WILD) may be needed to increase dream recall",
         ],
     },
     {
         "rsid": "rs1800955",
         "gene": "DRD4",
-        "name": "Dopamina, Novidade Onírica e Sonhos Lúcidos",
+        "name": "Dopamine, Dream Novelty, and Lucid Dreams",
         "chromosome": "11",
         "position": 637304,
         "effectSize": "moderate",
@@ -216,63 +215,63 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Conteúdo Onírico Típico",
+                "nickname": "Typical Dream Content",
                 "interpretation": (
-                    "Genótipo de referência para DRD4 −521. Expressão e função típica do receptor "
-                    "de dopamina D4. Seus sonhos tendem a refletir predominantemente conteúdo do "
-                    "cotidiano e memórias recentes."
+                    "Reference genotype for DRD4 -521. Typical expression and function of the "
+                    "dopamine D4 receptor. Your dreams tend to predominantly reflect everyday "
+                    "content and recent memories."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Sonhador Explorador",
+                "nickname": "Explorer Dreamer",
                 "interpretation": (
-                    "Uma cópia do alelo C. O receptor D4 com variante C tem expressão reduzida no "
-                    "córtex pré-frontal, o que pode aumentar a probabilidade de conteúdo onírico "
-                    "incomum, bizarro ou de exploração de novidades. Alguns estudos associam "
-                    "variantes DRD4 a propensão para sonhos lúcidos."
+                    "One copy of the C allele. The D4 receptor with the C variant has reduced "
+                    "expression in the prefrontal cortex, which may increase the likelihood of "
+                    "unusual, bizarre, or novelty-seeking dream content. Some studies associate "
+                    "DRD4 variants with lucid dream propensity."
                 ),
                 "score": 0.6,
             },
             "CC": {
                 "label": "C/C",
-                "nickname": "Sonhador Visionário",
+                "nickname": "Visionary Dreamer",
                 "interpretation": (
-                    "Duas cópias do alelo C. Variante associada ao receptor D4 de menor afinidade "
-                    "pela dopamina. Correlacionada com busca por novidades, criatividade e, em "
-                    "contexto onírico, conteúdo mais incomum e potencialmente mais bizarro ou "
-                    "visionário. A atividade dopaminérgica prefrontal durante o REM está ligada "
-                    "à metacognição onírica (consciência de que se está sonhando)."
+                    "Two copies of the C allele. Variant associated with a lower-affinity D4 receptor "
+                    "for dopamine. Correlated with novelty seeking, creativity, and in a dream context, "
+                    "more unusual and potentially more bizarre or visionary content. Prefrontal "
+                    "dopaminergic activity during REM is linked to dream metacognition (awareness "
+                    "that one is dreaming)."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "DRD4 −521C/T (rs1800955) afeta a expressão do receptor de dopamina D4 — variantes de "
-            "menor expressão no córtex pré-frontal foram associadas à busca por novidades (Strobel "
-            "et al., 1999). Durante o sono REM, a dopamina prefrontal é crucial para a metacognição "
-            "onírica. Schmack et al. (2013, PLOS ONE) demonstraram que perfis dopaminérgicos "
-            "influenciam o conteúdo e a bizarria dos sonhos. A ligação com sonhos lúcidos é explorada "
-            "por Hobson & Friston (2012): a consciência durante o REM requer ativação de áreas "
-            "frontais que normalmente estão inativas — padrão favorecido por certos perfis de "
-            "receptor D4. O DRD4 de 7 repetições (VNTR, bem correlacionado com rs1800955) é o alelo "
-            "mais fortemente associado à novidade, criatividade e comportamentos exploratórios."
+            "DRD4 -521C/T (rs1800955) affects expression of the dopamine D4 receptor — variants with "
+            "lower expression in the prefrontal cortex have been associated with novelty seeking (Strobel "
+            "et al., 1999). During REM sleep, prefrontal dopamine is crucial for dream metacognition. "
+            "Schmack et al. (2013, PLOS ONE) demonstrated that dopaminergic profiles influence dream "
+            "content and bizarreness. The link to lucid dreams is explored by Hobson & Friston (2012): "
+            "consciousness during REM requires activation of frontal areas that are normally inactive — "
+            "a pattern favored by certain D4 receptor profiles. The 7-repeat DRD4 VNTR (well correlated "
+            "with rs1800955) is the allele most strongly associated with novelty, creativity, and "
+            "exploratory behaviors."
         ),
         "references": [
             {"pmid": "23516459", "title": "Dopaminergic prediction errors drive dream content", "year": 2013},
             {"pmid": "10205490", "title": "DRD4 promoter polymorphism and novelty seeking", "year": 1999},
         ],
         "actionableInsights": [
-            "Portadores CC: Técnicas de realidade verificada (reality checks) durante o dia podem aumentar a probabilidade de sonhos lúcidos",
-            "Mantenha um diário de sonhos ao lado da cama — sua predisposição a conteúdo incomum vale registrar",
-            "Portadores TT: Técnicas de MILD (Mnemonic Induction of Lucid Dreams) podem ser especialmente eficazes por fortalecer a intenção pré-sono",
+            "CC carriers: Reality check techniques during the day can increase the probability of lucid dreams",
+            "Keep a dream journal beside your bed — your predisposition to unusual content is worth recording",
+            "TT carriers: MILD (Mnemonic Induction of Lucid Dreams) techniques may be especially effective by strengthening pre-sleep intention",
         ],
     },
     {
         "rsid": "rs324420",
         "gene": "FAAH",
-        "name": "Endocannabinoides, Intensidade Emocional dos Sonhos",
+        "name": "Endocannabinoids and Dream Emotional Intensity",
         "chromosome": "1",
         "position": 46891060,
         "effectSize": "moderate",
@@ -280,138 +279,137 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "AA": {
                 "label": "C385A / A385A",
-                "nickname": "Sonhos Emocionalmente Amplificados",
+                "nickname": "Emotionally Amplified Dreams",
                 "interpretation": (
-                    "Portador do alelo A (385A). A enzima FAAH com 385A tem atividade reduzida, "
-                    "resultando em níveis mais altos de anandamida (o 'canabinóide endógeno' ou "
-                    "'molécula da bem-aventurança'). Maior anandamida está associada a sonhos mais "
-                    "intensos emocionalmente, com maior tonalidade positiva e, em alguns estudos, "
-                    "menor ansiedade onírica. Você pode ter uma vida de sonhos emocionalmente "
-                    "rica com tonalidade hedônica mais elevada."
+                    "Carrier of the A allele (385A). The FAAH enzyme with 385A has reduced activity, "
+                    "resulting in higher levels of anandamide (the 'endogenous cannabinoid' or "
+                    "'bliss molecule'). Higher anandamide is associated with more emotionally intense "
+                    "dreams, with greater positive tone and, in some studies, less dream anxiety. "
+                    "You may have an emotionally rich dream life with higher hedonic tone."
                 ),
                 "score": 0.7,
             },
             "AC": {
-                "label": "Heterozigoto C385A",
-                "nickname": "Modulação Endocannabinoide Balanceada",
+                "label": "Heterozygous C385A",
+                "nickname": "Balanced Endocannabinoid Modulation",
                 "interpretation": (
-                    "Uma cópia de cada variante. Atividade intermediária da FAAH e níveis de "
-                    "anandamida entre os extremos. Você provavelmente experimenta uma vida onírica "
-                    "com intensidade emocional variável conforme seu estado emocional da vigília."
+                    "One copy of each variant. Intermediate FAAH activity and anandamide levels "
+                    "between the extremes. You likely experience a dream life with emotional "
+                    "intensity that varies depending on your waking emotional state."
                 ),
                 "score": 0.5,
             },
             "CC": {
                 "label": "C/C (385Pro)",
-                "nickname": "Processamento Endocannabinoide Padrão",
+                "nickname": "Standard Endocannabinoid Processing",
                 "interpretation": (
-                    "Genótipo de referência com atividade normal da FAAH. Níveis padrão de "
-                    "anandamida. Seus sonhos tendem a ter intensidade emocional típica, sem "
-                    "amplificação endocannabinoide particular."
+                    "Reference genotype with normal FAAH activity. Standard anandamide levels. "
+                    "Your dreams tend to have typical emotional intensity, without any particular "
+                    "endocannabinoid amplification."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "FAAH (Fatty Acid Amide Hydrolase) rs324420 (C385A) é a variante mais estudada no "
-            "sistema endocannabinoide. O alelo 385A produz uma proteína ~30% menos estável, "
-            "resultando em menor degradação de anandamida. Prather et al. (2013, PNAS) mostraram "
-            "que portadores do alelo A têm resposta reduzida ao estresse e humor mais positivo. "
-            "No contexto do sono, o sistema endocannabinoide regula o sono REM — animais sem FAAH "
-            "(e portanto com alta anandamida) mostram aumento de sono REM com maior atividade "
-            "neuronal durante essa fase. Bhattacharya et al. (2021, Int J Mol Sci) revisaram a "
-            "relação entre endocannabinoides e regulação do sono, confirmando o papel da anandamida "
-            "na intensidade do sono REM. Este SNP é particularmente relevante para o perfil "
-            "espiritual da GeneHealth: a anandamida é chamada de 'molécula da bliss' e sua "
-            "conexão com experiências de absorção e bem-estar espiritual está documentada."
+            "FAAH (Fatty Acid Amide Hydrolase) rs324420 (C385A) is the most studied variant in the "
+            "endocannabinoid system. The 385A allele produces a protein ~30% less stable, resulting "
+            "in reduced anandamide degradation. Prather et al. (2013, PNAS) showed that A allele "
+            "carriers have reduced stress response and more positive mood. In the sleep context, the "
+            "endocannabinoid system regulates REM sleep — animals lacking FAAH (and therefore with "
+            "high anandamide) show increased REM sleep with greater neuronal activity during that "
+            "phase. Bhattacharya et al. (2021, Int J Mol Sci) reviewed the relationship between "
+            "endocannabinoids and sleep regulation, confirming the role of anandamide in REM sleep "
+            "intensity. This SNP is particularly relevant for GeneHealth's spiritual profile: "
+            "anandamide is called the 'bliss molecule' and its connection to absorption experiences "
+            "and spiritual well-being is documented."
         ),
         "references": [
             {"pmid": "23754379", "title": "FAAH C385A and stress reactivity in humans", "year": 2013},
             {"pmid": "34444209", "title": "Endocannabinoid system and sleep regulation", "year": 2021},
         ],
         "actionableInsights": [
-            "Portadores A/A: Práticas de mindfulness que aumentam anandamida endógena (meditação, exercício) podem potencializar sua experiência onírica",
-            "Portadores C/C: O exercício físico eleva temporariamente a anandamida e pode enriquecer seus sonhos nas noites seguintes",
-            "Todos os genótipos: Dieta rica em ácidos graxos ômega-3 suporta a síntese de endocannabinoides",
+            "A/A carriers: Mindfulness practices that increase endogenous anandamide (meditation, exercise) can enhance your dream experience",
+            "C/C carriers: Physical exercise temporarily elevates anandamide and may enrich your dreams on subsequent nights",
+            "All genotypes: A diet rich in omega-3 fatty acids supports endocannabinoid synthesis",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# BANCO DE SNPs: Arquitetura do Sono
+# SNP DATABASE: Sleep Architecture
 # ---------------------------------------------------------------------------
 
 SLEEP_ARCHITECTURE_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs228697",
         "gene": "PER3",
-        "name": "Arquitetura do Sono REM e Pressão do Sono",
+        "name": "REM Sleep Architecture and Sleep Pressure",
         "chromosome": "1",
         "position": 7847208,
         "effectSize": "strong",
         "category": "sleepArchitecture",
         "genotypes": {
             "CC": {
-                "label": "Alelo curto (proxy 4-repeat)",
-                "nickname": "Sono Eficiente",
+                "label": "Short allele (proxy 4-repeat)",
+                "nickname": "Efficient Sleeper",
                 "interpretation": (
-                    "Associado ao alelo PER3 de 4 repetições (proxy). Portadores tendem a acumular "
-                    "pressão de sono mais rapidamente, adormecer com facilidade e ter sono profundo "
-                    "eficiente. No entanto, são mais sensíveis aos efeitos cognitivos da privação de "
-                    "sono. O sono REM é tipicamente mais compacto e concentrado no final da noite."
+                    "Associated with the PER3 4-repeat allele (proxy). Carriers tend to accumulate "
+                    "sleep pressure more quickly, fall asleep easily, and have efficient deep sleep. "
+                    "However, they are more sensitive to the cognitive effects of sleep deprivation. "
+                    "REM sleep is typically more compact and concentrated at the end of the night."
                 ),
                 "score": 0.4,
             },
             "CT": {
-                "label": "Heterozigoto",
-                "nickname": "Perfil de Sono Misto",
+                "label": "Heterozygous",
+                "nickname": "Mixed Sleep Profile",
                 "interpretation": (
-                    "Genótipo heterozigoto. Combina características de ambos os perfis de "
-                    "arquitetura do sono. Você provavelmente experimenta boa eficiência do sono "
-                    "com uma vida de sonhos moderadamente rica — o equilíbrio mais comum."
+                    "Heterozygous genotype. Combines characteristics of both sleep architecture "
+                    "profiles. You likely experience good sleep efficiency with a moderately rich "
+                    "dream life — the most common balance."
                 ),
                 "score": 0.5,
             },
             "TT": {
-                "label": "Alelo longo (proxy 5-repeat)",
-                "nickname": "Sonhador REM Rico",
+                "label": "Long allele (proxy 5-repeat)",
+                "nickname": "REM-Rich Dreamer",
                 "interpretation": (
-                    "Associado ao alelo PER3 de 5 repetições (proxy). Este perfil é fascinante: "
-                    "portadores têm sono REM mais distribuído ao longo da noite, com maior "
-                    "densidade de sonhos e melhor recall onírico. São mais resistentes à privação "
-                    "de sono cognitivamente (precisam dormir menos para funcionar bem), mas têm "
-                    "maior latência de início do sono. Viola et al. (2007) mostraram que portadores "
-                    "5/5 têm ondas delta de maior amplitude — sono profundo mais intenso."
+                    "Associated with the PER3 5-repeat allele (proxy). This profile is fascinating: "
+                    "carriers have REM sleep more distributed throughout the night, with higher "
+                    "dream density and better dream recall. They are more cognitively resilient to "
+                    "sleep deprivation (need less sleep to function well), but have longer sleep "
+                    "onset latency. Viola et al. (2007) showed that 5/5 carriers have higher "
+                    "amplitude delta waves — more intense deep sleep."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "PER3 (Period Circadian Regulator 3) contém um VNTR (rs57875989) de 4 ou 5 repetições "
-            "de 54 pares de bases que é o SNP de sono mais estudado na genômica do consumidor. "
-            "rs228697 é um proxy de alta correlação disponível em arrays de genotyping padrão. "
-            "Viola et al. (2007, Current Biology 17:4) demonstraram que portadores 5/5 têm mais "
-            "ondas lentas (SWA) e maior atividade EEG theta durante a vigília após privação do sono. "
-            "Dijk & Archer (2010, J Sleep Res) revisaram extensivamente como o genótipo PER3 "
-            "modula tanto a homeostase do sono quanto a resposta à privação. A relevância para "
-            "a GeneHealth: portadores do alelo longo têm experiências oníricas naturalmente mais "
-            "ricas — um dado que se conecta diretamente ao perfil de sensibilidade espiritual."
+            "PER3 (Period Circadian Regulator 3) contains a VNTR (rs57875989) of 4 or 5 repeats "
+            "of 54 base pairs, which is the most studied sleep SNP in consumer genomics. rs228697 "
+            "is a high-correlation proxy available on standard genotyping arrays. Viola et al. "
+            "(2007, Current Biology 17:4) demonstrated that 5/5 carriers have more slow-wave "
+            "activity (SWA) and higher theta EEG activity during wakefulness after sleep deprivation. "
+            "Dijk & Archer (2010, J Sleep Res) extensively reviewed how PER3 genotype modulates "
+            "both sleep homeostasis and the response to deprivation. The relevance for GeneHealth: "
+            "carriers of the long allele have naturally richer dream experiences — a finding that "
+            "connects directly to the spiritual sensitivity profile."
         ),
         "references": [
             {"pmid": "17320392", "title": "PER3 polymorphism and sleep homeostasis", "year": 2007},
             {"pmid": "20082661", "title": "PER3 VNTR and sleep regulation", "year": 2010},
         ],
         "actionableInsights": [
-            "Portadores TT (proxy 5/5): Garanta 8+ horas — sua arquitetura de sono é naturalmente mais longa para completar ciclos REM",
-            "Portadores CC (proxy 4/4): Você pode ser mais resistente cognitivamente à privação, mas não negligencie o sono de qualidade",
-            "Todos: Manter horários regulares de sono maximiza a densidade do REM independentemente do genótipo",
+            "TT carriers (proxy 5/5): Ensure 8+ hours — your sleep architecture is naturally longer to complete REM cycles",
+            "CC carriers (proxy 4/4): You may be more cognitively resilient to deprivation, but don't neglect quality sleep",
+            "Everyone: Maintaining regular sleep schedules maximizes REM density regardless of genotype",
         ],
     },
     {
         "rsid": "rs5751876",
         "gene": "ADORA2A",
-        "name": "Pressão do Sono e Sensibilidade à Cafeína",
+        "name": "Sleep Pressure and Caffeine Sensitivity",
         "chromosome": "22",
         "position": 24822676,
         "effectSize": "strong",
@@ -419,72 +417,71 @@ SLEEP_ARCHITECTURE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T (1083T)",
-                "nickname": "Alta Pressão de Sono",
+                "nickname": "High Sleep Pressure",
                 "interpretation": (
-                    "Genótipo associado a maior sensibilidade ao receptor de adenosina A2A. "
-                    "A adenosina é a principal molécula que acumula a 'pressão de sono' durante "
-                    "a vigília. Portadores TT sentem mais sono ao longo do dia, têm maior "
-                    "propensão a adormecer e são mais sensíveis à cafeína (que bloqueia exatamente "
-                    "este receptor). Quando dormem, tendem a ter sono mais profundo e reparador. "
-                    "Seus sonhos podem ser mais intensos após privação parcial."
+                    "Genotype associated with greater adenosine A2A receptor sensitivity. "
+                    "Adenosine is the main molecule that accumulates 'sleep pressure' during "
+                    "wakefulness. TT carriers feel sleepier throughout the day, have a greater "
+                    "propensity to fall asleep, and are more sensitive to caffeine (which blocks "
+                    "exactly this receptor). When they do sleep, they tend to have deeper and more "
+                    "restorative sleep. Their dreams may be more intense after partial deprivation."
                 ),
                 "score": 0.7,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Sensibilidade Intermediária",
+                "nickname": "Intermediate Sensitivity",
                 "interpretation": (
-                    "Perfil heterozigoto. Sensibilidade à adenosina e à cafeína entre os extremos. "
-                    "Você provavelmente tolera cafeína moderada sem grande impacto no sono se "
-                    "consumida antes das 14h."
+                    "Heterozygous profile. Adenosine and caffeine sensitivity between the extremes. "
+                    "You probably tolerate moderate caffeine without major sleep impact if consumed "
+                    "before 2 PM."
                 ),
                 "score": 0.5,
             },
             "CC": {
                 "label": "C/C (1083C)",
-                "nickname": "Sono Resiliente",
+                "nickname": "Resilient Sleeper",
                 "interpretation": (
-                    "Menor sensibilidade ao receptor A2A de adenosina. Portadores CC tendem a "
-                    "acumular pressão de sono mais lentamente, são menos sonolentos durante o dia "
-                    "e mais tolerantes à cafeína noturna. Podem funcionar melhor com privação "
-                    "parcial de sono, mas o sono profundo (ondas lentas) pode ser levemente "
-                    "reduzido em comparação com portadores TT."
+                    "Lower adenosine A2A receptor sensitivity. CC carriers tend to accumulate sleep "
+                    "pressure more slowly, are less drowsy during the day, and are more tolerant of "
+                    "evening caffeine. They may function better with partial sleep deprivation, but "
+                    "deep sleep (slow waves) may be slightly reduced compared to TT carriers."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "ADORA2A rs5751876 é o SNP de sensibilidade à cafeína mais bem validado. Rétey et al. "
-            "(2005, PNAS 102:17) mostraram que portadores T/T têm maior sensibilidade subjetiva e "
-            "objetiva à cafeína (medida por EEG e escalas de sonolência). O receptor A2A de adenosina "
-            "é o principal alvo da cafeína — quando a adenosina se liga, sinaliza cansaço; quando "
-            "a cafeína bloqueia, você se sente acordado. Portadores T/T têm um receptor que 'amplifica' "
-            "tanto o sinal de sono quanto o efeito de vigília da cafeína. Em termos de sonhos: a "
-            "arquitetura do sono dos portadores T/T favorece ciclos REM mais intensos quando o sono "
-            "finalmente ocorre, potencialmente amplificando a experiência onírica."
+            "ADORA2A rs5751876 is the best-validated caffeine sensitivity SNP. Retey et al. "
+            "(2005, PNAS 102:17) showed that T/T carriers have greater subjective and objective "
+            "caffeine sensitivity (measured by EEG and sleepiness scales). The adenosine A2A "
+            "receptor is the main target of caffeine — when adenosine binds, it signals fatigue; "
+            "when caffeine blocks, you feel awake. T/T carriers have a receptor that 'amplifies' "
+            "both the sleep signal and the wakefulness effect of caffeine. In terms of dreams: "
+            "the sleep architecture of T/T carriers favors more intense REM cycles when sleep "
+            "finally occurs, potentially amplifying the dream experience."
         ),
         "references": [
             {"pmid": "16188225", "title": "ADORA2A polymorphism and caffeine sensitivity", "year": 2005},
             {"pmid": "17592536", "title": "Adenosine A2A receptor and sleep homeostasis", "year": 2007},
         ],
         "actionableInsights": [
-            "Portadores T/T: Evite cafeína após as 13h — seu sistema adenosinérgico amplifica o impacto",
-            "Portadores C/C: Você pode tolerar café vespertino, mas monitore a qualidade do sono individualmente",
-            "Todos: A 'dívida de sono' acumulada leva a sonhos mais intensos na recuperação — use isso conscientemente",
+            "T/T carriers: Avoid caffeine after 1 PM — your adenosinergic system amplifies the impact",
+            "C/C carriers: You may tolerate afternoon coffee, but monitor sleep quality individually",
+            "Everyone: Accumulated 'sleep debt' leads to more intense recovery dreams — use this consciously",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# BANCO DE SNPs: Cronótipo & Ritmo Circadiano
+# SNP DATABASE: Chronotype & Circadian Rhythm
 # ---------------------------------------------------------------------------
 
 CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs1801260",
         "gene": "CLOCK",
-        "name": "Ritmo Circadiano e Atraso de Fase do Sono",
+        "name": "Circadian Rhythm and Sleep Phase Delay",
         "chromosome": "4",
         "position": 56292869,
         "effectSize": "moderate",
@@ -492,64 +489,62 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "C/C (3111C)",
-                "nickname": "Ciclo Circadiano Padrão",
+                "nickname": "Standard Circadian Cycle",
                 "interpretation": (
-                    "Genótipo de referência para CLOCK 3111T/C. Período circadiano típico (~24h). "
-                    "Você provavelmente se adapta bem a horários convencionais de sono e tem "
-                    "relativa facilidade para ajustar o ciclo sono-vigília."
+                    "Reference genotype for CLOCK 3111T/C. Typical circadian period (~24h). "
+                    "You likely adapt well to conventional sleep schedules and have relative "
+                    "ease in adjusting your sleep-wake cycle."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Tendência Noturna Leve",
+                "nickname": "Mild Evening Tendency",
                 "interpretation": (
-                    "Uma cópia do alelo T. Associado a uma leve tendência para cronótipo vespertino "
-                    "(noturno). Você pode ter facilidade para ficar acordado até mais tarde e "
-                    "dificuldade para acordar cedo, especialmente na adolescência e início da "
-                    "vida adulta."
+                    "One copy of the T allele. Associated with a slight tendency toward evening "
+                    "chronotype (night owl). You may find it easy to stay up late and difficult "
+                    "to wake up early, especially during adolescence and early adulthood."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "T/T (3111T)",
-                "nickname": "Cronótipo Noturno",
+                "nickname": "Evening Chronotype",
                 "interpretation": (
-                    "Duas cópias do alelo T. Mishima et al. (2005) associaram este genótipo a "
-                    "atraso de fase do sono e padrão circadiano noturno. Portadores TT têm "
-                    "maior tendência a dormir tarde, acordar tarde e funcionar melhor à noite. "
-                    "O pico de melatonina ocorre mais tarde em comparação com portadores CC. "
-                    "Sonhos mais intensos tendem a ocorrer próximos ao horário de despertar "
-                    "natural tardio deste cronótipo."
+                    "Two copies of the T allele. Mishima et al. (2005) associated this genotype "
+                    "with delayed sleep phase and an evening circadian pattern. TT carriers have "
+                    "a greater tendency to sleep late, wake late, and function better at night. "
+                    "The melatonin peak occurs later compared to CC carriers. More intense dreams "
+                    "tend to occur near the natural late wake time of this chronotype."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "CLOCK 3111T/C (rs1801260) está na região 3' UTR do gene CLOCK, um dos principais "
-            "reguladores do relógio circadiano molecular. O CLOCK forma o heterodímero CLOCK:BMAL1 "
-            "que ativa a transcrição dos genes Per e Cry. Mishima et al. (2005, Sleep 28:1) "
-            "demonstraram associação significativa do alelo T com síndrome do atraso de fase do "
-            "sono (DSPS) em japoneses. Katzenberg et al. (1998, Sleep 21:6) também reportaram "
-            "associação com matutinidade vs. vespertinidade. O CLOCK é o 'maestro' do ritmo "
-            "circadiano — variantes aqui afetam não apenas o sono, mas também o timing de picos "
-            "hormonais, temperatura corporal e, por consequência, quando os sonhos mais vívidos "
-            "ocorrem durante a arquitetura de sono personalizada."
+            "CLOCK 3111T/C (rs1801260) is in the 3' UTR region of the CLOCK gene, one of the main "
+            "regulators of the molecular circadian clock. CLOCK forms the CLOCK:BMAL1 heterodimer "
+            "that activates transcription of Per and Cry genes. Mishima et al. (2005, Sleep 28:1) "
+            "demonstrated a significant association of the T allele with delayed sleep phase syndrome "
+            "(DSPS) in Japanese populations. Katzenberg et al. (1998, Sleep 21:6) also reported an "
+            "association with morningness vs. eveningness. CLOCK is the 'conductor' of circadian "
+            "rhythm — variants here affect not only sleep but also the timing of hormonal peaks, "
+            "body temperature, and consequently when the most vivid dreams occur during personalized "
+            "sleep architecture."
         ),
         "references": [
             {"pmid": "15700720", "title": "CLOCK mutation and delayed sleep phase syndrome", "year": 2005},
             {"pmid": "9756555", "title": "CLOCK gene polymorphism and human diurnal preference", "year": 1998},
         ],
         "actionableInsights": [
-            "Portadores T/T: Respeite sua biologia — forçar um ciclo muito matutino pode cronicamente reduzir a qualidade do sono REM",
-            "Exposição à luz solar matinal ajuda a 'ancorar' o ciclo circadiano independentemente do genótipo",
-            "Portadores T/T que precisam de horários matutinos: melatonina de baixa dose (0,5mg) 5h antes do sono desejado pode ajudar",
+            "T/T carriers: Respect your biology — forcing a very early schedule can chronically reduce REM sleep quality",
+            "Morning sunlight exposure helps 'anchor' the circadian cycle regardless of genotype",
+            "T/T carriers who need morning schedules: low-dose melatonin (0.5mg) 5h before desired sleep time may help",
         ],
     },
     {
         "rsid": "rs2287161",
         "gene": "CRY1",
-        "name": "Período Circadiano Longo e Sono Atrasado",
+        "name": "Long Circadian Period and Delayed Sleep",
         "chromosome": "12",
         "position": 107484498,
         "effectSize": "strong",
@@ -557,64 +552,63 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "C/C",
-                "nickname": "Período Circadiano Típico",
+                "nickname": "Typical Circadian Period",
                 "interpretation": (
-                    "Genótipo de referência. Período circadiano endógeno próximo a 24h. "
-                    "Você se adapta bem a horários convencionais e tende a ter boa sincronização "
-                    "entre seu relógio interno e o ciclo claro-escuro ambiental."
+                    "Reference genotype. Endogenous circadian period close to 24h. "
+                    "You adapt well to conventional schedules and tend to have good synchronization "
+                    "between your internal clock and the environmental light-dark cycle."
                 ),
                 "score": 0.3,
             },
             "CG": {
                 "label": "C/G",
-                "nickname": "Período Levemente Alongado",
+                "nickname": "Slightly Extended Period",
                 "interpretation": (
-                    "Uma cópia do alelo G. Seu período circadiano endógeno pode ser ligeiramente "
-                    "mais longo que 24h. Isso cria uma tendência natural a atrasar o ciclo "
-                    "sono-vigília progressivamente se não houver âncoras de luz externas fortes."
+                    "One copy of the G allele. Your endogenous circadian period may be slightly "
+                    "longer than 24h. This creates a natural tendency to progressively delay the "
+                    "sleep-wake cycle if there are no strong external light anchors."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "G/G",
-                "nickname": "Período Circadiano Alongado (~50 min+)",
+                "nickname": "Extended Circadian Period (~50 min+)",
                 "interpretation": (
-                    "Variante de alto impacto descrita por Patke et al. (2017, Cell). Portadores "
-                    "têm um período circadiano endógeno mais longo — aproximadamente 50 minutos "
-                    "acima da média. Isso significa que seu relógio interno prefere 'correr mais "
-                    "lento', resultando em tendência forte a dormis tarde e acordar tarde. Em "
-                    "ambientes livres (sem obrigações de horário), portadores naturalmente dormem "
-                    "2-3h mais tarde que a média. Esta é uma das variantes de cronótipo mais "
-                    "potentes identificadas até hoje."
+                    "High-impact variant described by Patke et al. (2017, Cell). Carriers have "
+                    "a longer endogenous circadian period — approximately 50 minutes above average. "
+                    "This means your internal clock prefers to 'run slower', resulting in a strong "
+                    "tendency to sleep late and wake late. In free-running environments (without "
+                    "schedule obligations), carriers naturally sleep 2-3h later than average. This "
+                    "is one of the most potent chronotype variants identified to date."
                 ),
                 "score": 0.85,
             },
         },
         "scientificBasis": (
-            "CRY1 (Cryptochrome 1) é um repressor central do relógio circadiano molecular — "
-            "ele inibe o heterodímero CLOCK:BMAL1, fechando o loop de feedback. Patke et al. "
-            "(2017, Cell 169:2) identificaram uma mutação de splicing em CRY1 associada à "
-            "síndrome do atraso de fase do sono familiar (FASP). rs2287161 é um marcador de "
-            "desequilíbrio de ligação com esta variante funcional. Portadores com período mais "
-            "longo têm mais dificuldade de sincronização com o ciclo solar padrão — sua 'meia-noite "
-            "biológica' ocorre mais tarde. Estudos de sleep EEG mostram que portadores com período "
-            "CRY1 longo têm maior intensidade de ondas lentas acumulada quando finalmente dormem, "
-            "potencialmente resultando em REM de recuperação mais rico."
+            "CRY1 (Cryptochrome 1) is a central repressor of the molecular circadian clock — "
+            "it inhibits the CLOCK:BMAL1 heterodimer, closing the feedback loop. Patke et al. "
+            "(2017, Cell 169:2) identified a splicing mutation in CRY1 associated with familial "
+            "advanced sleep phase syndrome (FASP). rs2287161 is a linkage disequilibrium marker "
+            "for this functional variant. Carriers with a longer period have more difficulty "
+            "synchronizing with the standard solar cycle — their 'biological midnight' occurs "
+            "later. Sleep EEG studies show that carriers with a long CRY1 period have greater "
+            "accumulated slow-wave intensity when they finally sleep, potentially resulting in "
+            "richer recovery REM."
         ),
         "references": [
             {"pmid": "28388406", "title": "CRY1 splice variant and delayed sleep phase disorder", "year": 2017},
             {"pmid": "30773234", "title": "CRY1 functional variants and circadian period", "year": 2019},
         ],
         "actionableInsights": [
-            "Portadores G/G: Seu cronótipo tem uma base genética forte — validar isso pode aliviar a culpa social de ser 'noturno'",
-            "Exposição matinal intensa à luz (10.000 lux por 30 min) é a intervenção mais eficaz para avançar o ciclo",
-            "Se trabalho permite, considere ajustar horários para respeitar seu pico cognitivo natural (tipicamente 11h-13h para noturnos)",
+            "G/G carriers: Your chronotype has a strong genetic basis — validating this can relieve the social guilt of being a 'night owl'",
+            "Intense morning light exposure (10,000 lux for 30 min) is the most effective intervention for advancing the cycle",
+            "If work allows, consider adjusting schedules to respect your natural cognitive peak (typically 11 AM-1 PM for night owls)",
         ],
     },
     {
         "rsid": "rs2735611",
         "gene": "PER1",
-        "name": "Preferência Matutina e Antecipação Circadiana",
+        "name": "Morning Preference and Circadian Anticipation",
         "chromosome": "17",
         "position": 8123949,
         "effectSize": "moderate",
@@ -622,69 +616,69 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "AA": {
                 "label": "A/A",
-                "nickname": "Cronótipo Matutino",
+                "nickname": "Morning Chronotype",
                 "interpretation": (
-                    "Associado a preferência matutina. Portadores tendem a adormecer mais cedo, "
-                    "acordar naturalmente cedo e ter pico de energia e cognição nas primeiras horas "
-                    "da manhã. O sono REM mais intenso ocorre nos ciclos do início da madrugada, "
-                    "o que pode resultar em sonhos mais vívidos nas primeiras horas após dormir."
+                    "Associated with morning preference. Carriers tend to fall asleep earlier, "
+                    "wake up naturally early, and have peak energy and cognition in the first "
+                    "hours of the morning. The most intense REM sleep occurs in the early morning "
+                    "cycles, which may result in more vivid dreams in the first hours after falling asleep."
                 ),
                 "score": 0.7,
             },
             "AG": {
                 "label": "A/G",
-                "nickname": "Cronótipo Intermediário",
+                "nickname": "Intermediate Chronotype",
                 "interpretation": (
-                    "Genótipo heterozigoto. Tendência ao cronótipo intermediário — você "
-                    "provavelmente se adapta razoavelmente bem a diferentes horários, "
-                    "com leve preferência por acordar em horários moderados."
+                    "Heterozygous genotype. Tendency toward an intermediate chronotype — you "
+                    "likely adapt reasonably well to different schedules, with a slight "
+                    "preference for waking at moderate times."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "G/G",
-                "nickname": "Tendência Vespertina",
+                "nickname": "Evening Tendency",
                 "interpretation": (
-                    "Associado a menor preferência matutina. Você pode ter mais facilidade "
-                    "para ficar acordado à noite e mais dificuldade para acordar cedo. "
-                    "Em combinação com outros marcadores circadianos, pode indicar cronótipo "
-                    "vespertino moderado."
+                    "Associated with lower morning preference. You may find it easier to stay "
+                    "awake at night and harder to wake up early. In combination with other "
+                    "circadian markers, this may indicate a moderate evening chronotype."
                 ),
                 "score": 0.4,
             },
         },
         "scientificBasis": (
-            "PER1 (Period 1) é um dos três genes 'period' do relógio circadiano. rs2735611 "
-            "foi associado a cronotipo e preferência matutina em estudos GWAS de grande escala. "
-            "Jones et al. (2019, Nature Communications) identificaram 351 loci para cronótipo em "
-            "~700.000 indivíduos do UK Biobank, com PER1 entre os mais significativos. Carpen et al. "
-            "(2006, J Sleep Res) também reportaram associação de variantes PER1 com matutinidade. "
-            "PER1 regula a fase do relógio circadiano junto com PER2 e PER3 — variantes neste gene "
-            "afetam a velocidade com que o relógio 'avança' em resposta à luz matinal."
+            "PER1 (Period 1) is one of three 'period' genes of the circadian clock. rs2735611 "
+            "was associated with chronotype and morning preference in large-scale GWAS studies. "
+            "Jones et al. (2019, Nature Communications) identified 351 loci for chronotype in "
+            "~700,000 individuals from the UK Biobank, with PER1 among the most significant. "
+            "Carpen et al. (2006, J Sleep Res) also reported an association of PER1 variants "
+            "with morningness. PER1 regulates the circadian clock phase along with PER2 and "
+            "PER3 — variants in this gene affect how quickly the clock 'advances' in response "
+            "to morning light."
         ),
         "references": [
             {"pmid": "30696823", "title": "GWAS of chronotype in UK Biobank identifies 351 loci", "year": 2019},
             {"pmid": "16685255", "title": "PER1 polymorphism and diurnal preference", "year": 2006},
         ],
         "actionableInsights": [
-            "Portadores A/A: Aproveite seu pico matinal — agende trabalho criativo e decisões importantes antes do meio-dia",
-            "Portadores G/G: Considere blocos de trabalho profundo no final da tarde/início da noite quando sua cognição estiver no pico",
-            "Todos: Consistência no horário de despertar (mesmo nos fins de semana) é o fator mais importante para a qualidade do sono",
+            "A/A carriers: Take advantage of your morning peak — schedule creative work and important decisions before noon",
+            "G/G carriers: Consider deep work blocks in the late afternoon/early evening when your cognition peaks",
+            "Everyone: Consistency in wake time (even on weekends) is the most important factor for sleep quality",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# BANCO DE SNPs: Fenômenos Noturnos
-# (Paralisia do sono, hipnagogia, sonhos lúcidos, experiências de fronteira)
+# SNP DATABASE: Nocturnal Phenomena
+# (Sleep paralysis, hypnagogia, lucid dreams, boundary experiences)
 # ---------------------------------------------------------------------------
 
 NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs6313",
         "gene": "HTR2A",
-        "name": "Paralisia do Sono e Experiências Hipnagógicas",
+        "name": "Sleep Paralysis and Hypnagogic Experiences",
         "chromosome": "13",
         "position": 46897065,
         "effectSize": "moderate",
@@ -692,68 +686,68 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Fronteira Sono-Vigília Definida",
+                "nickname": "Defined Sleep-Wake Boundary",
                 "interpretation": (
-                    "Genótipo de referência. Transição sono-vigília típica. Você provavelmente "
-                    "experimenta a fronteira entre o sono e a vigília de forma relativamente clara, "
-                    "sem fenômenos de fronteira frequentes."
+                    "Reference genotype. Typical sleep-wake transition. You likely experience "
+                    "the boundary between sleep and wakefulness in a relatively clear manner, "
+                    "without frequent boundary phenomena."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Fronteira Permeável",
+                "nickname": "Permeable Boundary",
                 "interpretation": (
-                    "Uma cópia do alelo C. Expressão aumentada de HTR2A pode tornar a fronteira "
-                    "sono-vigília mais permeável. Você pode experimentar com maior frequência "
-                    "alucinações hipnagógicas (ao adormecer) ou hipnopômpicas (ao acordar), "
-                    "paralisia do sono ocasional ou sensações vívidas na transição entre estados. "
-                    "Estas experiências, embora às vezes assustadoras, têm base neurobiológica "
-                    "clara e são reportadas em diversas tradições como experiências espirituais."
+                    "One copy of the C allele. Increased HTR2A expression may make the sleep-wake "
+                    "boundary more permeable. You may experience hypnagogic hallucinations (while "
+                    "falling asleep) or hypnopompic hallucinations (while waking), occasional sleep "
+                    "paralysis, or vivid sensations during state transitions more frequently. "
+                    "These experiences, though sometimes frightening, have a clear neurobiological "
+                    "basis and are reported in many traditions as spiritual experiences."
                 ),
                 "score": 0.6,
             },
             "CC": {
                 "label": "C/C",
-                "nickname": "Fronteira Muito Permeável",
+                "nickname": "Highly Permeable Boundary",
                 "interpretation": (
-                    "Maior expressão do receptor 5-HT2A. A fronteira entre REM e vigília pode "
-                    "ser especialmente permeável para você. Episódios de paralisia do sono com "
-                    "conteúdo alucinatório rico, sonhos lúcidos espontâneos e experiências "
-                    "hipnagógicas intensas são mais prováveis com este perfil. Em muitas culturas, "
-                    "estas experiências de fronteira sono-vigília são interpretadas como contato "
-                    "com outras dimensões, visões ou mensagens espirituais — e você pode ter "
-                    "predisposição genética para essas experiências de fronteira."
+                    "Higher 5-HT2A receptor expression. The boundary between REM and wakefulness "
+                    "may be especially permeable for you. Episodes of sleep paralysis with rich "
+                    "hallucinatory content, spontaneous lucid dreams, and intense hypnagogic "
+                    "experiences are more likely with this profile. In many cultures, these "
+                    "sleep-wake boundary experiences are interpreted as contact with other "
+                    "dimensions, visions, or spiritual messages — and you may have a genetic "
+                    "predisposition for these boundary experiences."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "HTR2A rs6313 é outro polimorfismo no promotor do receptor de serotonina 2A. "
-            "A paralisia do sono (SP) ocorre quando há intrusão do estado REM na vigília — "
-            "os mecanismos que paralisam a musculatura durante o REM persistem ao acordar, "
-            "frequentemente acompanhados por alucinações hipnopômpicas. O sistema serotonérgico "
-            "via HTR2A regula a transição REM-vigília. Jalal & Hinton (2013, Psychol Sci) "
-            "documentaram extensivamente as alucinações da SP em 30+ culturas como 'visitantes "
-            "noturnos', 'demônios', 'entidades' — a mesma neurobiologia expressa em narrativas "
-            "espirituais distintas. Variantes que aumentam HTR2A podem aumentar tanto a "
-            "probabilidade quanto a intensidade dessas experiências de fronteira."
+            "HTR2A rs6313 is another polymorphism in the serotonin 2A receptor promoter. "
+            "Sleep paralysis (SP) occurs when REM state intrudes into wakefulness — the "
+            "mechanisms that paralyze musculature during REM persist upon waking, frequently "
+            "accompanied by hypnopompic hallucinations. The serotonergic system via HTR2A "
+            "regulates the REM-wakefulness transition. Jalal & Hinton (2013, Psychol Sci) "
+            "extensively documented SP hallucinations across 30+ cultures as 'night visitors', "
+            "'demons', 'entities' — the same neurobiology expressed in distinct spiritual "
+            "narratives. Variants that increase HTR2A can increase both the probability and "
+            "the intensity of these boundary experiences."
         ),
         "references": [
             {"pmid": "23983260", "title": "Sleep paralysis hallucinations across cultures", "year": 2013},
             {"pmid": "11774094", "title": "HTR2A polymorphisms and serotonin receptor expression", "year": 2001},
         ],
         "actionableInsights": [
-            "Portadores CC: Se a paralisia do sono for perturbadora, dormir de lado (não de costas) reduz significativamente a frequência",
-            "Você pode explorar técnicas de indução de sonhos lúcidos — sua fronteira permeável pode ser uma porta de entrada",
-            "Compreender a neurobiologia desses estados pode transformar experiências assustadoras em exploração consciente",
-            "Práticas meditativas que trabalham com estados hipnagógicos (yoga nidra, NSDR) são especialmente relevantes para seu perfil",
+            "CC carriers: If sleep paralysis is disturbing, sleeping on your side (not on your back) significantly reduces frequency",
+            "You can explore lucid dream induction techniques — your permeable boundary can be a gateway",
+            "Understanding the neurobiology of these states can transform frightening experiences into conscious exploration",
+            "Meditative practices that work with hypnagogic states (yoga nidra, NSDR) are especially relevant for your profile",
         ],
     },
     {
         "rsid": "rs6265",
         "gene": "BDNF",
-        "name": "Consolidação de Memória Onírica e Neuroplasticidade",
+        "name": "Dream Memory Consolidation and Neuroplasticity",
         "chromosome": "11",
         "position": 27658369,
         "effectSize": "moderate",
@@ -761,111 +755,110 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "Val/Val",
-                "nickname": "Consolidação Onírica Padrão",
+                "nickname": "Standard Dream Consolidation",
                 "interpretation": (
-                    "Genótipo de referência. Secreção normal de BDNF dependente de atividade. "
-                    "A consolidação de memória durante o sono segue o padrão típico — sonhos "
-                    "relacionados a eventos recentes e processamento emocional usual."
+                    "Reference genotype. Normal activity-dependent BDNF secretion. Memory "
+                    "consolidation during sleep follows the typical pattern — dreams related "
+                    "to recent events and usual emotional processing."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "Val/Met",
-                "nickname": "Consolidação Onírica Alterada",
+                "nickname": "Altered Dream Consolidation",
                 "interpretation": (
-                    "Uma cópia do alelo Met. A secreção reduzida de BDNF dependente de atividade "
-                    "pode afetar como as memórias emocionais são processadas e consolidadas durante "
-                    "o sono. Você pode ter sonhos com replay de eventos emocionais intensos com "
-                    "maior frequência — seu cérebro pode precisar de mais 'iterações' de REM para "
-                    "processar experiências emocionalmente carregadas."
+                    "One copy of the Met allele. Reduced activity-dependent BDNF secretion may "
+                    "affect how emotional memories are processed and consolidated during sleep. "
+                    "You may have dreams with replay of emotionally intense events more frequently "
+                    "— your brain may need more REM 'iterations' to process emotionally charged "
+                    "experiences."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "Met/Met",
-                "nickname": "Processamento Onírico Intensificado",
+                "nickname": "Intensified Dream Processing",
                 "interpretation": (
-                    "Duas cópias do alelo Met (Val66Met). A redução na liberação de BDNF "
-                    "dependente de atividade afeta a plasticidade hipocampal e a consolidação "
-                    "de memória. No contexto onírico, isso pode se manifestar como sonhos mais "
-                    "frequentes com processamento de memórias emocionais, sonhos recorrentes "
-                    "em períodos de estresse (o cérebro tentando 'resolver' via REM), e "
-                    "possivelmente maior ruminação onírica. Exercício regular eleva o BDNF "
-                    "e pode melhorar a qualidade do processamento durante o sono."
+                    "Two copies of the Met allele (Val66Met). The reduction in activity-dependent "
+                    "BDNF release affects hippocampal plasticity and memory consolidation. In the "
+                    "dream context, this may manifest as more frequent dreams processing emotional "
+                    "memories, recurrent dreams during stressful periods (the brain trying to "
+                    "'resolve' via REM), and possibly greater dream rumination. Regular exercise "
+                    "elevates BDNF and can improve the quality of processing during sleep."
                 ),
                 "score": 0.65,
             },
         },
         "scientificBasis": (
-            "BDNF Val66Met (rs6265) já está no mind_spirit_analyzer da GeneHealth no contexto "
-            "de neuroplasticidade diurna. Aqui, o enfoque é o papel do BDNF na consolidação de "
-            "memória durante o sono. Walker & Stickgold (2004, Neuron 44:1) estabeleceram que "
-            "o sono REM é crítico para a consolidação de memórias procedurais e emocionais. "
-            "BDNF é o principal mediador da plasticidade sináptica durante essa consolidação. "
-            "Bhattacharya et al. (2015, Neurobiology of Sleep and Circadian Rhythms) revisaram "
-            "como variantes de BDNF afetam a consolidação de memória dependente do sono. "
-            "Este SNP aparece em dois contextos na plataforma GeneHealth: durante a vigília "
-            "(plasticidade e humor) e durante o sono (consolidação onírica e processamento "
-            "emocional noturno) — ilustrando a continuidade mente-sono."
+            "BDNF Val66Met (rs6265) is already in GeneHealth's mind_spirit_analyzer in the context "
+            "of daytime neuroplasticity. Here, the focus is on BDNF's role in memory consolidation "
+            "during sleep. Walker & Stickgold (2004, Neuron 44:1) established that REM sleep is "
+            "critical for the consolidation of procedural and emotional memories. BDNF is the "
+            "main mediator of synaptic plasticity during this consolidation. Bhattacharya et al. "
+            "(2015, Neurobiology of Sleep and Circadian Rhythms) reviewed how BDNF variants "
+            "affect sleep-dependent memory consolidation. This SNP appears in two contexts on "
+            "the GeneHealth platform: during wakefulness (plasticity and mood) and during sleep "
+            "(dream consolidation and nocturnal emotional processing) — illustrating the "
+            "mind-sleep continuum."
         ),
         "references": [
             {"pmid": "15450160", "title": "Sleep and the price of plasticity", "year": 2004},
             {"pmid": "26779544", "title": "BDNF and sleep-dependent memory consolidation", "year": 2015},
         ],
         "actionableInsights": [
-            "Portadores TT: O exercício aeróbico (especialmente manhã/tarde) eleva BDNF e pode melhorar dramaticamente a qualidade do processamento onírico",
-            "Journaling pré-sono ajuda a 'pré-digerir' conteúdo emocional antes que o REM precise processá-lo",
-            "Portadores Val/Val: Seu processamento de memória durante o sono é eficiente — aproveite dormindo bem após aprendizado importante",
+            "TT carriers: Aerobic exercise (especially morning/afternoon) elevates BDNF and can dramatically improve dream processing quality",
+            "Pre-sleep journaling helps 'pre-digest' emotional content before REM needs to process it",
+            "Val/Val carriers: Your sleep memory processing is efficient — take advantage by sleeping well after important learning",
         ],
     },
 ]
 
 
 # ---------------------------------------------------------------------------
-# CONSTANTES DE CONTEXTO (para o relatório frontend)
+# CONTEXT CONSTANTS (for the frontend report)
 # ---------------------------------------------------------------------------
 
 SPIRITUAL_DREAM_CONTEXT = (
-    "Na GeneHealth, entendemos que a experiência onírica é uma janela única para a "
-    "consciência. Culturas de todo o mundo trataram os sonhos como portais para o sagrado "
-    "— de incubação onírica nos templos de Asclépio na Grécia antiga, às tradições "
-    "xamânicas siberianas, aos sonhos proféticos do Candomblé e das tradições indígenas "
-    "brasileiras. A neurociência moderna está começando a compreender por que: o estado "
-    "REM compartilha características de estados meditativos profundos e experiências com "
-    "substâncias psicodélicas, incluindo ativação das mesmas redes neurais e redução do "
-    "Default Mode Network. Seus marcadores genéticos neste relatório refletem sua "
-    "predisposição biológica para essa dimensão da experiência humana."
+    "At GeneHealth, we understand that the dream experience is a unique window into "
+    "consciousness. Cultures around the world have treated dreams as portals to the sacred "
+    "— from dream incubation in the temples of Asclepius in ancient Greece, to Siberian "
+    "shamanic traditions, to prophetic dreams in Candomble and Brazilian indigenous "
+    "traditions. Modern neuroscience is beginning to understand why: the REM state shares "
+    "characteristics of deep meditative states and psychedelic experiences, including "
+    "activation of the same neural networks and reduction of the Default Mode Network. "
+    "Your genetic markers in this report reflect your biological predisposition for this "
+    "dimension of the human experience."
 )
 
 DISCLAIMERS = {
     "general": (
-        "Este relatório é educativo e não constitui diagnóstico médico. "
-        "Genética é apenas um fator — higiene do sono, estresse, medicamentos "
-        "e ambiente têm impacto igual ou maior na qualidade do sono e dos sonhos. "
-        "Para distúrbios do sono, consulte um especialista em medicina do sono."
+        "This report is educational and does not constitute a medical diagnosis. "
+        "Genetics is only one factor — sleep hygiene, stress, medications, "
+        "and environment have an equal or greater impact on sleep and dream quality. "
+        "For sleep disorders, consult a sleep medicine specialist."
     ),
     "chronotype": (
-        "Cronótipo tem forte base genética (~50% herdabilidade) mas é moldável "
-        "por exposição à luz, horários sociais e rotina. Não use estes resultados "
-        "para justificar hábitos prejudiciais à saúde."
+        "Chronotype has a strong genetic basis (~50% heritability) but is malleable "
+        "through light exposure, social schedules, and routine. Do not use these results "
+        "to justify habits harmful to your health."
     ),
     "nocturnal": (
-        "Paralisia do sono e experiências hipnagógicas são fenômenos neurológicos benignos, "
-        "presentes em 20-40% da população. Se frequentes ou perturbadores, consulte um "
-        "especialista — tratamentos comportamentais simples são altamente eficazes."
+        "Sleep paralysis and hypnagogic experiences are benign neurological phenomena, "
+        "present in 20-40% of the population. If frequent or disturbing, consult a "
+        "specialist — simple behavioral treatments are highly effective."
     ),
 }
 
 
 # ---------------------------------------------------------------------------
-# FUNÇÕES AUXILIARES DE RELATÓRIO
+# REPORT HELPER FUNCTIONS
 # ---------------------------------------------------------------------------
 
 def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> str:
-    """Gera um sumário textual para uma categoria de traços."""
+    """Generates a text summary for a category of traits."""
     found = [t for t in traits if t.get("found", False)]
     if not found:
-        return "Nenhuma variante desta categoria encontrada no seu arquivo genômico."
+        return "No variants from this category were found in your genomic file."
 
     scores = [
         t["genotypeData"]["score"]
@@ -873,30 +866,30 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
         if t["genotypeData"].get("score") is not None
     ]
     if not scores:
-        return "Variantes encontradas, mas sem dados de interpretação suficientes."
+        return "Variants found, but insufficient interpretation data available."
 
     avg = sum(scores) / len(scores)
 
     summaries = {
         "dreamVividness": {
-            0.65: "Seu perfil genético sugere uma vida onírica naturalmente intensa e rica — sonhos vívidos, emocionalmente carregados e com boa memorabilidade são características prováveis.",
-            0.45: "Você tem um perfil onírico equilibrado — com potencial para sonhos vívidos em condições favoráveis, especialmente após dias emocionalmente intensos.",
-            0.0: "Seu perfil sugere uma abordagem mais serena à vida onírica — sonhos tendem a ser menos intrusivos, com recall moderado.",
+            0.65: "Your genetic profile suggests a naturally intense and rich dream life — vivid, emotionally charged dreams with good memorability are likely characteristics.",
+            0.45: "You have a balanced dream profile — with potential for vivid dreams under favorable conditions, especially after emotionally intense days.",
+            0.0: "Your profile suggests a more serene approach to dream life — dreams tend to be less intrusive, with moderate recall.",
         },
         "sleepArchitecture": {
-            0.65: "Sua arquitetura de sono tende para ciclos REM ricos e sono profundo intenso — você provavelmente precisa de horas adequadas para completar seus ciclos naturalmente mais longos.",
-            0.45: "Arquitetura de sono equilibrada com boa resposta à regularidade de horários.",
-            0.0: "Sono eficiente com acúmulo rápido de pressão — você pode funcionar bem com ciclos mais compactos.",
+            0.65: "Your sleep architecture tends toward rich REM cycles and intense deep sleep — you likely need adequate hours to complete your naturally longer cycles.",
+            0.45: "Balanced sleep architecture with good response to schedule regularity.",
+            0.0: "Efficient sleep with rapid pressure buildup — you can function well with more compact cycles.",
         },
         "chronotype": {
-            0.65: "Seu relógio biológico tem forte tendência vespertina (noturna) com base genética sólida.",
-            0.45: "Cronótipo intermediário — você se adapta a diferentes horários com relativa facilidade.",
-            0.0: "Forte predisposição ao cronótipo matutino — você provavelmente funciona melhor cedo.",
+            0.65: "Your biological clock has a strong evening (night owl) tendency with a solid genetic basis.",
+            0.45: "Intermediate chronotype — you adapt to different schedules with relative ease.",
+            0.0: "Strong predisposition to a morning chronotype — you likely function best early.",
         },
         "nocturnal": {
-            0.65: "Alta probabilidade de experiências de fronteira sono-vigília (hipnagogia, paralisia do sono, sonhos lúcidos espontâneos).",
-            0.45: "Propensão moderada a fenômenos noturnos — experiências de fronteira são possíveis em condições de privação ou estresse.",
-            0.0: "Perfil com transições sono-vigília tipicamente bem definidas.",
+            0.65: "High probability of sleep-wake boundary experiences (hypnagogia, sleep paralysis, spontaneous lucid dreams).",
+            0.45: "Moderate propensity for nocturnal phenomena — boundary experiences are possible under deprivation or stress conditions.",
+            0.0: "Profile with typically well-defined sleep-wake transitions.",
         },
     }
 
@@ -904,14 +897,14 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
     for threshold in sorted(cat_summaries.keys(), reverse=True):
         if avg >= threshold:
             return cat_summaries[threshold]
-    return "Perfil típico."
+    return "Typical profile."
 
 
 def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> str:
-    """Gera o rótulo de perfil geral."""
+    """Generates the overall profile label."""
     found = [t for t in traits if t.get("found", False)]
     if not found:
-        return "Dados insuficientes"
+        return "Insufficient data"
 
     scores = [
         t["genotypeData"]["score"]
@@ -919,30 +912,30 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
         if t["genotypeData"].get("score") is not None
     ]
     if not scores:
-        return "Perfil típico"
+        return "Typical profile"
 
     avg = sum(scores) / len(scores)
 
     profiles = {
         "dreamVividness": {
-            0.65: "Sonhador Intenso",
-            0.45: "Sonhador Equilibrado",
-            0.0: "Sonhador Sereno",
+            0.65: "Intense Dreamer",
+            0.45: "Balanced Dreamer",
+            0.0: "Serene Dreamer",
         },
         "sleepArchitecture": {
-            0.65: "Arquitetura REM Rica",
-            0.45: "Arquitetura Equilibrada",
-            0.0: "Sono Eficiente e Compacto",
+            0.65: "REM-Rich Architecture",
+            0.45: "Balanced Architecture",
+            0.0: "Efficient and Compact Sleep",
         },
         "chronotype": {
-            0.65: "Noturno Genético",
-            0.45: "Cronótipo Intermediário",
-            0.0: "Matutino Genético",
+            0.65: "Genetic Night Owl",
+            0.45: "Intermediate Chronotype",
+            0.0: "Genetic Early Bird",
         },
         "nocturnal": {
-            0.65: "Explorador da Fronteira",
-            0.45: "Sensibilidade Moderada",
-            0.0: "Fronteira Definida",
+            0.65: "Boundary Explorer",
+            0.45: "Moderate Sensitivity",
+            0.0: "Defined Boundary",
         },
     }
 
@@ -950,24 +943,24 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
     for threshold in sorted(cat_profiles.keys(), reverse=True):
         if avg >= threshold:
             return cat_profiles[threshold]
-    return "Típico"
+    return "Typical"
 
 
 # ---------------------------------------------------------------------------
-# FUNÇÃO PRINCIPAL DE ANÁLISE
+# MAIN ANALYSIS FUNCTION
 # ---------------------------------------------------------------------------
 
 def analyze_dream_sleep(
     variants: Dict[str, Tuple[str, str, str]]
 ) -> Dict[str, Any]:
     """
-    Executa a análise completa de Sonhos & Sono para as variantes do usuário.
+    Runs the full Dream & Sleep analysis for the user's variants.
 
     Args:
-        variants: Dict mapeando rsid -> (chromosome, position, genotype)
+        variants: Dict mapping rsid -> (chromosome, position, genotype)
 
     Returns:
-        Dict com resultados completos da análise
+        Dict with complete analysis results
     """
     dream_vividness = _analyze_snp_list(variants, DREAM_VIVIDNESS_SNPS)
     sleep_architecture = _analyze_snp_list(variants, SLEEP_ARCHITECTURE_SNPS)
@@ -984,13 +977,13 @@ def analyze_dream_sleep(
 
 def generate_dream_sleep_json(result: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Gera o JSON final para o relatório de Sonhos & Sono.
+    Generates the final JSON for the Dream & Sleep report.
 
     Args:
-        result: Output de analyze_dream_sleep()
+        result: Output from analyze_dream_sleep()
 
     Returns:
-        Dict compatível com o schema JSON do frontend GeneHealth
+        Dict compatible with the GeneHealth frontend JSON schema
     """
     dv = result["dream_vividness"]
     sa = result["sleep_architecture"]
@@ -1024,10 +1017,10 @@ def generate_dream_sleep_json(result: Dict[str, Any]) -> Dict[str, Any]:
         "disclaimers": DISCLAIMERS,
         "crossReferences": {
             "mindSpirit": (
-                "HTR2A (rs6311, rs6313) e BDNF (rs6265) também aparecem no relatório "
-                "Mente & Espírito. A mesma neurobiologia que amplifica a sensibilidade "
-                "espiritual na vigília se manifesta como vida onírica intensa no sono — "
-                "a consciência é um continuum."
+                "HTR2A (rs6311, rs6313) and BDNF (rs6265) also appear in the Mind & Spirit "
+                "report. The same neurobiology that amplifies spiritual sensitivity during "
+                "wakefulness manifests as an intense dream life during sleep — consciousness "
+                "is a continuum."
             ),
         },
     }
