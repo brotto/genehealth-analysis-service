@@ -45,6 +45,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Richard III",
         "dates": "1452-1485 AD",
         "title": "Last Plantagenet King of England",
+        "category": "royalty",
         "bio": (
             "Last Plantagenet king of England, killed at the Battle of Bosworth "
             "Field in 1485. His skeleton was discovered under a Leicester parking "
@@ -86,6 +87,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Nicholas II - Romanov Family",
         "dates": "1868-1918 AD",
         "title": "Last Tsar of Russia",
+        "category": "royalty",
         "bio": (
             "Last Tsar of Russia, executed with his family in 1918. DNA identification "
             "resolved decades of mystery about the Romanov fate."
@@ -123,6 +125,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Otzi the Iceman",
         "dates": "c. 3300 BC",
         "title": "Natural mummy from the Italian Alps - 5,300 years old",
+        "category": "ancient",
         "bio": (
             "The 5,300-year-old natural mummy found in the Italian Alps in 1991 - "
             "the oldest human with a fully published genome."
@@ -162,6 +165,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Ludwig van Beethoven",
         "dates": "1770-1827 AD",
         "title": "Composer - one of the greatest figures in Western music",
+        "category": "artist",
         "bio": (
             "One of the greatest composers in Western music history. His hair was "
             "sequenced in 2023, revealing surprising genetic secrets."
@@ -198,6 +202,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Napoleon Bonaparte",
         "dates": "1769-1821 AD",
         "title": "Emperor of France",
+        "category": "conqueror",
         "bio": (
             "Emperor of France who conquered most of Europe. His Y-DNA was inferred "
             "from living paternal relatives."
@@ -230,6 +235,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Ramesses III",
         "dates": "c. 1186-1155 BC",
         "title": "Pharaoh of Egypt (20th Dynasty, New Kingdom)",
+        "category": "ancient",
         "bio": (
             "Pharaoh of Egypt's 20th Dynasty who defended against the Sea Peoples "
             "invasion (~1178 BC)."
@@ -260,6 +266,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Cheddar Man",
         "dates": "c. 7150 BC",
         "title": "Mesolithic British hunter-gatherer (9,100 years old)",
+        "category": "ancient",
         "bio": (
             "Britain's oldest complete skeleton (9,100 years old). Had dark skin and "
             "blue eyes - rewrote our understanding of European appearance."
@@ -298,6 +305,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Loschbour Man",
         "dates": "c. 6000 BC",
         "title": "Mesolithic hunter-gatherer, Luxembourg",
+        "category": "ancient",
         "bio": (
             "A Mesolithic hunter-gatherer from Luxembourg (~8,000 years old). His "
             "genome defines the Western Hunter-Gatherer reference profile."
@@ -334,6 +342,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Mongol Imperial Clan (Genghis Khan lineage)",
         "dates": "c. 1162-1227 AD",
         "title": "Founder of the largest contiguous empire in history",
+        "category": "conqueror",
         "bio": (
             "Founder of the Mongol Empire, the largest contiguous empire in history. "
             "His tomb has never been found."
@@ -365,6 +374,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Johann Sebastian Bach",
         "dates": "1685-1750 AD",
         "title": "Composer - father of Western classical music",
+        "category": "artist",
         "bio": (
             "Father of Western classical music. His Y-DNA was inferred from living "
             "male Bach family members."
@@ -394,6 +404,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Tutankhamun and the 18th Egyptian Dynasty",
         "dates": "c. 1341-1323 BC",
         "title": "Pharaoh of Egypt - New Kingdom",
+        "category": "ancient",
         "bio": (
             "The boy king of Egypt's 18th Dynasty, famous for his intact tomb "
             "discovered by Howard Carter in 1922."
@@ -430,6 +441,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Nicolaus Copernicus",
         "dates": "1473-1543 AD",
         "title": "Astronomer - founder of the heliocentric model",
+        "category": "scientist",
         "bio": (
             "Polish astronomer who proposed the heliocentric model. His skeleton was "
             "identified by DNA from hair in his own book."
@@ -460,6 +472,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Marie Antoinette",
         "dates": "1755-1793 AD",
         "title": "Queen of France (Habsburg-Lorraine)",
+        "category": "royalty",
         "bio": (
             "Queen of France, executed during the French Revolution. DNA extracted "
             "from a hair locket preserved by her mother."
@@ -492,6 +505,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Rurikid Dynasty - Dmitry Alexandrovich",
         "dates": "9th-13th century AD",
         "title": "Founding dynasty of Russia (son of Alexander Nevsky)",
+        "category": "royalty",
         "bio": (
             "The founding dynasty of Russia, from Rurik (830 AD) through Alexander "
             "Nevsky to Ivan the Terrible."
@@ -523,6 +537,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Corvinus - Hunyadi Family",
         "dates": "15th century AD",
         "title": "John and Christopher Corvinus (sons of King Matthias Corvinus of Hungary)",
+        "category": "royalty",
         "bio": (
             "Hungary's most powerful medieval royal family. Sons of King Matthias "
             "Corvinus had their full genomes sequenced."
@@ -557,6 +572,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Birger Jarl",
         "dates": "c. 1210-1266 AD",
         "title": "Founder of Stockholm and regent of Sweden",
+        "category": "royalty",
         "bio": (
             "Founder of Stockholm (~1252 AD) and architect of Sweden as a feudal "
             "kingdom."
@@ -586,6 +602,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Hunnic Elite - Lineage Associated with Attila",
         "dates": "4th-5th century AD",
         "title": "Huns - conquerors from Central Asia to Western Europe",
+        "category": "conqueror",
         "bio": (
             "The Hunnic warrior elite who swept from Central Asia to Europe in the "
             "5th century AD."
@@ -615,6 +632,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Charlemagne (Carolingians)",
         "dates": "747-814 AD",
         "title": "Emperor of the Holy Roman Empire - unified Western Europe",
+        "category": "royalty",
         "bio": (
             "Emperor who united Western Europe under the Carolingian dynasty (~800 AD)."
         ),
@@ -647,6 +665,7 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
         "name": "Galilean Jewish Men - 1st century AD (historical context)",
         "dates": "c. 1-100 AD",
         "title": "Population reference - Galilee and Second Temple Judea",
+        "category": "historical",
         "bio": (
             "Population reference for 1st century AD Galilean Jewish men, based on "
             "ancient DNA from contemporary Levantine sites."
@@ -671,6 +690,464 @@ HISTORICAL_FIGURES: List[Dict[str, Any]] = [
             "Documented haplogroups: J1-P58 (~30-40%), J2a-M410 (~15-20%), E1b1b "
             "(~10-15%), T1a (~5-8%), G2a (~3-6%). No confirmed DNA exists from any "
             "specific historical figure of this period and region."
+        ),
+    },
+    # ── INFAMOUS ───────────────────────────────────────────────────────────────
+    {
+        "name": "Adolf Hitler",
+        "dates": "1889-1945 AD",
+        "title": "Dictator of Nazi Germany",
+        "category": "infamous",
+        "bio": (
+            "Leader of Nazi Germany responsible for the Holocaust and World War II. "
+            "His Y-DNA was determined from 39 patrilineal relatives in 2010."
+        ),
+        "origin": "Austrian (Braunau am Inn)",
+        "y_hg": "E1b1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("E1b1b1c", 4, "Close E1b1b branch (also shared by Napoleon)"),
+            ("E1b1b", 5, "Exact match - E1b1b (E-M35)"),
+            ("E1b1", 3, "E1b1 clade"),
+            ("E", 2, "Macrohaplogroup E"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "Mulders & Vermeeren 2010, Knack magazine (39 patrilineal relatives tested)",
+        "verified": False,
+        "story": (
+            "In 2010, journalist Jean-Paul Mulders and historian Marc Vermeeren collected "
+            "saliva samples from 39 patrilineal relatives of Hitler across Austria and the "
+            "United States. All carried Y-DNA haplogroup E1b1b (E-M35). Ironically, E1b1b "
+            "is most common in North Africa, the Horn of Africa, and among some Jewish "
+            "populations - contradicting Nazi racial ideology. However, Professor Michael "
+            "Hammer cautioned that no conclusions about Jewish ancestry can be drawn from "
+            "haplogroup alone, as E1b1b is widespread across many populations."
+        ),
+    },
+    {
+        "name": "Joseph Stalin",
+        "dates": "1878-1953 AD",
+        "title": "Dictator of the Soviet Union",
+        "category": "infamous",
+        "bio": (
+            "General Secretary of the Soviet Communist Party who ruled through terror. "
+            "Responsible for the deaths of millions through purges, gulags, and famine."
+        ),
+        "origin": "Georgian (Gori, Georgia)",
+        "y_hg": "G2a",
+        "mt_hg": None,
+        "y_matches": [
+            ("G2a2b", 4, "Close G2a branch (Otzi is also G2a2b)"),
+            ("G2a", 5, "Exact match - G2a (G-FGC595/Z6553)"),
+            ("G2", 4, "G2 clade"),
+            ("G", 3, "Macrohaplogroup G - Caucasus/European Neolithic"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "DNA test on grandson Alexander Burdonsky (son of Vasily Stalin)",
+        "verified": False,
+        "story": (
+            "Stalin's Y-DNA haplogroup G2a was determined through testing of his grandson "
+            "Alexander Burdonsky, son of Vasily Stalin. G2a1a (G-FGC595/Z6553) is found at "
+            "high frequencies in the Caucasus Mountains, consistent with Stalin's Georgian "
+            "heritage. The Jughashvili family originated from the village of Didi Lilo near "
+            "Tbilisi. G2a is also the haplogroup of Otzi the Iceman and Richard III - "
+            "connecting a 20th-century dictator to a 5,300-year-old mummy and a medieval king "
+            "through deep patrilineal ancestry."
+        ),
+    },
+    # ── ROYALTY (EXPANDED) ─────────────────────────────────────────────────────
+    {
+        "name": "House of Habsburg",
+        "dates": "13th-20th century AD",
+        "title": "Europe's most powerful dynasty for 600 years",
+        "category": "royalty",
+        "bio": (
+            "The Habsburg dynasty ruled the Holy Roman Empire, Spain, Austria, and much of "
+            "Europe for over six centuries. Known for strategic marriages and genetic effects "
+            "of consanguinity."
+        ),
+        "origin": "Swiss-Austrian (Habsburg Castle, Aargau, Switzerland)",
+        "y_hg": "R1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1b-U152", 5, "Exact match - R1b-U152 (L2+ branch, Habsburg signature)"),
+            ("R1b-P312", 4, "R1b-P312 clade"),
+            ("R1b-L11", 3, "R1b-L11 branch"),
+            ("R1b", 3, "Macrohaplogroup R1b"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "FamilyTreeDNA Habsburg Family Project (20 documented members tested)",
+        "verified": False,
+        "story": (
+            "The Habsburg Y-DNA was determined through the FamilyTreeDNA Habsburg Family "
+            "Project, where 20 living members with documented Habsburg surname all share "
+            "R1b-U152 (L2+ branch). This subclade is consistent with the family's origin in "
+            "northern Switzerland, a known hotspot for U152. The Habsburgs are infamous for "
+            "extensive inbreeding - Charles II of Spain (1661-1700) had an inbreeding "
+            "coefficient higher than a child of siblings, contributing to the dynasty's "
+            "eventual biological decline."
+        ),
+    },
+    {
+        "name": "House of Bourbon - Louis XVI",
+        "dates": "16th-21st century AD",
+        "title": "Royal house of France, Spain, and Luxembourg",
+        "category": "royalty",
+        "bio": (
+            "The Bourbon dynasty ruled France from Henry IV to Louis XVI, and continues "
+            "in Spain today. Their Y-DNA was confirmed from three living descendants."
+        ),
+        "origin": "French (House of Capet branch)",
+        "y_hg": "R1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1b-U152", 3, "Distinct R1b branches"),
+            ("R1b-P312", 3, "Distinct R1b branches"),
+            ("R1b-L11", 3, "R1b-L11 branch"),
+            ("R1b", 4, "Same macrohaplogroup R1b (R-Z381* subclade)"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 5,
+        "evidence_mt": 0,
+        "source": "Larmuseau et al. 2014, European Journal of Human Genetics",
+        "verified": True,
+        "story": (
+            "A 2014 peer-reviewed study by Larmuseau et al. tested three living male-line "
+            "Bourbon descendants and confirmed Y-DNA R1b (R-Z381*). Importantly, this "
+            "contradicted a previous claim that a blood-stained handkerchief from Louis XVI's "
+            "execution carried haplogroup G2a - proving the relic was likely inauthentic. The "
+            "Bourbons descend from the House of Capet, making their Y-DNA the confirmed "
+            "patrilineal signature of the French royal house from Hugh Capet (987 AD) onward."
+        ),
+    },
+    {
+        "name": "Queen Victoria",
+        "dates": "1819-1901 AD",
+        "title": "Queen of the United Kingdom and Empress of India",
+        "category": "royalty",
+        "bio": (
+            "Queen Victoria reigned for 63 years and became the 'grandmother of Europe' "
+            "through her descendants' marriages into royal houses across the continent."
+        ),
+        "origin": "British-German (House of Hanover)",
+        "y_hg": None,
+        "mt_hg": "H",
+        "y_matches": [],
+        "mt_matches": [
+            ("H27", 3, "Close H branch (Copernicus is also H)"),
+            ("H17", 3, "Close H branch (Beethoven is H17)"),
+            ("H1", 3, "Close H branch"),
+            ("H", 5, "Exact match - Haplogroup H (confirmed via Prince Philip of Edinburgh)"),
+            ("HV", 3, "HV ancestor"),
+        ],
+        "evidence_y": 0,
+        "evidence_mt": 5,
+        "source": "Confirmed via Prince Philip matching Romanov remains (Gill et al. 1994)",
+        "verified": True,
+        "story": (
+            "Queen Victoria's mtDNA haplogroup H was confirmed through a remarkable chain of "
+            "evidence: Prince Philip, Duke of Edinburgh, shared Victoria's maternal lineage "
+            "(both descend from Princess Alice of the UK through the female line). When Prince "
+            "Philip's mtDNA was used to identify the Romanov remains in 1994, it also "
+            "confirmed the mtDNA lineage of Victoria herself. Victoria's maternal line "
+            "connects to virtually every surviving European royal house."
+        ),
+    },
+    # ── SCIENTISTS ─────────────────────────────────────────────────────────────
+    {
+        "name": "Charles Darwin",
+        "dates": "1809-1882 AD",
+        "title": "Naturalist - author of On the Origin of Species",
+        "category": "scientist",
+        "bio": (
+            "Father of the theory of evolution by natural selection. His great-great-grandson "
+            "was DNA tested to determine the Darwin patrilineal haplogroup."
+        ),
+        "origin": "English (Shrewsbury, Shropshire)",
+        "y_hg": "R1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1b-U152", 3, "Distinct R1b branches"),
+            ("R1b-P312", 3, "Distinct R1b branches"),
+            ("R1b-L11", 3, "R1b-L11 branch"),
+            ("R1b", 4, "Same macrohaplogroup R1b"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "Great-great-grandson DNA tested via FamilyTreeDNA",
+        "verified": False,
+        "story": (
+            "Darwin's Y-DNA R1b was determined by testing a great-great-grandson through the "
+            "paternal line. R1b is the most common Y-DNA haplogroup in Western Europe (~60-70% "
+            "of men in the British Isles), consistent with the Darwin family's deep English "
+            "roots in Shropshire. Ironically, the man who revolutionized our understanding of "
+            "heredity and descent carries the most common Western European patrilineal lineage "
+            "- a haplogroup that expanded massively during the Bronze Age with Indo-European "
+            "migrations ~4,500 years ago."
+        ),
+    },
+    {
+        "name": "Nikola Tesla",
+        "dates": "1856-1943 AD",
+        "title": "Inventor and electrical engineer",
+        "category": "scientist",
+        "bio": (
+            "Serbian-American inventor who pioneered alternating current (AC) electrical "
+            "systems, the Tesla coil, and wireless energy transmission."
+        ),
+        "origin": "Serbian (Smiljan, Austrian Empire - modern Croatia)",
+        "y_hg": "R1a",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1a", 5, "Exact match - R1a (Slavic/Indo-European signature)"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 3,
+        "evidence_mt": 0,
+        "source": "Serbian DNA Project (relative/descendant testing)",
+        "verified": False,
+        "story": (
+            "Tesla's Y-DNA R1a-M458 (L1029 subclade) was determined through the Serbian DNA "
+            "Project via relative testing. R1a is the most common haplogroup among Slavic "
+            "peoples (~40-50% in Serbia, Poland, Russia) and traces back to Indo-European "
+            "migrations from the Pontic Steppe ~5,000 years ago. Tesla's R1a-M458 subclade "
+            "is specifically associated with West Slavic populations and is one of the "
+            "largest Slavic-specific branches of R1a."
+        ),
+    },
+    # ── POLITICAL LEADERS ──────────────────────────────────────────────────────
+    {
+        "name": "Abraham Lincoln",
+        "dates": "1809-1865 AD",
+        "title": "16th President of the United States",
+        "category": "political",
+        "bio": (
+            "President who preserved the Union during the American Civil War and abolished "
+            "slavery. His haplogroup was determined through multiple paternal descendants."
+        ),
+        "origin": "American (English ancestry, Kentucky)",
+        "y_hg": "R1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1b-U152", 5, "Exact match - R1b-U152 (Lincoln lineage confirmed)"),
+            ("R1b-P312", 4, "R1b-P312 clade"),
+            ("R1b-L11", 3, "R1b-L11 branch"),
+            ("R1b", 3, "Macrohaplogroup R1b"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "Lincoln DNA Project at FamilyTreeDNA (multiple descendants of Samuel 'the weaver' Lincoln)",
+        "verified": False,
+        "story": (
+            "Lincoln's Y-DNA was determined through the Lincoln DNA Project at FamilyTreeDNA, "
+            "where multiple paternal descendants of Samuel 'the weaver' Lincoln (Abraham's "
+            "earliest documented ancestor, who emigrated from Norfolk, England to Massachusetts "
+            "in 1637) were tested. Result: R1b-U152 (R1b-S20376, within U152>L2>Z142>Z150). "
+            "Remarkably, this places Lincoln in the same R1b-U152 branch as the Habsburg "
+            "dynasty and possibly George Washington - a ~4,500-year-old lineage connecting "
+            "an American president to European royal houses."
+        ),
+    },
+    {
+        "name": "Thomas Jefferson",
+        "dates": "1743-1826 AD",
+        "title": "3rd President of the United States",
+        "category": "political",
+        "bio": (
+            "Principal author of the Declaration of Independence. DNA testing of his "
+            "descendants famously confirmed the Sally Hemings paternity controversy."
+        ),
+        "origin": "American (Welsh/English ancestry, Virginia)",
+        "y_hg": "T",
+        "mt_hg": None,
+        "y_matches": [],
+        "mt_matches": [],
+        "evidence_y": 5,
+        "evidence_mt": 0,
+        "source": "Foster et al. 1998, Nature",
+        "verified": True,
+        "story": (
+            "Jefferson's Y-DNA haplogroup T (T-M184, formerly K2) was determined through "
+            "direct male-line descendant testing, published in Nature in 1998. This landmark "
+            "study also confirmed that Jefferson fathered children with Sally Hemings, an "
+            "enslaved woman. Haplogroup T is extremely rare in Europe (<1% of men), making "
+            "it a powerful forensic identifier. The same rare haplogroup was found in both "
+            "the Jefferson and Hemings descendants, with odds of a coincidental match "
+            "effectively zero. NOTE: Your DNA chip may not detect haplogroup T markers, "
+            "so this connection may not appear even if you carry haplogroup T."
+        ),
+    },
+    # ── WARRIORS & CULTURAL FIGURES ────────────────────────────────────────────
+    {
+        "name": "Somerled - King of the Isles",
+        "dates": "c. 1100-1164 AD",
+        "title": "Norse-Gaelic King of the Hebrides and Argyll",
+        "category": "conqueror",
+        "bio": (
+            "Norse-Gaelic leader who drove the Vikings from western Scotland and founded "
+            "Clan Donald (MacDonald), the most powerful Highland clan."
+        ),
+        "origin": "Norse-Gaelic (Scotland/Hebrides)",
+        "y_hg": "R1a",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1a", 5, "Exact match - R1a (Norse-Gaelic warrior lineage)"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 3,
+        "evidence_mt": 0,
+        "source": "Oxford University 2003; Bryan Sykes 2005",
+        "verified": False,
+        "story": (
+            "Somerled is the progenitor of Clan Donald (MacDonald, MacDougall, MacAlister) - "
+            "the most powerful clan in Scottish history. His Y-DNA R1a1 was determined by "
+            "testing clan descendants, estimated at ~500,000 living men today. R1a is unusual "
+            "for a 'Celtic' leader, suggesting Norse paternal ancestry - consistent with his "
+            "Norse-Gaelic (Gall-Ghaidheal) heritage. Somerled expelled the Vikings from the "
+            "Hebrides around 1156 and established a maritime kingdom that lasted centuries."
+        ),
+    },
+    {
+        "name": "Niall of the Nine Hostages",
+        "dates": "c. 400 AD",
+        "title": "Legendary High King of Ireland",
+        "category": "conqueror",
+        "bio": (
+            "Semi-legendary Irish High King whose descendants became the most powerful "
+            "dynasty in Ireland for a millennium."
+        ),
+        "origin": "Irish (Connacht/Tara)",
+        "y_hg": "R1b",
+        "mt_hg": None,
+        "y_matches": [
+            ("R1b-U152", 3, "Distinct R1b branches"),
+            ("R1b-P312", 4, "R1b-P312 clade (Niall is within P312)"),
+            ("R1b-L11", 3, "R1b-L11 branch"),
+            ("R1b", 3, "Macrohaplogroup R1b"),
+            ("R1", 2, "R1 superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 3,
+        "evidence_mt": 0,
+        "source": "Moore et al. 2006, Trinity College Dublin (population study)",
+        "verified": False,
+        "story": (
+            "A 2006 study from Trinity College Dublin found that R1b-M222 occurs at very "
+            "high frequency (~21%) in northwest Ireland, with a common ancestor estimated "
+            "at ~1,700 years ago - consistent with Niall's era. The association with Niall "
+            "specifically is genealogical inference (Ui Neill dynasty), not confirmed ancient "
+            "DNA. Today, an estimated 2-3 million men worldwide carry the M222 marker. "
+            "NOTE: Consumer DNA chips typically cannot resolve R1b-M222 specifically, so "
+            "this match is at the broader R1b level."
+        ),
+    },
+    {
+        "name": "Martin Luther",
+        "dates": "1483-1546 AD",
+        "title": "Theologian who sparked the Protestant Reformation",
+        "category": "religious",
+        "bio": (
+            "German theologian whose Ninety-Five Theses (1517) triggered the Protestant "
+            "Reformation, fundamentally reshaping Christianity and European history."
+        ),
+        "origin": "German (Eisleben, Saxony)",
+        "y_hg": "I2a",
+        "mt_hg": None,
+        "y_matches": [
+            ("I2a", 5, "Exact match - I2a (European Paleolithic hunter lineage)"),
+            ("I2", 4, "I2 clade"),
+            ("I", 3, "Macrohaplogroup I - European Paleolithic"),
+            ("IJ", 2, "IJ superlineage"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 3,
+        "evidence_mt": 0,
+        "source": "Tested relatives via genealogical DNA projects",
+        "verified": False,
+        "story": (
+            "Luther's Y-DNA I2a was determined through tested relatives with documented "
+            "paternal lineage to the Luther family. I2a is one of Europe's oldest "
+            "haplogroups, carried by Paleolithic hunter-gatherers including Cheddar Man "
+            "(9,100 years old). Its presence in Luther connects the Protestant reformer "
+            "to the oldest surviving male lineage in Europe - a lineage that was largely "
+            "replaced by Neolithic farmers and Bronze Age steppe migrants but persists "
+            "today at ~15-20% in central and southeastern Europe."
+        ),
+    },
+    {
+        "name": "Jesse James",
+        "dates": "1847-1882 AD",
+        "title": "American outlaw and bank robber",
+        "category": "infamous",
+        "bio": (
+            "America's most famous outlaw. His identity was confirmed by DNA extracted "
+            "from his exhumed remains in 1995."
+        ),
+        "origin": "American (Missouri, Scots-Irish ancestry)",
+        "y_hg": None,
+        "mt_hg": "T",
+        "y_matches": [],
+        "mt_matches": [
+            ("T2", 4, "Close T branch (T2 is shared by the Romanovs)"),
+            ("T", 5, "Exact match - mtDNA T (confirmed from direct remains)"),
+            ("JT", 3, "JT ancestor"),
+        ],
+        "evidence_y": 0,
+        "evidence_mt": 5,
+        "source": "Stone et al. 2001, Journal of Forensic Sciences (teeth from 1995 exhumation)",
+        "verified": True,
+        "story": (
+            "Jesse James' mtDNA was extracted from teeth recovered during the 1995 exhumation "
+            "of his grave. The profile (T: 16126C, 16274A, 16294T, 16296T, 16304C) matched "
+            "living maternal descendants of Jesse's sister Susan, confirming the remains were "
+            "indeed James - debunking persistent conspiracy theories that he had faked his "
+            "death. This was one of the first uses of ancient DNA to resolve a historical "
+            "identity dispute in the United States."
+        ),
+    },
+    {
+        "name": "Fath Ali Shah Qajar",
+        "dates": "1772-1834 AD",
+        "title": "Shah of Persia (Qajar Dynasty)",
+        "category": "royalty",
+        "bio": (
+            "Second ruler of the Qajar dynasty of Iran, known for his exceptionally long "
+            "beard and hundreds of children."
+        ),
+        "origin": "Persian-Turkic (Tehran, Iran)",
+        "y_hg": "J1",
+        "mt_hg": None,
+        "y_matches": [
+            ("J1", 5, "Exact match - J1 (J-M267, Qajar dynasty lineage)"),
+            ("J", 3, "Macrohaplogroup J - Semitic/Middle Eastern"),
+        ],
+        "mt_matches": [],
+        "evidence_y": 4,
+        "evidence_mt": 0,
+        "source": "Descendant testing of multiple lineages from Fath Ali Shah's sons",
+        "verified": False,
+        "story": (
+            "Fath Ali Shah's Y-DNA J1 (J-M267) was determined through testing descendants "
+            "from multiple sons' lineages. Fath Ali Shah reportedly fathered over 100 sons "
+            "and is believed to have approximately 5,000 descendants alive today. J1 is the "
+            "most common haplogroup in the Arabian Peninsula and Levant (~40-70% of men in "
+            "some regions). Its presence in the Turkic Qajar dynasty reflects the deep "
+            "genetic connections between Persian, Turkic, and Semitic populations in the "
+            "Middle East."
         ),
     },
 ]
@@ -1126,6 +1603,7 @@ def _build_connection_json(conn: Dict[str, Any], line_type: str, user_hg: Option
         "name": fig["name"],
         "dates": fig["dates"],
         "title": fig["title"],
+        "category": fig.get("category", "historical"),
         "bio": fig["bio"],
         "origin": fig["origin"],
         "haplogroup": fig["y_hg"] if line_type == "Y" else fig["mt_hg"],
@@ -1236,7 +1714,7 @@ def generate_historical_connections_json(result: Dict[str, Any]) -> Dict[str, An
 
     return {
         "reportType": "historical_connections",
-        "version": "1.0",
+        "version": "2.0",
         "summary": {
             "userYHaplogroup": user_y_hg,
             "userMtHaplogroup": user_mt_hg,
