@@ -26,6 +26,7 @@ from .immune_microbiome_analyzer import analyze_immune_microbiome, generate_immu
 from .historical_connections_analyzer import analyze_historical_connections, generate_historical_connections_json
 from .mind_spirit_analyzer import analyze_mind_spirit, generate_mind_spirit_json
 from .dream_sleep_analyzer import analyze_dream_sleep, generate_dream_sleep_json
+from .precision_medicine_analyzer import analyze_precision_medicine, generate_precision_medicine_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -332,6 +333,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Dream & Sleep: {dv_count} dream vividness, {sa_count} sleep architecture, {ch_count} chronotype, {np_count} nocturnal phenomena SNPs found")
     except Exception as e:
         print(f"Dream & Sleep analysis failed: {e}")
+
+    # Run precision medicine / pharmacogenomics analysis
+    print("Starting precision medicine analysis...")
+    try:
+        pm_result = analyze_precision_medicine(variants)
+        reports["precision_medicine"] = json.dumps(pm_result)
+        genes_found = len([e for e in pm_result.get('enzyme_panel', []) if e.get('variants_found')])
+        alerts = pm_result.get('summary', {}).get('high_risk_alerts', 0)
+        drugs = pm_result.get('summary', {}).get('total_drugs_assessed', 0)
+        print(f"Precision Medicine: {genes_found} genes with variants, {drugs} drugs assessed, {alerts} critical alerts")
+    except Exception as e:
+        print(f"Precision Medicine analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
