@@ -1301,25 +1301,205 @@ RSID_MT_MARKERS: Dict[str, Tuple[str, str]] = {
 
 
 # ---------------------------------------------------------------------------
+# AUTOSOMAL mtDNA HAPLOGROUP INFERENCE
+# ---------------------------------------------------------------------------
+# When the DNA provider does not export mitochondrial data (e.g. MyHeritage),
+# we use ancestry-informative autosomal markers (AIMs) to estimate the user's
+# biogeographic ancestry, then assign the most probable mtDNA haplogroup based
+# on known population haplogroup frequency distributions.
+#
+# This is an INDIRECT inference — it estimates what haplogroup is most likely
+# given the user's overall genetic ancestry, NOT a direct mtDNA reading.
+#
+# Sources:
+#   - Kosoy et al. 2009, PLoS ONE: European ancestry AIMs
+#   - Phillips et al. 2007, Forensic Sci Int Genet: 34-SNP ancestry panel
+#   - Richards et al. 2000, AJHG: European mtDNA haplogroup frequencies
+#   - Achilli et al. 2004, Science: European mtDNA distribution
+
+# Ancestry-informative markers for population classification
+# Each entry: rsid → list of (genotype, population_scores)
+# population_scores: {"western_european": float, "eastern_european": float,
+#                     "mediterranean": float, "near_eastern": float,
+#                     "african": float, "east_asian": float}
+AUTOSOMAL_AIMS: Dict[str, List[Tuple[str, Dict[str, float]]]] = {
+    # Lactase persistence — strong European signal
+    "rs4988235": [
+        ("AA", {"western_european": 0.8, "eastern_european": 0.5, "mediterranean": 0.3, "near_eastern": 0.2, "african": 0.05, "east_asian": 0.01}),
+        ("AG", {"western_european": 0.6, "eastern_european": 0.4, "mediterranean": 0.4, "near_eastern": 0.3, "african": 0.1, "east_asian": 0.05}),
+        ("GG", {"western_european": 0.1, "eastern_european": 0.2, "mediterranean": 0.4, "near_eastern": 0.5, "african": 0.8, "east_asian": 0.9}),
+    ],
+    # SLC24A5 — European skin lightening
+    "rs1426654": [
+        ("AA", {"western_european": 0.95, "eastern_european": 0.9, "mediterranean": 0.85, "near_eastern": 0.7, "african": 0.02, "east_asian": 0.3}),
+        ("AG", {"western_european": 0.3, "eastern_european": 0.2, "mediterranean": 0.4, "near_eastern": 0.5, "african": 0.3, "east_asian": 0.4}),
+        ("GG", {"western_european": 0.01, "eastern_european": 0.02, "mediterranean": 0.05, "near_eastern": 0.15, "african": 0.95, "east_asian": 0.5}),
+    ],
+    # SLC45A2 — European pigmentation
+    "rs16891982": [
+        ("GG", {"western_european": 0.9, "eastern_european": 0.8, "mediterranean": 0.7, "near_eastern": 0.3, "african": 0.01, "east_asian": 0.01}),
+        ("CG", {"western_european": 0.3, "eastern_european": 0.3, "mediterranean": 0.5, "near_eastern": 0.5, "african": 0.1, "east_asian": 0.1}),
+        ("CC", {"western_european": 0.02, "eastern_european": 0.05, "mediterranean": 0.1, "near_eastern": 0.5, "african": 0.95, "east_asian": 0.95}),
+    ],
+    # HERC2/OCA2 — eye color
+    "rs12913832": [
+        ("GG", {"western_european": 0.7, "eastern_european": 0.6, "mediterranean": 0.2, "near_eastern": 0.1, "african": 0.01, "east_asian": 0.01}),
+        ("AG", {"western_european": 0.5, "eastern_european": 0.4, "mediterranean": 0.4, "near_eastern": 0.2, "african": 0.05, "east_asian": 0.05}),
+        ("AA", {"western_european": 0.1, "eastern_european": 0.15, "mediterranean": 0.6, "near_eastern": 0.7, "african": 0.95, "east_asian": 0.95}),
+    ],
+    # EDAR — East Asian hair thickness
+    "rs3827760": [
+        ("AA", {"western_european": 0.95, "eastern_european": 0.9, "mediterranean": 0.95, "near_eastern": 0.95, "african": 0.95, "east_asian": 0.05}),
+        ("AG", {"western_european": 0.1, "eastern_european": 0.1, "mediterranean": 0.1, "near_eastern": 0.1, "african": 0.1, "east_asian": 0.3}),
+        ("GG", {"western_european": 0.01, "eastern_european": 0.01, "mediterranean": 0.01, "near_eastern": 0.01, "african": 0.01, "east_asian": 0.9}),
+    ],
+    # Duffy null — African malaria resistance
+    "rs2814778": [
+        ("TT", {"western_european": 0.01, "eastern_european": 0.01, "mediterranean": 0.02, "near_eastern": 0.02, "african": 0.95, "east_asian": 0.01}),
+        ("CT", {"western_european": 0.05, "eastern_european": 0.02, "mediterranean": 0.1, "near_eastern": 0.1, "african": 0.3, "east_asian": 0.05}),
+        ("CC", {"western_european": 0.95, "eastern_european": 0.95, "mediterranean": 0.85, "near_eastern": 0.85, "african": 0.05, "east_asian": 0.95}),
+    ],
+    # IRF4 — pigmentation (European-specific)
+    "rs12203592": [
+        ("TT", {"western_european": 0.5, "eastern_european": 0.3, "mediterranean": 0.15, "near_eastern": 0.05, "african": 0.01, "east_asian": 0.01}),
+        ("CT", {"western_european": 0.4, "eastern_european": 0.3, "mediterranean": 0.3, "near_eastern": 0.15, "african": 0.05, "east_asian": 0.05}),
+        ("CC", {"western_european": 0.2, "eastern_european": 0.4, "mediterranean": 0.6, "near_eastern": 0.8, "african": 0.95, "east_asian": 0.95}),
+    ],
+}
+
+# Population-level mtDNA haplogroup frequency distributions
+# Based on Richards et al. 2000, Achilli et al. 2004, and subsequent surveys
+# Format: population → [(haplogroup, frequency), ...] sorted by frequency desc
+POPULATION_MT_FREQUENCIES: Dict[str, List[Tuple[str, float]]] = {
+    "western_european": [
+        ("H",  0.44), ("U5", 0.09), ("T",  0.09), ("J",  0.08),
+        ("K",  0.06), ("V",  0.05), ("U4", 0.03), ("W",  0.02),
+        ("I",  0.02), ("X",  0.01), ("HV", 0.01),
+    ],
+    "eastern_european": [
+        ("H",  0.40), ("U5", 0.12), ("T",  0.10), ("J",  0.07),
+        ("K",  0.05), ("U4", 0.05), ("W",  0.03), ("V",  0.02),
+        ("I",  0.02), ("X",  0.01), ("HV", 0.01),
+    ],
+    "mediterranean": [
+        ("H",  0.35), ("T",  0.12), ("J",  0.10), ("K",  0.08),
+        ("U5", 0.06), ("HV", 0.04), ("V",  0.03), ("U4", 0.02),
+        ("W",  0.02), ("L",  0.03), ("X",  0.01),
+    ],
+    "near_eastern": [
+        ("H",  0.15), ("J",  0.20), ("T",  0.15), ("K",  0.10),
+        ("HV", 0.08), ("U",  0.06), ("W",  0.04), ("X",  0.03),
+        ("L",  0.03), ("U5", 0.02), ("V",  0.01),
+    ],
+    "african": [
+        ("L",  0.90), ("U",  0.03), ("H",  0.02), ("J",  0.01),
+        ("T",  0.01), ("K",  0.01),
+    ],
+    "east_asian": [
+        ("M",  0.60), ("N*", 0.15), ("R*", 0.10), ("H",  0.02),
+        ("K",  0.02), ("J",  0.01),
+    ],
+}
+
+
+def _infer_mt_haplogroup_from_autosomal(
+    variants: Dict[str, Tuple[str, str, str]],
+) -> Optional[Tuple[str, float, str]]:
+    """
+    Infer the most probable mtDNA haplogroup from autosomal ancestry markers.
+
+    Returns:
+        Tuple of (haplogroup, confidence_score, dominant_population) or None
+        confidence_score: 0.0-1.0 indicating how confident the inference is
+    """
+    # Score each population based on autosomal markers
+    pop_scores: Dict[str, float] = {
+        "western_european": 0.0, "eastern_european": 0.0,
+        "mediterranean": 0.0, "near_eastern": 0.0,
+        "african": 0.0, "east_asian": 0.0,
+    }
+    markers_found = 0
+
+    for rsid, genotype_scores in AUTOSOMAL_AIMS.items():
+        rsid_lower = rsid.lower()
+        if rsid_lower not in variants:
+            continue
+        _chrom, _pos, gt = variants[rsid_lower]
+        gt_clean = gt.strip().upper().replace("-", "")
+        if not gt_clean:
+            continue
+
+        # Sort alleles for consistent matching (e.g. "GA" → "AG")
+        gt_sorted = "".join(sorted(gt_clean))
+
+        for genotype, scores in genotype_scores:
+            gt_ref_sorted = "".join(sorted(genotype))
+            if gt_sorted == gt_ref_sorted:
+                markers_found += 1
+                for pop, score in scores.items():
+                    pop_scores[pop] += score
+                break
+
+    if markers_found < 3:
+        return None  # Not enough markers for reliable inference
+
+    # Normalize scores
+    total = sum(pop_scores.values())
+    if total == 0:
+        return None
+
+    pop_weights: Dict[str, float] = {k: v / total for k, v in pop_scores.items()}
+
+    # Calculate weighted haplogroup probabilities
+    hg_probs: Dict[str, float] = {}
+    for pop, weight in pop_weights.items():
+        if pop not in POPULATION_MT_FREQUENCIES:
+            continue
+        for hg, freq in POPULATION_MT_FREQUENCIES[pop]:
+            hg_probs[hg] = hg_probs.get(hg, 0.0) + weight * freq
+
+    if not hg_probs:
+        return None
+
+    # Sort by probability
+    sorted_hgs = sorted(hg_probs.items(), key=lambda x: -x[1])
+    best_hg, best_prob = sorted_hgs[0]
+
+    # Determine dominant population
+    dominant_pop = max(pop_weights, key=pop_weights.get)  # type: ignore
+    dominant_pop_label = dominant_pop.replace("_", " ").title()
+
+    # Confidence: higher when one haplogroup is clearly dominant and we have many markers
+    marker_confidence = min(1.0, markers_found / 5.0)  # max confidence at 5+ markers
+    separation = best_prob - (sorted_hgs[1][1] if len(sorted_hgs) > 1 else 0)
+    confidence = min(1.0, marker_confidence * (0.5 + separation))
+
+    return best_hg, confidence, dominant_pop_label
+
+
+# ---------------------------------------------------------------------------
 # SEX DETECTION
 # ---------------------------------------------------------------------------
 
 def _detect_is_male(variants: Dict[str, Tuple[str, str, str]]) -> bool:
-    """Detect if the user is male by checking for Y chromosome markers."""
+    """Detect if the user is male by checking for Y chromosome markers with real calls.
+
+    MyHeritage exports Y chromosome positions for ALL users (male and female),
+    but females have genotype '--' (no call) on male-specific Y markers.
+    However, many Y-mapped SNPs in the file are pseudo-autosomal or cross-mapped
+    and show actual calls even for females.
+
+    Strategy: ONLY check the curated Y_MARKERS_ORDERED list (ISOGG haplogroup-defining
+    SNPs) which are guaranteed to be in the male-specific region (MSY). If ANY of
+    these has a real genotype call (not '--'), the user is male.
+    """
     for rsid, derived, clade, spec in Y_MARKERS_ORDERED:
         rsid_lower = rsid.lower()
         if rsid_lower in variants:
             chrom, pos, gt = variants[rsid_lower]
-            # If the chromosome is Y or the genotype is not empty/null
-            if chrom.upper() in ("Y", "24"):
+            gt_clean = gt.strip().replace("-", "")
+            if gt_clean:
                 return True
-            # If we find a derived allele on a Y marker, user is male
-            if derived in gt.upper():
-                return True
-    # Also check if any variant is on chromosome Y
-    for rsid, (chrom, pos, gt) in variants.items():
-        if chrom.upper() in ("Y", "24"):
-            return True
     return False
 
 
@@ -1351,8 +1531,12 @@ def _detect_y_haplogroup(
 
 def _detect_mt_haplogroup(
     variants: Dict[str, Tuple[str, str, str]],
-) -> Optional[str]:
-    """Returns best mtDNA haplogroup string."""
+) -> Tuple[Optional[str], str, Optional[float]]:
+    """Returns (haplogroup, method, confidence).
+
+    method: "direct" (from MT markers) or "inferred" (from autosomal AIMs)
+    confidence: None for direct, 0.0-1.0 for inferred
+    """
     signals: set = set()
 
     # Build position lookup for mitochondrial chromosome
@@ -1379,12 +1563,21 @@ def _detect_mt_haplogroup(
             if allele in gt.upper():
                 signals.add(marker)
 
-    # Decision tree
+    # Decision tree — direct detection
     for required, hg, label in MT_DECISION_TREE:
         if required.issubset(signals):
-            return hg
+            return hg, "direct", None
 
-    return None if not signals else "R*"
+    if signals:
+        return "R*", "direct", None
+
+    # No MT data found — try autosomal inference as fallback
+    inference = _infer_mt_haplogroup_from_autosomal(variants)
+    if inference:
+        hg, confidence, _pop = inference
+        return hg, "inferred", confidence
+
+    return None, "none", None
 
 
 # ---------------------------------------------------------------------------
@@ -1520,7 +1713,7 @@ def analyze_historical_connections(
 
     # Detect haplogroups
     user_y_hg = _detect_y_haplogroup(variants, is_male)
-    user_mt_hg = _detect_mt_haplogroup(variants)
+    user_mt_hg, mt_method, mt_confidence = _detect_mt_haplogroup(variants)
 
     # Y-DNA connections
     y_connections: List[Dict[str, Any]] = []
@@ -1568,10 +1761,20 @@ def analyze_historical_connections(
         if len(top_connections) >= 5:
             break
 
+    # Get autosomal inference details for display
+    mt_inferred_pop = None
+    if mt_method == "inferred":
+        inference = _infer_mt_haplogroup_from_autosomal(variants)
+        if inference:
+            _, _, mt_inferred_pop = inference
+
     return {
         "is_male": is_male,
         "user_y_hg": user_y_hg,
         "user_mt_hg": user_mt_hg,
+        "mt_method": mt_method,  # "direct", "inferred", or "none"
+        "mt_confidence": mt_confidence,  # None for direct, 0.0-1.0 for inferred
+        "mt_inferred_population": mt_inferred_pop,  # e.g. "Western European"
         "y_connections": y_connections,
         "mt_connections": mt_connections,
         "otzi_results": otzi_results,
@@ -1631,6 +1834,9 @@ def generate_historical_connections_json(result: Dict[str, Any]) -> Dict[str, An
     user_y_hg = result["user_y_hg"]
     user_mt_hg = result["user_mt_hg"]
     is_male = result["is_male"]
+    mt_method = result.get("mt_method", "direct")
+    mt_confidence = result.get("mt_confidence")
+    mt_inferred_population = result.get("mt_inferred_population")
 
     # Build Y-DNA connections JSON
     y_dna_json: List[Dict[str, Any]] = []
@@ -1703,6 +1909,12 @@ def generate_historical_connections_json(result: Dict[str, Any]) -> Dict[str, An
             "and does not replace high-resolution genealogical DNA testing."
         ),
         (
+            "When your DNA provider does not export mitochondrial data (common with "
+            "MyHeritage), we estimate your maternal haplogroup using ancestry-informative "
+            "autosomal markers. This is an indirect inference based on population statistics "
+            "— not a direct mtDNA reading — and has lower confidence than direct detection."
+        ) if mt_method == "inferred" else None,
+        (
             "Evidence quality reflects the source of the historical figure's DNA: "
             "5 stars = confirmed from direct ancient DNA sequencing of verified remains; "
             "4 stars = multiple confirmations or from authenticated relatives; "
@@ -1714,7 +1926,7 @@ def generate_historical_connections_json(result: Dict[str, Any]) -> Dict[str, An
 
     return {
         "reportType": "historical_connections",
-        "version": "2.0",
+        "version": "2.1",
         "summary": {
             "userYHaplogroup": user_y_hg,
             "userMtHaplogroup": user_mt_hg,
@@ -1723,9 +1935,12 @@ def generate_historical_connections_json(result: Dict[str, Any]) -> Dict[str, An
             "yMatches": len(y_dna_json),
             "mtMatches": len(mt_dna_json),
             "topConnections": result["top_connections"],
+            "mtMethod": mt_method,
+            "mtConfidence": mt_confidence,
+            "mtInferredPopulation": mt_inferred_population,
         },
         "yDnaConnections": y_dna_json,
         "mtDnaConnections": mt_dna_json,
         "otziComparison": otzi_comparison_json,
-        "disclaimers": disclaimers,
+        "disclaimers": [d for d in disclaimers if d is not None],
     }

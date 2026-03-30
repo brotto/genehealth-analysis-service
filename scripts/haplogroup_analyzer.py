@@ -942,7 +942,10 @@ def analyze_haplogroup(
     y_haplogroup: Optional[str] = None
     y_confidence: str = "none"
     y_reason: Optional[str] = None
-    is_male: bool = y_snp_count > 0
+    # Detect sex: having Y-chromosome entries is not enough (MyHeritage exports
+    # Y positions for females with '--' genotype). Require actual Y-specific
+    # marker calls from ISOGG markers, or count non-PAR Y variants with calls.
+    is_male: bool = len(y_signals) > 0  # Only True if at least one Y marker has a derived allele call
 
     if not y_signals:
         if not is_male:
