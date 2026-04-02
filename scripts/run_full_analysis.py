@@ -27,6 +27,7 @@ from .historical_connections_analyzer import analyze_historical_connections, gen
 from .mind_spirit_analyzer import analyze_mind_spirit, generate_mind_spirit_json
 from .dream_sleep_analyzer import analyze_dream_sleep, generate_dream_sleep_json
 from .precision_medicine_analyzer import analyze_precision_medicine, generate_precision_medicine_json
+from .longevity_aging_analyzer import analyze_longevity_aging, generate_longevity_aging_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -345,6 +346,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Precision Medicine: {genes_found} genes with variants, {drugs} drugs assessed, {alerts} critical alerts")
     except Exception as e:
         print(f"Precision Medicine analysis failed: {e}")
+
+    # Run longevity & aging pathways analysis
+    print("Starting longevity & aging analysis...")
+    try:
+        longevity_result = analyze_longevity_aging(variants)
+        reports["longevity_aging"] = generate_longevity_aging_json(longevity_result)
+        score = longevity_result.get('summary', {}).get('longevityScore', 0)
+        found = longevity_result.get('summary', {}).get('totalVariantsFound', 0)
+        apoe = longevity_result.get('summary', {}).get('apoeGenotype', 'Unknown')
+        print(f"Longevity & Aging: score={score}, {found} variants found, APOE={apoe}")
+    except Exception as e:
+        print(f"Longevity & Aging analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
