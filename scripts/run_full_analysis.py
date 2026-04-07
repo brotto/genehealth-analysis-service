@@ -28,6 +28,7 @@ from .mind_spirit_analyzer import analyze_mind_spirit, generate_mind_spirit_json
 from .dream_sleep_analyzer import analyze_dream_sleep, generate_dream_sleep_json
 from .precision_medicine_analyzer import analyze_precision_medicine, generate_precision_medicine_json
 from .longevity_aging_analyzer import analyze_longevity_aging, generate_longevity_aging_json
+from .steroid_pharmacogenomics_analyzer import analyze_steroid_pharmacogenomics, generate_steroid_pharmacogenomics_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -358,6 +359,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Longevity & Aging: score={score}, {found} variants found, APOE={apoe}")
     except Exception as e:
         print(f"Longevity & Aging analysis failed: {e}")
+
+    # Run steroid pharmacogenomics analysis (hormonal response profile)
+    print("Starting steroid pharmacogenomics analysis...")
+    try:
+        spg_result = analyze_steroid_pharmacogenomics(variants)
+        reports["steroid_pharmacogenomics"] = json.dumps(generate_steroid_pharmacogenomics_json(spg_result))
+        found = len(spg_result['markers_found'])
+        score = spg_result['composite_scores']['overall_androgen_sensitivity']
+        label = spg_result['composite_scores']['overall_label']
+        print(f"Steroid Pharmacogenomics: {found} markers found, overall score={score} ({label})")
+    except Exception as e:
+        print(f"Steroid Pharmacogenomics analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
