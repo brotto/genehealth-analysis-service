@@ -35,6 +35,14 @@ from .organ_blood_wellness_analyzer import analyze_organ_blood_wellness, generat
 from .intelligence_analyzer import analyze_intelligence, generate_intelligence_json
 from .sports_analyzer import analyze_sports, generate_sports_json
 from .fun_traits_analyzer import analyze_fun_traits, generate_fun_traits_json
+from .celtic_analyzer import analyze_celtic, generate_celtic_json
+from .british_isles_analyzer import analyze_british_isles, generate_british_isles_json
+from .native_american_analyzer import analyze_native_american, generate_native_american_json
+from .latino_breakdown_analyzer import analyze_latino_breakdown, generate_latino_breakdown_json
+from .african_breakdown_analyzer import analyze_african_breakdown, generate_african_breakdown_json
+from .european_breakdown_analyzer import analyze_european_breakdown, generate_european_breakdown_json
+from .hunter_gatherer_farmer_analyzer import analyze_hunter_gatherer_farmer, generate_hunter_gatherer_farmer_json
+from .deep_ancestry_analyzer import analyze_deep_ancestry, generate_deep_ancestry_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -425,6 +433,88 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Fun Traits: {ft_result.found} variants found")
     except Exception as e:
         print(f"Fun Traits analysis failed: {e}")
+
+    # ── PHASE 3: ANCESTRY REPORTS ────────────────────────────────────────────
+
+    # Promote Viking heritage to standalone report
+    try:
+        viking_result_standalone = analyze_viking(variants)
+        reports["viking"] = json.dumps(generate_viking_json(viking_result_standalone))
+        print(f"Viking (standalone): {len(viking_result_standalone['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Viking standalone analysis failed: {e}")
+
+    # Promote Italian ancestry to standalone report
+    try:
+        italian_result_standalone = analyze_italian(variants)
+        reports["italian_ancestry"] = json.dumps(generate_italian_json(italian_result_standalone))
+        print(f"Italian (standalone): {len(italian_result_standalone['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Italian standalone analysis failed: {e}")
+
+    # Celtic ancestry
+    try:
+        celtic_result = analyze_celtic(variants)
+        reports["celtic"] = json.dumps(generate_celtic_json(celtic_result))
+        print(f"Celtic ancestry: {len(celtic_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Celtic analysis failed: {e}")
+
+    # British Isles ancestry
+    try:
+        british_result = analyze_british_isles(variants)
+        reports["british_isles"] = json.dumps(generate_british_isles_json(british_result))
+        print(f"British Isles: {len(british_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"British Isles analysis failed: {e}")
+
+    # Native American ancestry
+    try:
+        na_result = analyze_native_american(variants)
+        reports["native_american"] = json.dumps(generate_native_american_json(na_result))
+        print(f"Native American: {len(na_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Native American analysis failed: {e}")
+
+    # Latino breakdown
+    try:
+        latino_result = analyze_latino_breakdown(variants)
+        reports["latino_breakdown"] = json.dumps(generate_latino_breakdown_json(latino_result))
+        print(f"Latino breakdown: {len(latino_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Latino breakdown analysis failed: {e}")
+
+    # African breakdown
+    try:
+        african_result = analyze_african_breakdown(variants)
+        reports["african_breakdown"] = json.dumps(generate_african_breakdown_json(african_result))
+        print(f"African breakdown: {len(african_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"African breakdown analysis failed: {e}")
+
+    # European breakdown
+    try:
+        european_result = analyze_european_breakdown(variants)
+        reports["european_breakdown"] = json.dumps(generate_european_breakdown_json(european_result))
+        print(f"European breakdown: {len(european_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"European breakdown analysis failed: {e}")
+
+    # Hunter-Gatherer vs Farmer (3-wave model refinement)
+    try:
+        hgf_result = analyze_hunter_gatherer_farmer(variants)
+        reports["hunter_gatherer_farmer"] = json.dumps(generate_hunter_gatherer_farmer_json(hgf_result))
+        print(f"Hunter-Gatherer vs Farmer: {len(hgf_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Hunter-Gatherer vs Farmer analysis failed: {e}")
+
+    # Deep ancestry (out-of-Africa + archaic admixture)
+    try:
+        deep_result = analyze_deep_ancestry(variants)
+        reports["deep_ancestry"] = json.dumps(generate_deep_ancestry_json(deep_result))
+        print(f"Deep ancestry: {len(deep_result['used_snps'])} SNPs used")
+    except Exception as e:
+        print(f"Deep ancestry analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
