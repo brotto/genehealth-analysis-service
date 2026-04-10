@@ -29,6 +29,12 @@ from .dream_sleep_analyzer import analyze_dream_sleep, generate_dream_sleep_json
 from .precision_medicine_analyzer import analyze_precision_medicine, generate_precision_medicine_json
 from .longevity_aging_analyzer import analyze_longevity_aging, generate_longevity_aging_json
 from .steroid_pharmacogenomics_analyzer import analyze_steroid_pharmacogenomics, generate_steroid_pharmacogenomics_json
+from .mental_wellbeing_analyzer import analyze_mental_wellbeing, generate_mental_wellbeing_json
+from .big_five_personality_analyzer import analyze_big_five, generate_big_five_json
+from .organ_blood_wellness_analyzer import analyze_organ_blood_wellness, generate_organ_blood_json
+from .intelligence_analyzer import analyze_intelligence, generate_intelligence_json
+from .sports_analyzer import analyze_sports, generate_sports_json
+from .fun_traits_analyzer import analyze_fun_traits, generate_fun_traits_json
 
 
 def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, str, str]]:
@@ -371,6 +377,54 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Steroid Pharmacogenomics: {found} markers found, overall score={score} ({label})")
     except Exception as e:
         print(f"Steroid Pharmacogenomics analysis failed: {e}")
+
+    # Run mental wellbeing analysis
+    try:
+        mw_result = analyze_mental_wellbeing(variants)
+        reports["mental_wellbeing"] = json.dumps(generate_mental_wellbeing_json(mw_result))
+        print(f"Mental Wellbeing: {mw_result.found} variants found")
+    except Exception as e:
+        print(f"Mental Wellbeing analysis failed: {e}")
+
+    # Run Big Five personality analysis
+    try:
+        bf_result = analyze_big_five(variants)
+        reports["big_five_personality"] = json.dumps(generate_big_five_json(bf_result))
+        print(f"Big Five Personality: {bf_result.found} variants found")
+    except Exception as e:
+        print(f"Big Five Personality analysis failed: {e}")
+
+    # Run Organ & Blood Wellness analysis
+    try:
+        ob_result = analyze_organ_blood_wellness(variants)
+        reports["organ_blood_wellness"] = json.dumps(generate_organ_blood_json(ob_result))
+        print(f"Organ & Blood Wellness: {ob_result.found} variants found")
+    except Exception as e:
+        print(f"Organ & Blood Wellness analysis failed: {e}")
+
+    # Run Intelligence analysis
+    try:
+        iq_result = analyze_intelligence(variants)
+        reports["intelligence"] = json.dumps(generate_intelligence_json(iq_result))
+        print(f"Intelligence: {iq_result.found} variants found")
+    except Exception as e:
+        print(f"Intelligence analysis failed: {e}")
+
+    # Run Sports analysis
+    try:
+        sp_result = analyze_sports(variants)
+        reports["sports"] = json.dumps(generate_sports_json(sp_result))
+        print(f"Sports: {sp_result.found} variants found")
+    except Exception as e:
+        print(f"Sports analysis failed: {e}")
+
+    # Run Fun Traits analysis
+    try:
+        ft_result = analyze_fun_traits(variants)
+        reports["fun_traits"] = json.dumps(generate_fun_traits_json(ft_result))
+        print(f"Fun Traits: {ft_result.found} variants found")
+    except Exception as e:
+        print(f"Fun Traits analysis failed: {e}")
 
     return {
         "snp_count": len(variants),
