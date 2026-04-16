@@ -418,10 +418,12 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
     except Exception as e:
         print(f"Intelligence analysis failed: {e}")
 
-    # Run Sports analysis
+    # Run Sports analysis (elite athletic performance — premium)
     try:
         sp_result = analyze_sports(variants)
-        reports["sports"] = json.dumps(generate_sports_json(sp_result))
+        # Pass variants so the generator can compute physiological pillars,
+        # per-sport aptitudes, elite-athlete comparisons, and narrative.
+        reports["sports"] = json.dumps(generate_sports_json(sp_result, variants))
         print(f"Sports: {sp_result.found} variants found")
     except Exception as e:
         print(f"Sports analysis failed: {e}")

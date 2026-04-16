@@ -485,18 +485,424 @@ def _build_recommendation_text(top_category: str, scores: Dict[str, float]) -> s
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# PHYSIOLOGICAL PILLARS
+# Five axes that feed per-sport scoring. Each pillar aggregates a subset of
+# SPORTS_VARIANTS rsids, each with a favorable allele and a weight (1-2).
+# ─────────────────────────────────────────────────────────────────────────────
+
+FAST_TWITCH_SNPS = [
+    ("rs1815739", "C", 2),   # ACTN3 R577 - heavy weight (primary marker)
+    ("rs699", "A", 1),        # AGT 235T - explosive power
+    ("rs1805086", "A", 1),    # MSTN K153 - hypertrophy ceiling
+]
+
+SLOW_TWITCH_SNPS = [
+    ("rs1815739", "T", 1),    # ACTN3 577X - reduces fast-twitch, favors slow
+    ("rs4343", "G", 1),       # ACE I-tagging - endurance allele
+    ("rs8192678", "G", 1),    # PPARGC1A Gly482 - supports slow fiber / mito
+]
+
+CARDIO_SNPS = [
+    ("rs8192678", "G", 2),    # PPARGC1A - mito biogenesis, VO2max
+    ("rs4253778", "G", 1),    # PPARA - substrate switching
+    ("rs11549465", "T", 1),   # HIF1A - hypoxia response
+    ("rs1867785", "G", 1),    # EPAS1 - oxygen delivery
+    ("rs2070744", "T", 1),    # NOS3 promoter - endothelial function
+    ("rs17602729", "G", 1),   # AMPD1 - anaerobic buffer
+]
+
+RESPIRATORY_SNPS = [
+    ("rs1042713", "G", 2),    # ADRB2 Gly16 - bronchodilation
+    ("rs1042714", "G", 1),    # ADRB2 Glu27 - vascular response
+    ("rs11549465", "T", 1),   # HIF1A - ventilation response
+    ("rs1867785", "G", 1),    # EPAS1 - oxygen uptake
+]
+
+FORCE_SNPS = [
+    ("rs699", "A", 2),        # AGT 235T - explosive strength
+    ("rs35767", "G", 2),      # IGF1 - strength gain response
+    ("rs2296135", "A", 1),    # IL15RA - hypertrophy
+    ("rs10783485", "A", 1),   # ACVR1B - baseline strength
+    ("rs1799983", "G", 1),    # NOS3 Glu298 - muscle blood flow
+    ("rs17602729", "G", 1),   # AMPD1 - anaerobic ATP regen
+]
+
+
+def _score_pillar(variants: Dict[str, Tuple[str, str, str]], snp_list: List[Tuple[str, str, int]]):
+    """
+    Compute a pillar score 0-100 from a weighted list of (rsid, favorable_allele, weight).
+
+    Returns:
+        (score, contributing_snps) where contributing_snps is a list of dicts
+        describing which SNPs were used and what counts were found.
+    """
+    total_favorable = 0
+    total_possible = 0
+    contributing = []
+
+    for rsid, fav_allele, weight in snp_list:
+        max_count = 2 * weight
+        total_possible += max_count
+        rsid_lower = rsid.lower()
+
+        if rsid_lower in variants:
+            _c, _p, genotype = variants[rsid_lower]
+            genotype = genotype.upper().replace("-", "")
+            count = count_allele(genotype, fav_allele)
+            total_favorable += count * weight
+
+            snp_info = SPORTS_VARIANTS.get(rsid)
+            gene = snp_info.gene if snp_info else ""
+
+            contributing.append({
+                "rsid": rsid,
+                "gene": gene,
+                "favorableAllele": fav_allele,
+                "genotype": genotype,
+                "favorableCount": count,
+                "weight": weight,
+            })
+
+    if total_possible == 0:
+        return 0.0, contributing
+    return round((total_favorable / total_possible) * 100, 1), contributing
+
+
+def _aptitude_level_from_score(score: float) -> str:
+    """Map a 0-100 score to an aptitude level label."""
+    if score >= 75:
+        return "Elite"
+    elif score >= 60:
+        return "High"
+    elif score >= 45:
+        return "Good"
+    elif score >= 30:
+        return "Average"
+    else:
+        return "Low"
+
+
+def _pillar_label(score: float) -> str:
+    """Map a 0-100 score to a pillar strength label."""
+    if score >= 75:
+        return "Exceptional"
+    elif score >= 60:
+        return "Strong"
+    elif score >= 45:
+        return "Above Average"
+    elif score >= 30:
+        return "Average"
+    else:
+        return "Developing"
+
+
+def _fiber_bias(fast_score: float, slow_score: float) -> str:
+    """Determine overall muscle fiber bias from fast vs slow sub-scores."""
+    delta = fast_score - slow_score
+    if delta > 20:
+        return "fast-twitch dominant"
+    elif delta < -20:
+        return "slow-twitch dominant"
+    else:
+        return "balanced"
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SPORT APTITUDE MATRIX
+# Per-sport weight vectors across (fastTwitch, slowTwitch, cardio, respiratory,
+# force). Weights sum to 100. Sport score is the weighted average of pillar
+# scores.
+# ─────────────────────────────────────────────────────────────────────────────
+
+SPORT_APTITUDE_MATRIX = [
+    {"name": "100m Sprint", "emoji": "\U0001f4a8",
+     "category": "Sprint & Explosive",
+     "weights": {"fast": 40, "slow": 0, "cardio": 10, "respi": 10, "force": 40}},
+    {"name": "400m Track", "emoji": "\U0001f3c3",
+     "category": "Sprint & Explosive",
+     "weights": {"fast": 35, "slow": 5, "cardio": 25, "respi": 10, "force": 25}},
+    {"name": "Long & High Jump", "emoji": "\U0001f3c3",
+     "category": "Sprint & Explosive",
+     "weights": {"fast": 40, "slow": 0, "cardio": 5, "respi": 10, "force": 45}},
+    {"name": "Weightlifting", "emoji": "\U0001f3cb\ufe0f",
+     "category": "Strength",
+     "weights": {"fast": 30, "slow": 0, "cardio": 10, "respi": 5, "force": 55}},
+    {"name": "Powerlifting", "emoji": "\U0001f3cb\ufe0f",
+     "category": "Strength",
+     "weights": {"fast": 25, "slow": 0, "cardio": 10, "respi": 5, "force": 60}},
+    {"name": "Shot Put & Discus", "emoji": "\U0001f3f3\ufe0f",
+     "category": "Strength",
+     "weights": {"fast": 30, "slow": 0, "cardio": 5, "respi": 10, "force": 55}},
+    {"name": "Marathon", "emoji": "\U0001f3c3",
+     "category": "Endurance",
+     "weights": {"fast": 0, "slow": 35, "cardio": 45, "respi": 15, "force": 5}},
+    {"name": "Ultra-Running", "emoji": "\U0001f3d4\ufe0f",
+     "category": "Endurance",
+     "weights": {"fast": 0, "slow": 30, "cardio": 50, "respi": 15, "force": 5}},
+    {"name": "Triathlon", "emoji": "\U0001f3ca",
+     "category": "Endurance",
+     "weights": {"fast": 5, "slow": 30, "cardio": 40, "respi": 20, "force": 5}},
+    {"name": "Road Cycling", "emoji": "\U0001f6b4",
+     "category": "Endurance",
+     "weights": {"fast": 5, "slow": 25, "cardio": 45, "respi": 15, "force": 10}},
+    {"name": "Swimming (Distance)", "emoji": "\U0001f3ca",
+     "category": "Endurance",
+     "weights": {"fast": 10, "slow": 25, "cardio": 35, "respi": 25, "force": 5}},
+    {"name": "Swimming (Sprint)", "emoji": "\U0001f3ca",
+     "category": "Mixed",
+     "weights": {"fast": 30, "slow": 5, "cardio": 25, "respi": 20, "force": 20}},
+    {"name": "Rowing", "emoji": "\U0001f6a3",
+     "category": "Mixed",
+     "weights": {"fast": 15, "slow": 20, "cardio": 30, "respi": 15, "force": 20}},
+    {"name": "Cross-Country Skiing", "emoji": "\u26f7\ufe0f",
+     "category": "Endurance",
+     "weights": {"fast": 0, "slow": 30, "cardio": 45, "respi": 15, "force": 10}},
+    {"name": "Soccer / Football", "emoji": "\u26bd",
+     "category": "Mixed",
+     "weights": {"fast": 25, "slow": 10, "cardio": 30, "respi": 15, "force": 20}},
+    {"name": "Basketball", "emoji": "\U0001f3c0",
+     "category": "Mixed",
+     "weights": {"fast": 30, "slow": 5, "cardio": 25, "respi": 15, "force": 25}},
+    {"name": "Tennis", "emoji": "\U0001f3be",
+     "category": "Mixed",
+     "weights": {"fast": 25, "slow": 15, "cardio": 25, "respi": 15, "force": 20}},
+    {"name": "Boxing / MMA", "emoji": "\U0001f94a",
+     "category": "Mixed",
+     "weights": {"fast": 25, "slow": 10, "cardio": 25, "respi": 15, "force": 25}},
+    {"name": "Rugby", "emoji": "\U0001f3c9",
+     "category": "Strength",
+     "weights": {"fast": 30, "slow": 5, "cardio": 20, "respi": 10, "force": 35}},
+    {"name": "CrossFit", "emoji": "\U0001f3cb\ufe0f",
+     "category": "Mixed",
+     "weights": {"fast": 25, "slow": 15, "cardio": 25, "respi": 10, "force": 25}},
+    {"name": "Gymnastics", "emoji": "\U0001f938",
+     "category": "Strength",
+     "weights": {"fast": 30, "slow": 5, "cardio": 15, "respi": 15, "force": 35}},
+    {"name": "Climbing", "emoji": "\U0001f9d7",
+     "category": "Strength",
+     "weights": {"fast": 20, "slow": 15, "cardio": 20, "respi": 15, "force": 30}},
+]
+
+
+def _compute_sport_aptitudes(pillars: Dict[str, float]) -> List[Dict[str, Any]]:
+    """
+    Compute aptitude for every sport in SPORT_APTITUDE_MATRIX.
+
+    Returns a list sorted by score descending, each entry with score, level,
+    and metadata for display.
+    """
+    results = []
+    for sport in SPORT_APTITUDE_MATRIX:
+        w = sport["weights"]
+        score = (
+            pillars["fastTwitch"] * w["fast"]
+            + pillars["slowTwitch"] * w["slow"]
+            + pillars["cardio"] * w["cardio"]
+            + pillars["respiratory"] * w["respi"]
+            + pillars["force"] * w["force"]
+        ) / 100.0
+
+        results.append({
+            "sport": sport["name"],
+            "emoji": sport["emoji"],
+            "category": sport["category"],
+            "score": round(score, 1),
+            "level": _aptitude_level_from_score(score),
+        })
+
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ELITE ATHLETE PROFILES
+# Aggregate physiological signatures derived from published population-level
+# genetic studies of elite athletes from each specialty. Not individual
+# athletes.
+# ─────────────────────────────────────────────────────────────────────────────
+
+ELITE_ATHLETE_PROFILES = [
+    {
+        "id": "east_african_endurance",
+        "name": "East African Distance Runners",
+        "emoji": "\U0001f3c3",
+        "description": "Elite marathoners and middle-distance runners from Kenya and Ethiopia, characterized by exceptional aerobic capacity and high slow-twitch fiber proportion.",
+        "pillars": {"fastTwitch": 20, "slowTwitch": 90, "cardio": 90, "respiratory": 80, "force": 30},
+        "representative_sports": ["Marathon", "Ultra-Running", "Triathlon"],
+    },
+    {
+        "id": "west_african_sprint",
+        "name": "West African / Caribbean Sprinters",
+        "emoji": "\U0001f4a8",
+        "description": "Elite sprinters with West African and Caribbean genetic ancestry, characterized by very high fast-twitch fiber proportion and explosive force production.",
+        "pillars": {"fastTwitch": 90, "slowTwitch": 25, "cardio": 45, "respiratory": 55, "force": 85},
+        "representative_sports": ["100m Sprint", "400m Track", "Long & High Jump"],
+    },
+    {
+        "id": "nordic_endurance",
+        "name": "Nordic Cross-Country Skiers",
+        "emoji": "\u26f7\ufe0f",
+        "description": "Elite Scandinavian cross-country skiers, renowned for exceptional VO2max and sustained endurance performance at altitude.",
+        "pillars": {"fastTwitch": 30, "slowTwitch": 80, "cardio": 90, "respiratory": 80, "force": 50},
+        "representative_sports": ["Cross-Country Skiing", "Triathlon", "Road Cycling"],
+    },
+    {
+        "id": "eastern_power",
+        "name": "Eastern European Power Athletes",
+        "emoji": "\U0001f3cb\ufe0f",
+        "description": "Elite weightlifters and strongmen trained in the Eastern European tradition, characterized by maximal force production and anaerobic power.",
+        "pillars": {"fastTwitch": 80, "slowTwitch": 20, "cardio": 40, "respiratory": 45, "force": 90},
+        "representative_sports": ["Powerlifting", "Weightlifting", "Shot Put & Discus"],
+    },
+    {
+        "id": "mixed_team_athlete",
+        "name": "Elite Team Sport Athlete",
+        "emoji": "\u26bd",
+        "description": "Elite soccer, rugby, and basketball players, with balanced development across all physiological pillars for intermittent high-intensity efforts.",
+        "pillars": {"fastTwitch": 70, "slowTwitch": 55, "cardio": 70, "respiratory": 65, "force": 70},
+        "representative_sports": ["Soccer / Football", "Basketball", "Rugby"],
+    },
+]
+
+
+def _compute_elite_comparisons(user_pillars: Dict[str, float]) -> List[Dict[str, Any]]:
+    """
+    Compute alignment between the user's pillar profile and each elite profile.
+
+    Alignment = 100 - mean absolute difference across the 5 pillars,
+    clamped to [0, 100].
+    """
+    results = []
+    for profile in ELITE_ATHLETE_PROFILES:
+        pp = profile["pillars"]
+        diffs = [
+            abs(user_pillars["fastTwitch"] - pp["fastTwitch"]),
+            abs(user_pillars["slowTwitch"] - pp["slowTwitch"]),
+            abs(user_pillars["cardio"] - pp["cardio"]),
+            abs(user_pillars["respiratory"] - pp["respiratory"]),
+            abs(user_pillars["force"] - pp["force"]),
+        ]
+        mean_diff = sum(diffs) / len(diffs)
+        alignment = max(0.0, round(100.0 - mean_diff, 1))
+
+        results.append({
+            "id": profile["id"],
+            "name": profile["name"],
+            "emoji": profile["emoji"],
+            "description": profile["description"],
+            "alignment": alignment,
+            "alignmentLabel": _aptitude_level_from_score(alignment),
+            "representativeSports": profile["representative_sports"],
+            "profilePillars": profile["pillars"],
+        })
+
+    results.sort(key=lambda x: x["alignment"], reverse=True)
+    return results
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NARRATIVE HEADLINE GENERATION
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _build_narrative(
+    sport_aptitudes: List[Dict[str, Any]],
+    pillars: Dict[str, float],
+    fiber_bias: str,
+) -> Dict[str, Any]:
+    """
+    Build the top-of-report narrative block.
+
+    Returns a dict with hook, headline (top sport + level), supporting line
+    (2-3 complementary sports), and a one-paragraph summary.
+    """
+    top = sport_aptitudes[0] if sport_aptitudes else None
+    supporting = sport_aptitudes[1:3] if len(sport_aptitudes) > 1 else []
+
+    hook = "Are you, or could you be, a high-performance athlete?"
+
+    if not top:
+        return {
+            "hook": hook,
+            "headline": "Not enough genetic markers available to generate an athletic profile.",
+            "topSport": None,
+            "topLevel": None,
+            "supporting": [],
+            "supportingLine": "",
+            "summary": "Insufficient data to compute sport-specific aptitudes. Please verify that your genome file was processed correctly.",
+            "fiberBias": fiber_bias,
+        }
+
+    headline = f"You have genetic aptitude for {top['sport']}. Level: {top['level']}."
+
+    supporting_items = [{"sport": s["sport"], "level": s["level"], "emoji": s["emoji"]} for s in supporting]
+    if supporting:
+        names = " and ".join(s["sport"] for s in supporting)
+        supporting_line = f"Your profile also suggests a strong fit for {names}."
+    else:
+        supporting_line = ""
+
+    pillar_names = {
+        "fastTwitch": "explosive fast-twitch muscle",
+        "slowTwitch": "endurance slow-twitch muscle",
+        "cardio": "cardiovascular capacity",
+        "respiratory": "respiratory efficiency",
+        "force": "force production",
+    }
+    top_pillars = sorted(pillars.items(), key=lambda x: x[1], reverse=True)[:2]
+    strong_dims = " and ".join(pillar_names[p[0]] for p in top_pillars)
+
+    summary = (
+        f"Your genetic profile is {fiber_bias}, with notable strengths in "
+        f"{strong_dims}. This signature aligns best with {top['category']} "
+        f"disciplines, making sports like {top['sport']} a natural fit for "
+        f"your biology. Keep in mind: genetics is a predisposition, not a destiny."
+    )
+
+    return {
+        "hook": hook,
+        "headline": headline,
+        "topSport": top["sport"],
+        "topLevel": top["level"],
+        "supporting": supporting_items,
+        "supportingLine": supporting_line,
+        "summary": summary,
+        "fiberBias": fiber_bias,
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DISCLAIMERS — formal scientific boundaries for the elite report
+# ─────────────────────────────────────────────────────────────────────────────
+
+ELITE_REPORT_DISCLAIMERS = [
+    "Genetics is a predisposition, not a destiny. Training, nutrition, coaching, and consistency explain more variance in athletic outcomes than any set of SNPs combined.",
+    "The variants analyzed here are drawn from peer-reviewed association studies, but effect sizes are typically small and vary by population. Results should be interpreted as tendencies, not diagnostic verdicts.",
+    "Muscle fiber composition, cardiovascular capacity, respiratory efficiency, and force production are all highly trainable. A low score on any pillar can be substantially improved with consistent, targeted training.",
+    "Elite athlete profiles are aggregate signatures based on published population-level studies. Individual athletes vary widely; these profiles are references, not direct comparisons to named individuals.",
+    "This analysis does not predict performance ceilings. Many elite athletes carry less favorable variants in one or more markers, yet still reach the top of their sport through persistence, opportunity, and technique.",
+    "Injury risk, recovery capacity, and nutritional needs are only partially captured here. For personalized training prescriptions, consult a sports medicine physician or certified strength and conditioning coach.",
+]
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # JSON OUTPUT
 # ─────────────────────────────────────────────────────────────────────────────
 
-def generate_sports_json(result: SportsAnalysisResult) -> dict:
+def generate_sports_json(
+    result: SportsAnalysisResult,
+    variants: Dict[str, Tuple[str, str, str]] = None,
+) -> dict:
     """
     Generate a JSON-serializable dict for the frontend sports report.
 
     Args:
         result: SportsAnalysisResult from analyze_sports()
+        variants: original variants dict used to compute physiological pillars
+                  (optional — if None, pillar-related fields are omitted so
+                  the legacy schema is still produced).
 
     Returns:
-        Dict matching the sports report JSON schema
+        Dict matching the sports report JSON schema.
     """
     categories_list = []
 
@@ -525,7 +931,7 @@ def generate_sports_json(result: SportsAnalysisResult) -> dict:
             "recommendedSports": CATEGORY_RECOMMENDED_SPORTS.get(cat, []),
         })
 
-    return {
+    base = {
         "summary": {
             "totalChecked": result.total_checked,
             "found": result.found,
@@ -537,6 +943,84 @@ def generate_sports_json(result: SportsAnalysisResult) -> dict:
         },
         "categories": categories_list,
     }
+
+    # If variants aren't provided, return the legacy schema unchanged.
+    if variants is None:
+        return base
+
+    # Compute physiological pillars
+    fast_score, fast_contribs = _score_pillar(variants, FAST_TWITCH_SNPS)
+    slow_score, slow_contribs = _score_pillar(variants, SLOW_TWITCH_SNPS)
+    cardio_score, cardio_contribs = _score_pillar(variants, CARDIO_SNPS)
+    respi_score, respi_contribs = _score_pillar(variants, RESPIRATORY_SNPS)
+    force_score, force_contribs = _score_pillar(variants, FORCE_SNPS)
+
+    pillars_vec = {
+        "fastTwitch": fast_score,
+        "slowTwitch": slow_score,
+        "cardio": cardio_score,
+        "respiratory": respi_score,
+        "force": force_score,
+    }
+
+    fiber_bias_value = _fiber_bias(fast_score, slow_score)
+    sport_aptitudes = _compute_sport_aptitudes(pillars_vec)
+    elite_comparisons = _compute_elite_comparisons(pillars_vec)
+    narrative = _build_narrative(sport_aptitudes, pillars_vec, fiber_bias_value)
+
+    pillars_json = [
+        {
+            "id": "muscle_fiber",
+            "name": "Muscle Fiber Profile",
+            "emoji": "\U0001f4aa",
+            "bias": fiber_bias_value,
+            "score": round((fast_score + slow_score) / 2, 1),
+            "label": _pillar_label((fast_score + slow_score) / 2),
+            "fastTwitchScore": fast_score,
+            "slowTwitchScore": slow_score,
+            "fastTwitchLabel": _pillar_label(fast_score),
+            "slowTwitchLabel": _pillar_label(slow_score),
+            "description": "Balance of fast-twitch (power, sprint, explosive force) and slow-twitch (endurance, sustained output) muscle fibers.",
+            "contributingSnps": fast_contribs + slow_contribs,
+        },
+        {
+            "id": "cardiovascular",
+            "name": "Cardiovascular Capacity",
+            "emoji": "\u2764\ufe0f",
+            "score": cardio_score,
+            "label": _pillar_label(cardio_score),
+            "description": "VO2max potential, mitochondrial biogenesis, endothelial function, and anaerobic buffering.",
+            "contributingSnps": cardio_contribs,
+        },
+        {
+            "id": "respiratory",
+            "name": "Respiratory Capacity",
+            "emoji": "\U0001fac1",
+            "score": respi_score,
+            "label": _pillar_label(respi_score),
+            "description": "Bronchodilation efficiency, ventilatory response, and oxygen uptake kinetics.",
+            "contributingSnps": respi_contribs,
+        },
+        {
+            "id": "force",
+            "name": "Force & Strength",
+            "emoji": "\U0001f4aa",
+            "score": force_score,
+            "label": _pillar_label(force_score),
+            "description": "Maximal force production, hypertrophy response to training, and muscle blood flow.",
+            "contributingSnps": force_contribs,
+        },
+    ]
+
+    base.update({
+        "narrative": narrative,
+        "pillars": pillars_json,
+        "sportsRanking": sport_aptitudes,
+        "eliteComparisons": elite_comparisons,
+        "disclaimers": ELITE_REPORT_DISCLAIMERS,
+    })
+
+    return base
 
 
 # ─────────────────────────────────────────────────────────────────────────────
