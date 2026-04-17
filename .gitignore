@@ -1,0 +1,34 @@
+# Secrets & environment
+.env
+.env.*
+!.env.example
+
+# Cache
+ncbi_cache/
+.pytest_cache/
+.coverage
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.Python
+build/
+dist/
+*.egg
+
+# Virtual envs
+venv/
+.venv/
+env/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log

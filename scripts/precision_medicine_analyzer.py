@@ -25,6 +25,7 @@ References:
 """
 
 import json
+import os
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -2543,6 +2544,32 @@ def analyze_precision_medicine(
         "category_summaries": category_summaries,
         "pharmacogenomic_passport": passport,
     }
+
+    # ── PubMed Evidence enrichment (Biopython feature #1) ─────────────
+    # Opt-in via env ENABLE_PUBMED_ENRICHMENT=true (default: on in service).
+    # Failures here are swallowed — enrichment must never break the report.
+    if os.environ.get("ENABLE_PUBMED_ENRICHMENT", "true").lower() != "false":
+        try:
+            from .pubmed_enrichment import enrich_with_pubmed, extract_genes_and_rsids_from_report
+
+            extracted = extract_genes_and_rsids_from_report(report)
+            # Cap to 12 genes + 8 rsids per report — keeps latency bounded and
+            # focuses on the signal genes that dominate the output.
+            genes = extracted["genes"][:12]
+            rsids = extracted["rsids"][:8]
+            if genes or rsids:
+                report["scientificEvidence"] = enrich_with_pubmed(
+                    genes=genes,
+                    rsids=rsids,
+                    per_item=3,
+                    years_back=4,
+                    disease_context="pharmacogenomics",
+                )
+        except Exception as e:  # noqa: BLE001
+            import logging as _logging
+            _logging.getLogger(__name__).warning(
+                "PubMed enrichment skipped: %s", e,
+            )
 
     return report
 
