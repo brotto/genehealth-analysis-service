@@ -58,6 +58,64 @@ async def health_check():
     return {"status": "ok", "snp_database_size": len(SNP_DATABASE)}
 
 
+@app.get("/debug/env")
+async def debug_env():
+    """Show which env vars the Python process can see, without leaking values.
+
+    Also attempts to load .env from several well-known locations so we can
+    diagnose where EasyPanel is (or isn't) placing its env file.
+    """
+    import pathlib
+    report: dict = {}
+
+    # 1) Current env snapshot — only show whether keys exist + masked value length
+    env_keys_of_interest = [
+        "NCBI_API_KEY", "NCBI_EMAIL", "ENABLE_PUBMED_ENRICHMENT",
+        "ANALYSIS_SERVICE_API_KEY", "HOSTNAME", "PWD", "HOME", "PYTHONUNBUFFERED",
+    ]
+    report["env_before_loading"] = {
+        k: (f"len={len(os.environ[k])}" if k in os.environ else None)
+        for k in env_keys_of_interest
+    }
+    # Also count anything that looks NCBI-related
+    report["any_ncbi_key_in_env"] = sorted(
+        [k for k in os.environ if "NCBI" in k.upper()]
+    )
+
+    # 2) Files we might be able to load
+    candidate_paths = [
+        "/app/.env",
+        "/.env",
+        "/etc/easypanel/.env",
+        "/etc/environment",
+        os.path.join(os.getcwd(), ".env"),
+    ]
+    report["dotenv_file_probe"] = {}
+    for p in candidate_paths:
+        try:
+            exists = pathlib.Path(p).is_file()
+            size = pathlib.Path(p).stat().st_size if exists else 0
+            # Do NOT dump contents — only existence + size
+            report["dotenv_file_probe"][p] = {"exists": exists, "size": size}
+        except Exception as e:  # noqa: BLE001
+            report["dotenv_file_probe"][p] = {"error": f"{type(e).__name__}: {e}"}
+
+    # 3) Try load_dotenv from each candidate and re-check whether NCBI_API_KEY now exists
+    try:
+        from dotenv import load_dotenv
+        for p in candidate_paths:
+            if pathlib.Path(p).is_file():
+                load_dotenv(p, override=False)
+        report["env_after_loading"] = {
+            k: (f"len={len(os.environ[k])}" if k in os.environ else None)
+            for k in env_keys_of_interest
+        }
+    except Exception as e:  # noqa: BLE001
+        report["dotenv_load_error"] = f"{type(e).__name__}: {e}"
+
+    return report
+
+
 @app.get("/debug/pubmed")
 async def debug_pubmed():
     """Diagnostic endpoint for PubMed Evidence feature integration."""
