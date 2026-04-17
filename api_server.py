@@ -58,6 +58,63 @@ async def health_check():
     return {"status": "ok", "snp_database_size": len(SNP_DATABASE)}
 
 
+@app.get("/debug/pubmed")
+async def debug_pubmed():
+    """Diagnostic endpoint for PubMed Evidence feature integration."""
+    report: dict = {}
+
+    # 1) Biopython import check
+    try:
+        import Bio  # noqa: F401
+        report["biopython_version"] = Bio.__version__
+    except Exception as e:  # noqa: BLE001
+        report["biopython_version"] = None
+        report["biopython_error"] = f"{type(e).__name__}: {e}"
+
+    # 2) python-dotenv import check
+    try:
+        import dotenv  # noqa: F401
+        report["dotenv_ok"] = True
+    except Exception as e:  # noqa: BLE001
+        report["dotenv_ok"] = False
+        report["dotenv_error"] = f"{type(e).__name__}: {e}"
+
+    # 3) Env var presence
+    report["NCBI_API_KEY_set"] = bool(os.environ.get("NCBI_API_KEY"))
+    report["NCBI_EMAIL_set"] = bool(os.environ.get("NCBI_EMAIL"))
+    report["ENABLE_PUBMED_ENRICHMENT"] = os.environ.get("ENABLE_PUBMED_ENRICHMENT", "unset")
+
+    # 4) Module import check
+    try:
+        from scripts.ncbi_client import NCBIClient  # noqa: F401
+        from scripts.pubmed_enrichment import enrich_with_pubmed  # noqa: F401
+        report["modules_ok"] = True
+    except Exception as e:  # noqa: BLE001
+        report["modules_ok"] = False
+        report["modules_error"] = f"{type(e).__name__}: {e}"
+
+    # 5) Smoke test one live NCBI call (APOE longevity — small query)
+    if report.get("biopython_version") and report.get("modules_ok"):
+        try:
+            from scripts.pubmed_enrichment import enrich_with_pubmed
+            smoke = enrich_with_pubmed(
+                genes=["APOE"],
+                per_item=1,
+                years_back=3,
+                disease_context="longevity",
+            )
+            report["smoke_items"] = len(smoke)
+            if smoke:
+                refs = smoke[0].get("references") or []
+                report["smoke_first_title"] = (refs[0].get("title") if refs else "(no refs)")[:120]
+        except Exception as e:  # noqa: BLE001
+            import traceback as _tb
+            report["smoke_error"] = f"{type(e).__name__}: {e}"
+            report["smoke_traceback"] = _tb.format_exc().splitlines()[-8:]
+
+    return report
+
+
 @app.post("/analyze")
 async def analyze(
     request: AnalysisRequest,
