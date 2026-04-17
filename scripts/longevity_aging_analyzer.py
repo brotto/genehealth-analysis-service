@@ -1460,5 +1460,22 @@ def _evidence_tier(rsid: str) -> str:
 
 
 def generate_longevity_aging_json(result: Dict) -> str:
-    """Convert the analysis result to JSON string."""
+    """Convert the analysis result to JSON string.
+
+    Before serialization, we enrich the dict in place with scientific evidence
+    from PubMed for every gene/rsID mentioned in the report. Failures are
+    silent (no `scientificEvidence` key appears).
+    """
+    try:
+        from .pubmed_enrichment import maybe_enrich_report_inplace
+        maybe_enrich_report_inplace(
+            result,
+            disease_context="longevity aging",
+            gene_cap=12,
+            rsid_cap=8,
+            feature_label="pubmed-longevity",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[pubmed-longevity] import/call failed: {type(e).__name__}: {e}", flush=True)
+
     return json.dumps(result, indent=2, ensure_ascii=False)

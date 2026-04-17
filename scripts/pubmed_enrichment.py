@@ -258,3 +258,67 @@ def extract_genes_and_rsids_from_report(report: Dict[str, Any]) -> Dict[str, Lis
         return out
 
     return {"genes": _dedupe(genes), "rsids": _dedupe(rsids)}
+
+
+# -------------------------------------------------------------------- orchestrator
+
+import os as _os
+
+
+def maybe_enrich_report_inplace(
+    report: Dict[str, Any],
+    *,
+    disease_context: Optional[str] = None,
+    gene_cap: int = 12,
+    rsid_cap: int = 8,
+    per_item: int = 3,
+    years_back: int = 4,
+    feature_label: str = "pubmed",
+) -> None:
+    """
+    End-to-end helper: gate via env var, extract genes/rsids, enrich, assign
+    `scientificEvidence` to the report dict (mutates in place).
+
+    Never raises — any failure is logged and the report is left unchanged
+    (no `scientificEvidence` key), so the analyzer pipeline keeps flowing.
+
+    Used by all analyzers that want the PubMed Evidence treatment:
+    precision_medicine, longevity_aging, mental_wellbeing, etc.
+    """
+    gate = _os.environ.get("ENABLE_PUBMED_ENRICHMENT", "true").lower()
+    if gate == "false":
+        print(f"[{feature_label}] disabled via ENABLE_PUBMED_ENRICHMENT=false", flush=True)
+        return
+
+    try:
+        extracted = extract_genes_and_rsids_from_report(report)
+        genes = extracted["genes"][:gene_cap]
+        rsids = extracted["rsids"][:rsid_cap]
+        print(
+            f"[{feature_label}] extracted {len(genes)} genes + {len(rsids)} rsids "
+            f"(context={disease_context!r})",
+            flush=True,
+        )
+        if not genes and not rsids:
+            return
+
+        evidence = enrich_with_pubmed(
+            genes=genes,
+            rsids=rsids,
+            per_item=per_item,
+            years_back=years_back,
+            disease_context=disease_context,
+        )
+        if evidence:
+            report["scientificEvidence"] = evidence
+            print(
+                f"[{feature_label}] enrichment complete: {len(evidence)} items with refs",
+                flush=True,
+            )
+    except Exception as e:  # noqa: BLE001
+        import traceback as _tb
+        print(
+            f"[{feature_label}] enrichment skipped: {type(e).__name__}: {e}",
+            flush=True,
+        )
+        _tb.print_exc()

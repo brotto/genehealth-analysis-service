@@ -439,7 +439,7 @@ def generate_mental_wellbeing_json(result: MentalWellbeingAnalysisResult) -> dic
             "variants": variants_json,
         })
 
-    return {
+    out = {
         "summary": {
             "totalChecked": result.total_checked,
             "found": result.found,
@@ -452,6 +452,23 @@ def generate_mental_wellbeing_json(result: MentalWellbeingAnalysisResult) -> dic
         },
         "categories": categories_list,
     }
+
+    # ── PubMed Evidence enrichment (Biopython feature #1 expansion) ──────
+    # Reuses the same helper as precision_medicine + longevity_aging.
+    # Never raises — silent fallback to no evidence.
+    try:
+        from .pubmed_enrichment import maybe_enrich_report_inplace
+        maybe_enrich_report_inplace(
+            out,
+            disease_context="mental health",
+            gene_cap=12,
+            rsid_cap=8,
+            feature_label="pubmed-mental",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[pubmed-mental] import/call failed: {type(e).__name__}: {e}", flush=True)
+
+    return out
 
 
 # -----------------------------------------------------------------------------

@@ -2546,55 +2546,18 @@ def analyze_precision_medicine(
     }
 
     # ── PubMed Evidence enrichment (Biopython feature #1) ─────────────
-    # Opt-in via env ENABLE_PUBMED_ENRICHMENT=true (default: on in service).
-    # Failures here are swallowed — enrichment must never break the report.
-    print(
-        f"[pubmed] gate check — ENABLE_PUBMED_ENRICHMENT={os.environ.get('ENABLE_PUBMED_ENRICHMENT', 'unset')} "
-        f"| NCBI_API_KEY set={bool(os.environ.get('NCBI_API_KEY'))} "
-        f"| NCBI_EMAIL set={bool(os.environ.get('NCBI_EMAIL'))}",
-        flush=True,
-    )
-    if os.environ.get("ENABLE_PUBMED_ENRICHMENT", "true").lower() != "false":
-        try:
-            from .pubmed_enrichment import enrich_with_pubmed, extract_genes_and_rsids_from_report
-
-            extracted = extract_genes_and_rsids_from_report(report)
-            # Cap to 12 genes + 8 rsids per report — keeps latency bounded and
-            # focuses on the signal genes that dominate the output.
-            genes = extracted["genes"][:12]
-            rsids = extracted["rsids"][:8]
-            print(
-                f"[pubmed] extracted {len(genes)} genes + {len(rsids)} rsids: "
-                f"genes={genes[:5]}... rsids={rsids[:3]}...",
-                flush=True,
-            )
-            if genes or rsids:
-                evidence = enrich_with_pubmed(
-                    genes=genes,
-                    rsids=rsids,
-                    per_item=3,
-                    years_back=4,
-                    disease_context="pharmacogenomics",
-                )
-                report["scientificEvidence"] = evidence
-                print(
-                    f"[pubmed] enrichment complete: {len(evidence)} items with refs",
-                    flush=True,
-                )
-            else:
-                print("[pubmed] no genes/rsids extracted — skipping", flush=True)
-        except ImportError as e:
-            print(
-                f"[pubmed] IMPORT FAILED (biopython missing?): {e}",
-                flush=True,
-            )
-        except Exception as e:  # noqa: BLE001
-            import traceback as _tb
-            print(
-                f"[pubmed] enrichment failed: {type(e).__name__}: {e}",
-                flush=True,
-            )
-            _tb.print_exc()
+    # Delegates to the shared helper so all analyzers behave identically.
+    try:
+        from .pubmed_enrichment import maybe_enrich_report_inplace
+        maybe_enrich_report_inplace(
+            report,
+            disease_context="pharmacogenomics",
+            gene_cap=12,
+            rsid_cap=8,
+            feature_label="pubmed-precision",
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"[pubmed-precision] import/call failed: {type(e).__name__}: {e}", flush=True)
     else:
         print("[pubmed] disabled via ENABLE_PUBMED_ENRICHMENT=false", flush=True)
 
