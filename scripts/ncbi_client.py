@@ -114,14 +114,21 @@ class NCBIClient:
 
     # ---------------------------------------------------------------- core
     def _call_with_retry(self, fn, **kwargs):
-        """Execute an Entrez call with throttle + retry + exponential backoff."""
+        """Execute an Entrez call with throttle + retry + exponential backoff.
+
+        `validate=False` is required because NCBI regularly ships tags that
+        aren't present in Biopython's bundled DTDs (e.g. ClinVar esummary
+        emits a `common_name` element the DTD doesn't declare). Strict
+        validation would blow up the whole call — we prefer best-effort
+        parsing and let downstream code handle missing/extra fields.
+        """
         last_err: Optional[Exception] = None
         for attempt in range(self.max_retries):
             self._throttle()
             try:
                 handle = fn(**kwargs)
                 try:
-                    data = Entrez.read(handle)
+                    data = Entrez.read(handle, validate=False)
                 finally:
                     handle.close()
                 return data
@@ -167,7 +174,17 @@ class NCBIClient:
         return ids
 
     def esummary(self, db: str, ids: Iterable[str]) -> List[Dict[str, Any]]:
-        """Fetch summary records for a list of IDs."""
+        """Fetch summary records for a list of IDs.
+
+        NCBI esummary returns two different shapes depending on the database:
+
+          - PubMed (legacy): top-level list of records, iterate directly.
+          - Newer dbs (ClinVar, Gene, Protein, Taxonomy): wrapped in
+            `{'DocumentSummarySet': {'DocumentSummary': [...]}}` with the
+            `uid` exposed as an XML attribute on each `DocumentSummary`.
+
+        We handle both here so callers don't have to care which db they hit.
+        """
         id_list = list(ids)
         if not id_list:
             return []
@@ -178,11 +195,31 @@ class NCBIClient:
             return cached
 
         data = self._call_with_retry(Entrez.esummary, db=db, id=",".join(id_list))
-        # Entrez esummary returns a list-like; we normalize to list of dicts.
-        out: List[Dict[str, Any]] = []
-        for rec in data:
+
+        # Detect the "DocumentSummarySet" wrapper (ClinVar, Gene, etc).
+        doc_list: List[Any] = []
+        if isinstance(data, dict) and "DocumentSummarySet" in data:
+            wrapper = data["DocumentSummarySet"]
+            inner = wrapper.get("DocumentSummary") if isinstance(wrapper, dict) else None
+            if isinstance(inner, list):
+                doc_list = inner
+        if not doc_list:
+            # Legacy (PubMed) shape — iterate top-level.
             try:
-                out.append(dict(rec))
+                doc_list = list(data)
+            except TypeError:
+                doc_list = []
+
+        out: List[Dict[str, Any]] = []
+        for rec in doc_list:
+            try:
+                flat: Dict[str, Any] = dict(rec)
+                # Surface XML attributes (`uid` lives there on DocumentSummary).
+                attrs = getattr(rec, "attributes", None)
+                if attrs and isinstance(attrs, dict):
+                    for ak, av in attrs.items():
+                        flat.setdefault(ak, av)
+                out.append(flat)
             except (TypeError, ValueError):
                 continue
         self._cache_put(cache_key, out)

@@ -187,6 +187,34 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
 
     risk_result = analyze_disease_risks(variants, clinvar_path)
 
+    # ── ClinVar Live enrichment (Biopython feature #2) ──
+    # Opt-in via env ENABLE_CLINVAR_LIVE (default: on). Pulls fresh NCBI
+    # dbSNP + ClinVar metadata for each high/moderate risk variant. Failures
+    # are swallowed — the pipeline must never break because NCBI is slow.
+    clinical_live: dict = {}
+    if os.environ.get("ENABLE_CLINVAR_LIVE", "true").lower() != "false":
+        try:
+            from .clinvar_live import enrich_with_clinvar
+            # Collect rsIDs from the risk variants we actually care about.
+            candidate_rsids: list = []
+            for match in (
+                list(risk_result.high_risk_variants)
+                + list(risk_result.moderate_risk_variants)
+                + list(risk_result.pharmacogenomic_variants)
+            ):
+                if getattr(match, "rsid", None):
+                    candidate_rsids.append(match.rsid)
+            # Cap at 40 so a single analysis can't pound NCBI for a minute.
+            if candidate_rsids:
+                print(f"Enriching {len(candidate_rsids[:40])} risk variants with live ClinVar/dbSNP...")
+                clinical_live = enrich_with_clinvar(
+                    rsids=candidate_rsids[:40],
+                    max_rsids=40,
+                )
+                print(f"Live enrichment: {len(clinical_live)} variants resolved from NCBI")
+        except Exception as e:  # noqa: BLE001
+            print(f"ClinVar Live enrichment skipped: {type(e).__name__}: {e}")
+
     # Run traits analysis
     traits_result = analyze_traits(variants)
     print(f"Traits analysis: {traits_result.traits_found} found, {traits_result.traits_not_found} not available")
@@ -517,6 +545,18 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Deep ancestry: {len(deep_result['used_snps'])} SNPs used")
     except Exception as e:
         print(f"Deep ancestry analysis failed: {e}")
+
+    # Attach ClinVar Live payload as its own JSON report — the callback
+    # stores each key in the consolidated R2 bundle so the frontend can
+    # read it separately without having to re-parse disease_risk markdown.
+    if clinical_live:
+        from datetime import datetime, timezone
+        reports["clinical_live"] = json.dumps({
+            "generatedAt": datetime.now(timezone.utc).isoformat(),
+            "source": "NCBI dbSNP + ClinVar (live)",
+            "variantCount": len(clinical_live),
+            "variants": clinical_live,
+        })
 
     return {
         "snp_count": len(variants),
