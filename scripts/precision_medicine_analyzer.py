@@ -2548,6 +2548,12 @@ def analyze_precision_medicine(
     # ── PubMed Evidence enrichment (Biopython feature #1) ─────────────
     # Opt-in via env ENABLE_PUBMED_ENRICHMENT=true (default: on in service).
     # Failures here are swallowed — enrichment must never break the report.
+    print(
+        f"[pubmed] gate check — ENABLE_PUBMED_ENRICHMENT={os.environ.get('ENABLE_PUBMED_ENRICHMENT', 'unset')} "
+        f"| NCBI_API_KEY set={bool(os.environ.get('NCBI_API_KEY'))} "
+        f"| NCBI_EMAIL set={bool(os.environ.get('NCBI_EMAIL'))}",
+        flush=True,
+    )
     if os.environ.get("ENABLE_PUBMED_ENRICHMENT", "true").lower() != "false":
         try:
             from .pubmed_enrichment import enrich_with_pubmed, extract_genes_and_rsids_from_report
@@ -2557,19 +2563,40 @@ def analyze_precision_medicine(
             # focuses on the signal genes that dominate the output.
             genes = extracted["genes"][:12]
             rsids = extracted["rsids"][:8]
+            print(
+                f"[pubmed] extracted {len(genes)} genes + {len(rsids)} rsids: "
+                f"genes={genes[:5]}... rsids={rsids[:3]}...",
+                flush=True,
+            )
             if genes or rsids:
-                report["scientificEvidence"] = enrich_with_pubmed(
+                evidence = enrich_with_pubmed(
                     genes=genes,
                     rsids=rsids,
                     per_item=3,
                     years_back=4,
                     disease_context="pharmacogenomics",
                 )
-        except Exception as e:  # noqa: BLE001
-            import logging as _logging
-            _logging.getLogger(__name__).warning(
-                "PubMed enrichment skipped: %s", e,
+                report["scientificEvidence"] = evidence
+                print(
+                    f"[pubmed] enrichment complete: {len(evidence)} items with refs",
+                    flush=True,
+                )
+            else:
+                print("[pubmed] no genes/rsids extracted — skipping", flush=True)
+        except ImportError as e:
+            print(
+                f"[pubmed] IMPORT FAILED (biopython missing?): {e}",
+                flush=True,
             )
+        except Exception as e:  # noqa: BLE001
+            import traceback as _tb
+            print(
+                f"[pubmed] enrichment failed: {type(e).__name__}: {e}",
+                flush=True,
+            )
+            _tb.print_exc()
+    else:
+        print("[pubmed] disabled via ENABLE_PUBMED_ENRICHMENT=false", flush=True)
 
     return report
 
