@@ -1085,6 +1085,23 @@ def generate_haplogroup_json(result: Dict[str, Any]) -> dict:
     if y_display == "T_Y":
         y_display = "T"
 
+    # ── Ancestral lineage chains (Biopython #3) ─────────────────────────
+    # Curated chains from mt-MRCA ("Mitochondrial Eve") or y-MRCA
+    # ("Y-chromosomal Adam") down to the user's haplogroup. Frontend
+    # renders these as a horizontal tree with "you are here" highlight.
+    # Failure is silent: if lineage is unknown, no `ancestralLineage`
+    # key is added to that section.
+    try:
+        from .haplogroup_lineage import get_mt_lineage, get_y_lineage
+        mt_lineage = get_mt_lineage(mt_display)
+        if mt_lineage:
+            mt_section["ancestralLineage"] = mt_lineage
+        y_lineage = get_y_lineage(y_display)
+        if y_lineage:
+            y_section["ancestralLineage"] = y_lineage
+    except Exception as e:  # noqa: BLE001
+        print(f"[haplogroup-lineage] enrichment skipped: {type(e).__name__}: {e}", flush=True)
+
     return {
         "reportType": "haplogroup",
         "version": "1.0",
