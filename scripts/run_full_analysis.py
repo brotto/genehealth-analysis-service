@@ -33,6 +33,7 @@ from .mental_wellbeing_analyzer import analyze_mental_wellbeing, generate_mental
 from .big_five_personality_analyzer import analyze_big_five, generate_big_five_json
 from .organ_blood_wellness_analyzer import analyze_organ_blood_wellness, generate_organ_blood_json
 from .intelligence_analyzer import analyze_intelligence, generate_intelligence_json
+from .career_genes_analyzer import analyze_career, generate_career_genes_json
 from .sports_analyzer import analyze_sports, generate_sports_json
 from .fun_traits_analyzer import analyze_fun_traits, generate_fun_traits_json
 from .celtic_analyzer import analyze_celtic, generate_celtic_json
@@ -445,6 +446,14 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Intelligence: {iq_result.found} variants found")
     except Exception as e:
         print(f"Intelligence analysis failed: {e}")
+
+    # Run Career Genes analysis (RIASEC mapping — premium)
+    try:
+        career_result = analyze_career(variants)
+        reports["career_genes"] = json.dumps(generate_career_genes_json(career_result))
+        print(f"Career Genes: {career_result.found} variants found, Holland code = {career_result.holland_code}")
+    except Exception as e:
+        print(f"Career Genes analysis failed: {e}")
 
     # Run Sports analysis (elite athletic performance — premium)
     try:
