@@ -34,6 +34,7 @@ from .big_five_personality_analyzer import analyze_big_five, generate_big_five_j
 from .organ_blood_wellness_analyzer import analyze_organ_blood_wellness, generate_organ_blood_json
 from .intelligence_analyzer import analyze_intelligence, generate_intelligence_json
 from .career_genes_analyzer import analyze_career, generate_career_genes_json
+from .chronotype_analyzer import analyze_chronotype, generate_chronotype_json
 from .sports_analyzer import analyze_sports, generate_sports_json
 from .fun_traits_analyzer import analyze_fun_traits, generate_fun_traits_json
 from .celtic_analyzer import analyze_celtic, generate_celtic_json
@@ -454,6 +455,14 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
         print(f"Career Genes: {career_result.found} variants found, Holland code = {career_result.holland_code}")
     except Exception as e:
         print(f"Career Genes analysis failed: {e}")
+
+    # Run Chronotype analysis (Lion / Bear / Wolf / Dolphin — premium)
+    try:
+        chrono_result = analyze_chronotype(variants)
+        reports["chronotype"] = json.dumps(generate_chronotype_json(chrono_result))
+        print(f"Chronotype: {chrono_result.found}/{chrono_result.panel_size} variants found, type = {chrono_result.chronotype} (morn={chrono_result.morningness_score}, frag={chrono_result.fragmentation_score})")
+    except Exception as e:
+        print(f"Chronotype analysis failed: {e}")
 
     # Run Sports analysis (elite athletic performance — premium)
     try:
