@@ -653,7 +653,7 @@ def generate_italian_json(result: Dict[str, Any]) -> Dict[str, Any]:
 
     # Build period list sorted by affinity score descending
     sorted_pops = sorted(ITALIAN_POPS, key=lambda p: -affinity_scores.get(p, 0))
-    periods = []
+    populations = []
     for pop in sorted_pops:
         proportion = round(props.get(pop, 0.0), 4)
         entry = {
@@ -665,7 +665,7 @@ def generate_italian_json(result: Dict[str, Any]) -> Dict[str, Any]:
             "description": ITALIAN_POP_DESCRIPTIONS[pop],
             "color": ITALIAN_POP_COLORS[pop],
         }
-        periods.append(entry)
+        populations.append(entry)
 
     # Top match is first in sorted list
     top_pop = sorted_pops[0]
@@ -675,13 +675,17 @@ def generate_italian_json(result: Dict[str, Any]) -> Dict[str, Any]:
         "description": ITALIAN_POP_DESCRIPTIONS[top_pop],
     }
 
+    # Renamed `periods` -> `populations` (2026-05-06) to match the contract used
+    # by every other ancestry analyzer (Viking, Celtic, British Isles, etc.).
+    # The frontend renderer accepts both keys for backward-compat with jobs
+    # already in R2 — see ItalianAncestryReport.tsx data-shape comment.
     return {
         "summary": {
             "panelSize": panel_size,
             "snpsUsed": snps_used,
             "coverage": round(snps_used / panel_size * 100, 1),
         },
-        "periods": periods,
+        "populations": populations,
         "topMatch": top_match,
         "keyMarkers": key_markers,
     }
