@@ -225,6 +225,41 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
                     max_rsids=40,
                 )
                 print(f"Live enrichment: {len(clinical_live)} variants resolved from NCBI")
+
+                # Augment each variant with the USER'S actual genotype + a
+                # zygosity heuristic. Without this the report just lists
+                # ClinVar entries indexed under the user's chip positions —
+                # which one Mensa member misread as "I have all these cancer
+                # variants" (2026-05-07). Showing genotype + zygosity makes
+                # it obvious that homozygous (most common = reference allele,
+                # not at risk) is the dominant case for the typical user.
+                for rsid_lower_or_norm, payload in list(clinical_live.items()):
+                    user_record = variants.get(rsid_lower_or_norm.lower())
+                    if not user_record:
+                        # rsid normalization could differ; try direct key
+                        user_record = variants.get(rsid_lower_or_norm)
+                    if user_record:
+                        _, _, geno = user_record
+                        # Strip any defensive whitespace, no-call markers
+                        clean_geno = (geno or "").strip().upper()
+                        # Heuristic zygosity: 2-letter genotype, both same → homozygous
+                        if not clean_geno or set(clean_geno) <= {"-"}:
+                            zygosity = "no_call"
+                        elif len(clean_geno) >= 2 and clean_geno[0] == clean_geno[1]:
+                            zygosity = "homozygous"
+                        else:
+                            zygosity = "heterozygous"
+                        payload["userGenotype"] = clean_geno or None
+                        payload["zygosity"] = zygosity
+                        # likelyCarrier: heterozygous is the clearest carrier
+                        # signal. Homozygous-alt would also count, but we
+                        # don't reliably know "alt" from dbSNP without HGVS
+                        # parsing — so we conservatively flag only het here.
+                        payload["likelyCarrier"] = (zygosity == "heterozygous")
+                    else:
+                        payload["userGenotype"] = None
+                        payload["zygosity"] = "no_call"
+                        payload["likelyCarrier"] = False
         except Exception as e:  # noqa: BLE001
             print(f"ClinVar Live enrichment skipped: {type(e).__name__}: {e}")
 
