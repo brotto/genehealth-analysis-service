@@ -86,6 +86,17 @@ def parse_genome_file(content: str, source_format: str) -> Dict[str, Tuple[str, 
 def parse_line(line: str, source_format: str) -> Tuple[str, str, str, str] | None:
     """Parse a single line based on format"""
 
+    # Strip trailing CR from CRLF-encoded files. AncestryDNA exports (and some
+    # 23andMe/MyHeritage exports done on Windows) use \r\n line endings.
+    # `content.strip().split('\n')` upstream removes the \n but leaves the \r
+    # attached to the LAST column of each line. That \r then leaks into the
+    # `genotype` field, which causes downstream dict-key lookups (used by
+    # nutrition_analyzer, skincare_analyzer, fitness_analyzer, etc.) to miss
+    # and fall through to "Uncommon Genotype" / "uncategorized" branches.
+    # First reproduced 2026-05-06 by a Mensa member on AncestryDNA whose
+    # Nutrition report showed all 17 variants as "Uncommon Genotype".
+    line = line.rstrip('\r\n')
+
     if source_format == '23andme':
         parts = line.split('\t')
         if len(parts) >= 4:
