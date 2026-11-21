@@ -151,7 +151,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Prioritize high-protein, high-fiber meals to promote satiety. Regular exercise (especially resistance training) significantly mitigates this risk. Consider working with a dietitian for personalized guidance.",
             ),
         },
-        references=["PMID:17434869", "PMID:18454148"],
+        references=["PMID:17434869", "PMID:19073975"],
     ),
 
     "rs7903146": NutritionSNP(
@@ -205,7 +205,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Focus on a balanced fat intake with emphasis on unsaturated sources. Monitor weight and metabolic markers. A Mediterranean dietary pattern is advisable.",
             ),
         },
-        references=["PMID:9614169", "PMID:12829785"],
+        references=["PMID:9806549", "PMID:10973253"],
     ),
 
     # =========================================================================
@@ -236,7 +236,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Prioritise methylfolate-rich foods and consider supplementation with L-5-MTHF (methylfolate) rather than folic acid. Ensure adequate B6 and B12 intake. Have homocysteine levels monitored by your doctor.",
             ),
         },
-        references=["PMID:7647779", "PMID:9545397"],
+        references=["PMID:7647779", "PMID:8616944"],
     ),
 
     "rs1801131": NutritionSNP(
@@ -263,7 +263,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Increase folate-rich food intake. Consider methylfolate supplementation, especially if combined with the C677T variant. Monitor homocysteine levels.",
             ),
         },
-        references=["PMID:10444342", "PMID:11814284"],
+        references=["PMID:9545395", "PMID:9719624"],
     ),
 
     "rs7041": NutritionSNP(
@@ -290,7 +290,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Regular vitamin D supplementation (1000-2000 IU daily) is advisable, especially in winter or with limited sun exposure. Have 25(OH)D levels tested and supplement accordingly.",
             ),
         },
-        references=["PMID:20541252", "PMID:22573406"],
+        references=["PMID:20541252", "PMID:20418485"],
     ),
 
     "rs12934922": NutritionSNP(
@@ -329,22 +329,22 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
         alt_allele="A",
         genotype_interpretations={
             "GG": GenotypeInterpretation(
-                label="Normal B12 Absorption",
-                meaning="You are a 'secretor' with normal FUT2 function. Your gut microbiome composition supports typical vitamin B12 absorption.",
-                recommendation="Standard dietary B12 intake from animal products, fortified foods, or supplementation (for vegetarians/vegans) is adequate.",
+                label="Common Genotype (Typical B12)",
+                meaning="You carry two copies of the common G (Gly) allele, typical of FUT2 'secretors'. In a large study of women, G-allele carriers had modestly lower average plasma vitamin B12 than A/A carriers (Hazra 2008); most people with this genotype have normal B12.",
+                recommendation="Standard dietary B12 intake from animal products or fortified foods is usually sufficient. If vegetarian or vegan, B12 supplementation is recommended.",
             ),
             "AG": GenotypeInterpretation(
-                label="Slightly Reduced B12 Levels",
-                meaning="You carry one copy of the non-secretor allele. B12 levels may be slightly lower than average due to altered gut microbiome composition.",
-                recommendation="Ensure regular B12 intake. If vegetarian or vegan, supplementation is particularly important. Monitor B12 levels periodically.",
+                label="Common Genotype (Typical B12)",
+                meaning="You carry one copy of the G allele. In the same study, average B12 levels were similar in people with one or two G alleles, and modestly lower than in A/A carriers.",
+                recommendation="Standard dietary B12 intake from animal products or fortified foods is usually sufficient. If vegetarian or vegan, B12 supplementation is recommended.",
             ),
             "AA": GenotypeInterpretation(
-                label="Lower B12 Levels Likely",
-                meaning="You are a 'non-secretor' with reduced FUT2 function. This is associated with lower circulating vitamin B12 levels and altered gut microbiome.",
-                recommendation="Consider B12 supplementation (methylcobalamin or hydroxocobalamin form). Regular B12 level monitoring is recommended. Include B12-rich foods or fortified products consistently.",
+                label="Slightly Higher B12 Levels",
+                meaning="You carry two copies of the A (Ser) allele, which is strongly linked to the FUT2 'non-secretor' variant. A/A carriers had the highest plasma vitamin B12 levels (Hazra 2008).",
+                recommendation="Standard dietary B12 intake from animal products, fortified foods, or supplementation (for vegetarians/vegans) is adequate.",
             ),
         },
-        references=["PMID:19744961", "PMID:23754956"],
+        references=["PMID:18776911", "PMID:19744961", "PMID:23754956"],
     ),
 
     "rs1800562": NutritionSNP(
@@ -371,7 +371,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Seek medical evaluation and regular serum ferritin and transferrin saturation testing. Avoid iron supplements and vitamin C supplements with meals. Limit red meat. Therapeutic phlebotomy may be recommended.",
             ),
         },
-        references=["PMID:8696333", "PMID:11196646"],
+        references=["PMID:8696333", "PMID:18199861"],
     ),
 
     "rs1799945": NutritionSNP(
@@ -398,7 +398,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Consider periodic ferritin monitoring. Avoid unnecessary iron supplementation. Discuss with your doctor if ferritin levels are elevated.",
             ),
         },
-        references=["PMID:8696333", "PMID:12472866"],
+        references=["PMID:8696333", "PMID:11874997"],
     ),
 
     # =========================================================================
@@ -429,7 +429,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Limit coffee to 1-2 cups/day. Avoid caffeine in the afternoon and evening. Consider switching to decaf or tea. Be aware of caffeine in chocolate, energy drinks, and medications.",
             ),
         },
-        references=["PMID:16522833", "PMID:18226225"],
+        references=["PMID:16522833", "PMID:10233211"],
     ),
 
     "rs4244285": NutritionSNP(
@@ -456,7 +456,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Inform your doctor of this result. Alternative medications or adjusted dosing may be needed for CYP2C19 substrates. Carry this information on a pharmacogenomics card if available.",
             ),
         },
-        references=["PMID:16625025", "PMID:21270786"],
+        references=["PMID:8195181", "PMID:35034351"],
     ),
 
     "rs671": NutritionSNP(
@@ -483,7 +483,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Avoid alcohol entirely. Even small amounts can cause severe reactions and long-term health risks (esophageal and head/neck cancers). Be cautious with fermented foods and alcohol in cooking.",
             ),
         },
-        references=["PMID:19276327", "PMID:20304485"],
+        references=["PMID:2562960", "PMID:19320537"],
     ),
 
     "rs1229984": NutritionSNP(
@@ -495,22 +495,22 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
         alt_allele="C",
         genotype_interpretations={
             "TT": GenotypeInterpretation(
-                label="Typical Alcohol Metabolism",
-                meaning="You carry the common ADH1B*1 variant. Alcohol (ethanol) is converted to acetaldehyde at a normal rate.",
-                recommendation="Standard alcohol moderation guidelines apply. Be mindful of overall intake and its health effects.",
-            ),
-            "CT": GenotypeInterpretation(
-                label="Faster Alcohol Metabolism",
-                meaning="You carry one copy of the ADH1B*2 (His47Arg) variant. You convert ethanol to acetaldehyde more rapidly, which can cause faster accumulation of acetaldehyde after drinking. This variant is protective against alcoholism.",
-                recommendation="You may experience unpleasant effects from alcohol more quickly. This can be protective against excessive drinking. Moderate your alcohol intake accordingly.",
-            ),
-            "CC": GenotypeInterpretation(
                 label="Rapid Alcohol Metabolism",
                 meaning="You are homozygous for the ADH1B*2 variant. Ethanol is converted to acetaldehyde very rapidly. You likely experience stronger reactions to alcohol. This variant is strongly protective against alcohol dependence.",
                 recommendation="Alcohol tolerance is likely low. Respect your body's signals and limit consumption. This variant is protective against alcohol dependence but does not protect against alcohol-related organ damage if you do drink.",
             ),
+            "CT": GenotypeInterpretation(
+                label="Faster Alcohol Metabolism",
+                meaning="You carry one copy of the ADH1B*2 (Arg47His) variant. You convert ethanol to acetaldehyde more rapidly, which can cause faster accumulation of acetaldehyde after drinking. This variant is protective against alcoholism.",
+                recommendation="You may experience unpleasant effects from alcohol more quickly. This can be protective against excessive drinking. Moderate your alcohol intake accordingly.",
+            ),
+            "CC": GenotypeInterpretation(
+                label="Typical Alcohol Metabolism",
+                meaning="You carry the common ADH1B*1 variant. Alcohol (ethanol) is converted to acetaldehyde at a normal rate.",
+                recommendation="Standard alcohol moderation guidelines apply. Be mindful of overall intake and its health effects.",
+            ),
         },
-        references=["PMID:15057824", "PMID:19261174"],
+        references=["PMID:21968928", "PMID:25011450"],
     ),
 
     # =========================================================================
@@ -541,7 +541,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Prepare bitter vegetables with flavour-masking techniques (roasting, cheese sauce, spices). Despite taste aversion, aim to include these cancer-protective vegetables in your diet through creative preparation.",
             ),
         },
-        references=["PMID:12595690", "PMID:16051168"],
+        references=["PMID:12595690", "PMID:15723792"],
     ),
 
     "rs1726866": NutritionSNP(
@@ -568,7 +568,7 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
                 recommendation="Use flavour-masking strategies for cruciferous vegetables. Smoothies, stir-fries with strong sauces, or raw preparations with dips can help. These vegetables are important for cancer prevention.",
             ),
         },
-        references=["PMID:12595690", "PMID:16051168"],
+        references=["PMID:12595690", "PMID:15723792"],
     ),
 
     "rs17822931": NutritionSNP(

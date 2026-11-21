@@ -6,12 +6,12 @@ predispositions, and spiritual sensitivity (including mediumship genetics).
 THREE CATEGORIES:
   1. Personality Traits - COMT, CADM2, MSRA, OPRM1, OXTR
   2. Mental Health & Stress Response - FKBP5, BDNF, MTHFR, CACNA1C, RGS2, SNAP25
-  3. Spiritual Sensitivity - HTR2A, VMAT2/SLC18A2, OXTR (absorption context)
+  3. Spiritual Sensitivity - HTR2A, TPH2 (exploratory), OXTR (absorption context)
 
 SCIENTIFIC BASIS:
   - Personality: GWAS-validated SNPs (Nature Human Behaviour 2024, Translational Psychiatry 2023)
   - Mental Health: PGC consortium studies (Cell 2024, Nature Genetics 2025)
-  - Spiritual: USP/BJPsych 2025 mediumship study (PMID 39874024), HTR2A mystical experience research
+  - Spiritual: Gattaz et al. 2025, Braz J Psychiatry (PMID 39874024), HTR2A mystical experience research
 
 IMPORTANT CAVEATS:
   - All associations are probabilistic, not deterministic
@@ -22,10 +22,9 @@ IMPORTANT CAVEATS:
 
 References:
   - PGC MDD Working Group 2024, Cell (PMC11092713) - 697 depression loci
-  - Anxiety GWAS 2025, Nature Genetics - 58 anxiety loci
-  - Wagner et al. 2025, BJPsych (PMID 39874024) - mediumship candidate genes
+  - Gattaz et al. 2025, Braz J Psychiatry (PMID 39874024) - mediumship candidate genes
   - Pasternak & Zangari 2025, Questao de Ciencia - critical review
-  - Singh et al. 2023, Translational Psychiatry - CADM2 impulsivity
+  - Sanchez-Roige et al. 2023, Translational Psychiatry - CADM2 impulsivity
 """
 
 from typing import Dict, List, Tuple, Any, Optional
@@ -79,16 +78,18 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
         },
         "scientificBasis": (
             "COMT Val158Met (rs4680) is one of the most studied functional SNPs in behavioral genetics. "
-            "The Val allele (G) produces a high-activity enzyme that clears dopamine ~4x faster "
-            "than the Met allele (A). Meta-analyses confirm small but real effects on stress "
-            "response (d ~ 0.15-0.25) and cognitive flexibility. The 'Warrior vs Worrier' model "
-            "(Goldman et al. 2005) captures the trade-off: Val/Val excels under stress but has lower "
+            "The Val allele (G) is the predominant determinant of higher COMT enzyme activity in "
+            "human prefrontal cortex (Chen et al. 2004), compared with the Met allele (A). A "
+            "meta-analysis of cognitive studies found little if any consistent effect on cognition "
+            "(Barnett et al. 2008), so this marker should be read as a tendency, not a prediction. "
+            "The 'Warrior vs Worrier' model (Stein et al. 2006) captures the proposed trade-off: Val/Val excels under stress but has lower "
             "baseline prefrontal dopamine, while Met/Met excels in baseline cognition but is more "
             "sensitive to stress."
         ),
         "references": [
-            {"pmid": "16151010", "title": "The 'warrior' and 'worrier' model for COMT", "year": 2005},
-            {"pmid": "29520078", "title": "COMT Val158Met and cognition meta-analysis", "year": 2018},
+            {"pmid": "17008817", "title": "Warriors versus worriers: the role of COMT gene variants.", "year": 2006},
+            {"pmid": "18339359", "title": "Meta-analysis of the cognitive effects of the catechol-O-methyltransferase gene Val158/108Met polymorphism.", "year": 2008},
+            {"pmid": "15457404", "title": "Functional analysis of genetic variation in catechol-O-methyltransferase (COMT): effects on mRNA, protein, and enzyme activity in postmortem human brain.", "year": 2004},
         ],
         "actionableInsights": [
             "Val/Val: You may thrive in high-pressure environments — consider leveraging this in career choices",
@@ -137,13 +138,13 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
             "CADM2 (Cell Adhesion Molecule 2) rs17518584 is one of the best-validated GWAS findings "
             "for risk-taking behavior. Replicated in UK Biobank (n>400,000) and 23andMe research "
             "cohorts. CADM2 is expressed in the brain and plays a role in synaptic development. "
-            "Effect sizes are small but consistent (Singh et al. 2023, Translational "
-            "Psychiatry). A 2023 Nature Human Behaviour study identified 27+ independent loci "
-            "for risk tolerance, with CADM2 among the strongest."
+            "Effect sizes are small but consistent (Sanchez-Roige et al. 2023, Translational "
+            "Psychiatry). A GWAS of over 1 million individuals identified 99 loci for general "
+            "risk tolerance (Karlsson Linnér et al. 2019, Nat Genet)."
         ),
         "references": [
-            {"pmid": "36658148", "title": "CADM2 implicated in impulsive personality by GWAS", "year": 2023},
-            {"pmid": "30643258", "title": "Risk tolerance GWAS in UK Biobank", "year": 2019},
+            {"pmid": "37173343", "title": "CADM2 is implicated in impulsive personality and numerous other traits by genome- and phenome-wide association studies in humans and mice.", "year": 2023},
+            {"pmid": "30643258", "title": "Genome-wide association analyses of risk tolerance and risky behaviors in over 1 million individuals identify hundreds of loci and shared genetic influences.", "year": 2019},
         ],
         "actionableInsights": [
             "TT carriers: Being aware of elevated impulsivity tendencies can help with financial and health decisions",
@@ -192,10 +193,10 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
             "MSRA (Methionine Sulfoxide Reductase A) rs4925638 has been associated with irritability, "
             "risk tolerance, and impulsivity in UK Biobank GWAS analyses. MSRA protects proteins "
             "against oxidative damage — variants may affect neuronal stress resilience and emotional "
-            "regulation pathways. Replicated in Davies et al. 2017 (PMC5537199)."
+            "regulation pathways. Replicated by Boutwell et al. 2017 (Heliyon)."
         ),
         "references": [
-            {"pmid": "28696412", "title": "Replication of CADM2 and MSRA on human behavior", "year": 2017},
+            {"pmid": "28795158", "title": "Replication and characterization of CADM2 and MSRA genes on human behavior.", "year": 2017},
         ],
         "actionableInsights": [
             "GG carriers: An antioxidant-rich diet (berries, leafy greens) may support MSRA function",
@@ -215,8 +216,8 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
                 "label": "Asp/Asp",
                 "nickname": "Typical sensitivity",
                 "interpretation": (
-                    "Reference genotype for the mu-opioid receptor. Standard pain sensitivity "
-                    "and typical placebo response. Most common genotype worldwide."
+                    "Reference genotype for the mu-opioid receptor (A118). Most common "
+                    "genotype worldwide."
                 ),
                 "score": 0.4,
             },
@@ -224,9 +225,9 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
                 "label": "Asp/Asn",
                 "nickname": "Increased sensitivity",
                 "interpretation": (
-                    "One copy of the G allele (A118G). Associated with altered pain sensitivity, "
-                    "reduced placebo response, and potentially greater frustration sensitivity. "
-                    "May experience social rejection more intensely."
+                    "One copy of the G allele (A118G). In one study, G allele carriers reported "
+                    "higher sensitivity to social rejection and showed stronger brain responses "
+                    "to it (Way et al. 2009)."
                 ),
                 "score": 0.6,
             },
@@ -234,23 +235,25 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
                 "label": "Asn/Asn",
                 "nickname": "High sensitivity",
                 "interpretation": (
-                    "Two copies of the variant allele. Greater emotional sensitivity to social "
-                    "interactions and potentially altered reward processing. Less responsive "
-                    "to placebo effects and may require different approaches for pain management."
+                    "Two copies of the G allele. G allele carriers reported higher sensitivity to "
+                    "social rejection in one study (Way et al. 2009). Response to opioid pain "
+                    "medication may also differ; discuss pain management with your clinician."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
             "OPRM1 A118G (rs1799971) affects the mu-opioid receptor, which mediates pain, reward, and "
-            "social bonding. The G allele reduces receptor expression and has been associated with greater "
-            "frustration sensitivity, reduced placebo response, and altered social "
-            "pain processing. Multiple neuroimaging studies show that the G allele is associated with "
-            "greater neural responses to social rejection (Way et al. 2009, PNAS)."
+            "social bonding. The G allele yielded lower OPRM1 mRNA and protein in human brain tissue and "
+            "cell models (Zhang et al. 2005), and binds beta-endorphin about three times more tightly "
+            "in vitro (Bond et al. 1998). G allele carriers reported higher dispositional sensitivity "
+            "to rejection and showed greater dACC and anterior insula responses to social "
+            "rejection (Way et al. 2009, PNAS)."
         ),
         "references": [
-            {"pmid": "19622738", "title": "OPRM1 A118G and social rejection sensitivity", "year": 2009},
-            {"pmid": "15583718", "title": "Functional effects of the OPRM1 A118G polymorphism", "year": 2005},
+            {"pmid": "19706472", "title": "Variation in the mu-opioid receptor gene (OPRM1) is associated with dispositional and neural sensitivity to social rejection.", "year": 2009},
+            {"pmid": "16046395", "title": "Allelic expression imbalance of human mu opioid receptor (OPRM1) caused by variant A118G.", "year": 2005},
+            {"pmid": "9689128", "title": "Single-nucleotide polymorphism in the human mu opioid receptor gene alters beta-endorphin binding and activity: possible implications for opiate addiction.", "year": 1998},
         ],
         "actionableInsights": [
             "G carriers: Your elevated emotional sensitivity can be a strength in empathic relationships",
@@ -291,8 +294,8 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
                 "nickname": "Lower social sensitivity",
                 "interpretation": (
                     "Associated with slightly lower social sensitivity and empathy scores "
-                    "in some studies. However, large-scale replications in UK Biobank "
-                    "(n>100,000) found weak and inconsistent effects."
+                    "in some studies. However, a broader meta-analysis across social "
+                    "outcomes found effects indistinguishable from zero."
                 ),
                 "score": 0.3,
             },
@@ -300,13 +303,15 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
         "scientificBasis": (
             "OXTR rs53576 is the most studied oxytocin receptor variant for social behavior. "
             "Early studies linked the GG genotype to higher empathy and prosocial behavior. "
-            "However, a 2017 meta-analysis (n>10,000) found the association weak and "
-            "inconsistent (PMID 28343138). UK Biobank analyses show minimal effect. This SNP "
+            "A population study plus meta-analysis found a significant association with empathy "
+            "in Europeans and Asians (Gong et al. 2017, PMID 28343138). However, a broader "
+            "meta-analysis across social outcomes found combined effects indistinguishable from "
+            "zero (Bakermans-Kranenburg & van IJzendoorn 2014). This SNP "
             "is included for completeness, but results should be interpreted with caution."
         ),
         "references": [
-            {"pmid": "28343138", "title": "Meta-analysis of OXTR rs53576 and empathy", "year": 2017},
-            {"pmid": "21775986", "title": "OXTR and social behavior review", "year": 2011},
+            {"pmid": "28343138", "title": "Revisiting the impact of OXTR rs53576 on empathy: A population-based study and a meta-analysis.", "year": 2017},
+            {"pmid": "23921259", "title": "A sociability gene? Meta-analysis of oxytocin receptor genotype effects in humans.", "year": 2014},
         ],
         "actionableInsights": [
             "Social behavior is predominantly shaped by environment and personal experiences",
@@ -344,21 +349,22 @@ PERSONALITY_SNPS: List[Dict[str, Any]] = [
                 "label": "AA",
                 "nickname": "Variant",
                 "interpretation": (
-                    "Two copies of the A allele. Associated with altered attachment styles "
-                    "in some studies, particularly in East Asian populations. Limited "
-                    "replication in European-ancestry cohorts."
+                    "Two copies of the A allele. Linked to attachment or social bonding in "
+                    "some individual studies, but a meta-analysis found no significant "
+                    "association with social outcomes."
                 ),
                 "score": 0.6,
             },
         },
         "scientificBasis": (
             "OXTR rs2254298 has been studied for associations with social bonding, attachment security, "
-            "and prosocial behavior. Results vary significantly by population — the "
-            "A allele shows stronger effects in East Asian population studies than in "
-            "European-ancestry samples. Limited predictive value for individual social behavior."
+            "and prosocial behavior. Minor-allele frequency differs by ancestry, but a "
+            "meta-analysis of 34 effect sizes (N = 13,547) found no significant association "
+            "with social outcomes (Bakermans-Kranenburg & van IJzendoorn 2014). Limited "
+            "predictive value for individual social behavior."
         ),
         "references": [
-            {"pmid": "21775986", "title": "OXTR polymorphisms and social behavior", "year": 2011},
+            {"pmid": "23921259", "title": "A sociability gene? Meta-analysis of oxytocin receptor genotype effects in humans.", "year": 2014},
         ],
         "actionableInsights": [
             "Attachment styles are primarily shaped by childhood caregiving experiences",
@@ -415,17 +421,17 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
             },
         },
         "scientificBasis": (
-            "FKBP5 rs1360780 is one of the most robust single-SNP findings in stress-related "
-            "psychiatry. The T allele creates an allele-specific DNA methylation response to stress "
-            "that increases FKBP5 protein expression, which binds and inhibits the glucocorticoid receptor, "
-            "disrupting cortisol feedback. A 2025 MDPI Genes review (Zannas et al.) "
-            "characterized behavioral phenotypes. The gene-by-environment interaction with childhood "
-            "maltreatment is well-replicated across multiple independent cohorts. Effect sizes are "
-            "modest but mechanistically compelling."
+            "FKBP5 rs1360780 is one of the most studied single-SNP findings in stress-related "
+            "psychiatry. In people exposed to childhood trauma, the risk allele enables "
+            "allele-specific DNA demethylation in FKBP5, increasing FKBP5 responsiveness "
+            "(Klengel et al. 2013); FKBP5 protein binds and inhibits the glucocorticoid receptor, "
+            "disrupting cortisol feedback. FKBP5 polymorphisms interacted with childhood abuse to "
+            "predict adult PTSD symptoms (Binder et al. 2008, JAMA), an interaction that has been "
+            "reported in several cohorts. Effect sizes are modest."
         ),
         "references": [
-            {"pmid": "39856776", "title": "FKBP5 rs1360780: genetic variation and behavioral phenotypes", "year": 2025},
-            {"pmid": "24029109", "title": "FKBP5 epigenetics and stress vulnerability", "year": 2013},
+            {"pmid": "18349090", "title": "Association of FKBP5 polymorphisms and childhood abuse with risk of posttraumatic stress disorder symptoms in adults.", "year": 2008},
+            {"pmid": "23201972", "title": "Allele-specific FKBP5 DNA demethylation mediates gene-childhood trauma interactions.", "year": 2013},
         ],
         "actionableInsights": [
             "TT carriers: Stress management practices (meditation, exercise) may be especially important",
@@ -468,22 +474,21 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                     "Two copies of the Met allele. Significant reduction in activity-dependent "
                     "BDNF release. Associated with lower hippocampal volume, altered "
                     "memory consolidation, and in some studies, modestly elevated depression risk — "
-                    "particularly in males and elderly populations."
+                    "in a meta-analysis, the effect was seen in men."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
             "BDNF Val66Met (rs6265) affects activity-dependent secretion of brain-derived neurotrophic "
-            "factor, crucial for synaptic plasticity. A 2023 Frontiers in Psychiatry meta-analysis "
-            "found near-null effect for MDD (OR ~0.96). However, the "
-            "Met allele shows stronger associations in males (OR 1.27) and geriatric depression "
-            "(OR ~1.48). The greatest value lies in neuroplasticity and exercise biology — BDNF "
-            "mediates many exercise-related cognitive benefits."
+            "factor, crucial for synaptic plasticity. A meta-analysis of 14 studies (2,812 cases, "
+            "10,843 controls) found no overall association with major depression, but a "
+            "significant effect in men (Met allele OR 1.27) (Verhagen et al. 2010). "
+            "BDNF is also studied in exercise and cognition research."
         ),
         "references": [
-            {"pmid": "37398592", "title": "BDNF Val66Met and depression meta-analysis", "year": 2023},
-            {"pmid": "15457404", "title": "BDNF Val66Met and hippocampal function", "year": 2004},
+            {"pmid": "12553913", "title": "The BDNF val66met polymorphism affects activity-dependent secretion of BDNF and human memory and hippocampal function.", "year": 2003},
+            {"pmid": "18852698", "title": "Meta-analysis of the BDNF Val66Met polymorphism in major depressive disorder: effects of gender and ethnicity.", "year": 2010},
         ],
         "actionableInsights": [
             "Exercise is the best-known way to increase BDNF levels — especially important for Met carriers",
@@ -509,7 +514,7 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                 "score": 0.2,
             },
             "AG": {
-                "label": "CT (heterozigoto)",
+                "label": "CT (heterozygous)",
                 "nickname": "Reduced activity (~65%)",
                 "interpretation": (
                     "One copy of the T allele (C677T). MTHFR enzyme activity reduced to "
@@ -523,10 +528,11 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                 "nickname": "Significantly reduced (~30%)",
                 "interpretation": (
                     "Two copies of the T allele. MTHFR enzyme activity reduced to approximately "
-                    "30% of normal. Meta-analysis of 30 studies finds OR = 1.20 for depression "
-                    "(TT vs CC). Effect concentrated in Asian populations. TT prevalence in "
-                    "Brazil is approximately 10%. Actionable value is high: methylfolate "
-                    "supplementation for TT carriers is widely accepted clinically."
+                    "30% of normal. In a HuGE meta-analysis, TT homozygotes had higher odds of "
+                    "unipolar depression than CC (OR 1.36, 95% CI 1.11-1.67) (Gilbody et al. 2007). "
+                    "TT prevalence in Brazil is approximately 10%. Adjunctive L-methylfolate has "
+                    "been tested in SSRI-resistant depression (Papakostas et al. 2012), although "
+                    "that trial did not select patients by MTHFR genotype."
                 ),
                 "score": 0.8,
             },
@@ -535,16 +541,19 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
             "MTHFR C677T (rs1801133) reduces methylenetetrahydrofolate reductase activity, "
             "affecting the one-carbon metabolism cycle that produces SAMe (the primary methyl "
             "donor for neurotransmitter synthesis). TT homozygotes have ~30% enzyme activity "
-            "and may develop mild hyperhomocysteinemia. Meta-analysis shows modest association "
-            "with depression (OR = 1.20, p=0.0004) concentrated in Asian populations. The greatest "
-            "clinical value is actionability: folate/methylfolate supplementation."
+            "and may develop mild hyperhomocysteinemia. In a HuGE meta-analysis, TT homozygotes "
+            "had higher odds of unipolar depression than CC (OR 1.36, 95% CI 1.11-1.67) "
+            "(Gilbody et al. 2007). Adjunctive L-methylfolate has been tested in SSRI-resistant "
+            "depression (Papakostas et al. 2012), although that trial did not select patients "
+            "by MTHFR genotype."
         ),
         "references": [
-            {"pmid": "23212058", "title": "MTHFR C677T and depression meta-analysis", "year": 2013},
-            {"pmid": "15166018", "title": "MTHFR and psychiatric disorders review", "year": 2004},
+            {"pmid": "7647779", "title": "A candidate genetic risk factor for vascular disease: a common mutation in methylenetetrahydrofolate reductase.", "year": 1995},
+            {"pmid": "17074966", "title": "Methylenetetrahydrofolate reductase (MTHFR) genetic polymorphisms and psychiatric disorders: a HuGE review.", "year": 2007},
+            {"pmid": "23212058", "title": "L-methylfolate as adjunctive therapy for SSRI-resistant major depression: results of two randomized, double-blind, parallel-sequential trials.", "year": 2012},
         ],
         "actionableInsights": [
-            "TT carriers: Consider L-methylfolate supplementation (consult a healthcare professional)",
+            "TT carriers: Discuss folate status and any supplementation with a healthcare professional",
             "Ensure adequate dietary folate intake: leafy greens, legumes, fortified foods",
             "TT carriers should monitor homocysteine levels with their doctor",
             "B12 and B6 are important cofactors — ensure adequate intake",
@@ -572,8 +581,7 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                 "nickname": "One risk allele",
                 "interpretation": (
                     "One copy of the risk A allele. Slightly altered calcium channel "
-                    "expression. Modestly elevated transdiagnostic risk for mood conditions "
-                    "(bipolar, depression, schizophrenia) — OR approximately 1.07."
+                    "expression. Modestly elevated risk for bipolar disorder."
                 ),
                 "score": 0.5,
             },
@@ -581,25 +589,24 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                 "label": "AA",
                 "nickname": "Two risk alleles",
                 "interpretation": (
-                    "Two copies of the A allele. The most consistently replicated genetic "
-                    "risk variant for bipolar disorder (OR ~1.14). This is a transdiagnostic variant "
-                    "— it confers small risk increases across multiple mood and "
-                    "psychotic conditions. Most carriers never develop any condition."
+                    "Two copies of the A allele. One of the earliest and most studied genetic "
+                    "risk variants for bipolar disorder. CACNA1C has also been implicated in other "
+                    "psychiatric conditions. Most carriers never develop any condition."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "CACNA1C rs1006737 is the most consistently replicated bipolar disorder risk SNP "
-            "across all PGC meta-analyses (OR ~1.14, p = 9.78x10^-10). It encodes the alpha-1C subunit "
+            "CACNA1C rs1006737 is one of the earliest and most studied bipolar disorder GWAS "
+            "signals (combined P = 7.0 × 10^-8; Ferreira et al. 2008). It encodes the alpha-1C subunit "
             "of the voltage-dependent L-type calcium channel, critical for neuronal excitability "
-            "and synaptic plasticity. Important: this is a transdiagnostic variant — it also increases "
-            "risk for schizophrenia and recurrent depression. The 2025 PGC4 trans-ancestral study "
-            "found 93 bipolar loci (23 new), with CACNA1C remaining among the strongest."
+            "and synaptic plasticity. CACNA1C has also been implicated in other psychiatric "
+            "conditions. The 2021 Psychiatric Genomics Consortium study of more than 40,000 "
+            "bipolar disorder cases identified 64 loci (Mullins et al. 2021)."
         ),
         "references": [
-            {"pmid": "34002096", "title": "PGC Bipolar GWAS identifies 64 loci", "year": 2021},
-            {"pmid": "21926972", "title": "CACNA1C and psychiatric phenotypes", "year": 2011},
+            {"pmid": "18711365", "title": "Collaborative genome-wide association analysis supports a role for ANK3 and CACNA1C in bipolar disorder.", "year": 2008},
+            {"pmid": "34002096", "title": "Genome-wide association study of more than 40,000 bipolar disorder cases provides new insights into the underlying biology.", "year": 2021},
         ],
         "actionableInsights": [
             "AA carriers: Mood tracking can help identify patterns early",
@@ -618,48 +625,51 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "CC",
-                "nickname": "Reference",
+                "nickname": "Elevated anxiety sensitivity",
                 "interpretation": (
-                    "Reference genotype. Standard RGS2 expression and G-protein signaling "
-                    "regulation. Typical anxiety response levels."
+                    "Two copies of the C allele. In studies of RGS2, the C allele has been "
+                    "associated with higher odds of generalized anxiety disorder and with "
+                    "behavioral inhibition and greater amygdala/insula activation to emotional "
+                    "faces. RGS2 dampens G-protein signaling, so this is a tendency, "
+                    "not a prediction."
                 ),
-                "score": 0.3,
+                "score": 0.7,
             },
             "CG": {
                 "label": "CG",
                 "nickname": "Intermediate",
                 "interpretation": (
-                    "One copy of the G allele. Potentially reduced RGS2 expression, which "
-                    "may subtly increase stress hormone signaling downstream "
-                    "of CRH receptors."
+                    "One copy of the C allele. An intermediate profile; any effect on "
+                    "anxiety sensitivity is expected to be subtle."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "GG",
-                "nickname": "Elevated anxiety sensitivity",
+                "nickname": "Reference",
                 "interpretation": (
-                    "Two copies of the G allele. Associated with higher anxiety sensitivity "
-                    "and stress reactivity in multiple studies. RGS2 dampens G-protein "
-                    "signaling — reduced RGS2 may lead to increased stress hormone "
-                    "response."
+                    "Reference genotype. Typical anxiety response levels; no anxiety-associated "
+                    "C allele copies."
                 ),
-                "score": 0.7,
+                "score": 0.3,
             },
         },
         "scientificBasis": (
             "RGS2 (Regulator of G-protein Signaling 2) rs4606 modulates signaling downstream "
-            "of corticotropin-releasing hormone (CRH) receptors. The G allele has been associated "
-            "with anxiety and stress reactivity in multiple independent studies (2008-2024). "
-            "Effect sizes are small but the finding has been replicated. A landmark 2025 anxiety "
-            "GWAS from Nature Genetics (n=122,341) identified 58 loci, further supporting "
-            "the involvement of GABAergic and stress signaling pathways."
+            "of corticotropin-releasing hormone (CRH) receptors. RGS2 markers including rs4606 "
+            "were associated with childhood behavioral inhibition, introversion and increased "
+            "amygdala/insula activation to emotional faces; rs4606 genotype explained 10-15% of the "
+            "variance in that brain activation (Smoller et al. 2008, Arch Gen Psychiatry). Each C "
+            "allele was associated with higher odds of generalized anxiety disorder (Koenen et al. "
+            "2009, Depress Anxiety), consistent with an earlier report of a higher C-allele "
+            "prevalence in panic disorder patients. Effect sizes are small."
         ),
         "references": [
-            {"pmid": "18266781", "title": "RGS2 and anxiety disorders", "year": 2008},
+            {"pmid": "18316676", "title": "Influence of RGS2 on anxiety-related temperament, personality, and brain function.", "year": 2008},
+            {"pmid": "18833580", "title": "RGS2 and generalized anxiety disorder in an epidemiologic sample of hurricane-exposed adults.", "year": 2009},
         ],
         "actionableInsights": [
-            "GG carriers: Structured relaxation techniques (progressive muscle relaxation, deep breathing) may be especially helpful",
+            "CC carriers: Structured relaxation techniques (progressive muscle relaxation, deep breathing) may be especially helpful",
             "Regular physical exercise is one of the strongest anxiolytic interventions",
             "Consider whether anxiety management strategies would benefit your daily routine",
         ],
@@ -704,13 +714,14 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
         "scientificBasis": (
             "SNAP25 (Synaptosomal-Associated Protein 25kDa) rs3746544 is a candidate gene "
             "for ADHD. SNAP25 is essential for synaptic vesicle fusion and neurotransmitter "
-            "release. Effect sizes are small. The main classic ADHD candidate genes "
+            "release. A meta-analysis of ADHD candidate-gene studies found a significant but "
+            "heterogeneous association for SNAP25 (Gizer et al. 2009). Effect sizes are small. The main classic ADHD candidate genes "
             "(DRD4, DAT1 VNTRs) are not available on consumer DNA chips. The PGC ADHD GWAS "
             "(2023, PMC10914347) identified 27 genome-wide significant loci through "
             "GWAS approaches."
         ),
         "references": [
-            {"pmid": "15742474", "title": "SNAP25 and ADHD association", "year": 2005},
+            {"pmid": "19506906", "title": "Candidate gene studies of ADHD: a meta-analytic review.", "year": 2009},
         ],
         "actionableInsights": [
             "Attention and focus are highly trainable skills regardless of genotype",
@@ -736,56 +747,58 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "C/C (102C)",
-                "nickname": "Higher receptor density",
+                "nickname": "Lower receptor expression",
                 "interpretation": (
-                    "Reference genotype associated with higher 5-HT2A receptor density in the "
-                    "cortex. Standard intensity of transcendent or mystical experiences. "
-                    "This is the most common genotype."
+                    "In human cortex, C/C carriers had lower 5-HT2A mRNA and protein than T/T "
+                    "carriers. In a PET study, lower 5-HT2A binding predicted higher "
+                    "mystical-experience scores after psilocybin. Linking this genotype to "
+                    "mystical experience is an untested inference: that study measured receptors, "
+                    "not genotype."
                 ),
-                "score": 0.3,
+                "score": 0.8,
             },
             "CT": {
-                "label": "C/T (heterozigoto)",
-                "nickname": "Intermediate receptor density",
+                "label": "C/T (heterozygous)",
+                "nickname": "Intermediate receptor expression",
                 "interpretation": (
-                    "One copy of the T allele (T102C). Intermediate 5-HT2A receptor density. "
-                    "Potentially moderate sensitivity to transcendent or altered states of "
-                    "consciousness. Psilocybin research shows intermediate intensity of "
-                    "mystical experiences with this genotype."
+                    "One copy of the C allele (T102C). Expected to have intermediate 5-HT2A "
+                    "expression. Any link to the intensity of mystical or altered states is an "
+                    "untested inference."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "T/T (102T)",
-                "nickname": "Lower receptor density",
+                "nickname": "Higher receptor expression",
                 "interpretation": (
-                    "Two copies of the T allele. Associated with lower 5-HT2A receptor density "
-                    "in the cortex. Paradoxically, studies show that individuals with fewer "
-                    "5-HT2A receptors report MORE intense mystical experiences during psilocybin "
-                    "administration. This suggests a compensatory sensitivity mechanism — fewer "
-                    "receptors, but greater individual sensitivity per receptor."
+                    "Two copies of the T allele. In human cortex, T/T carriers had higher 5-HT2A "
+                    "mRNA and protein than C/C carriers. Because lower receptor binding (not "
+                    "genotype) predicted more intense psilocybin experiences in PET research, "
+                    "the genotype-to-experience link is an untested inference."
                 ),
-                "score": 0.8,
+                "score": 0.3,
             },
         },
         "scientificBasis": (
             "HTR2A (serotonin 5-HT2A receptor) is the primary target of classic psychedelics "
             "and plays a central role in consciousness, perception, and mystical experiences. "
-            "A 2021 study (PMID 33501857) found that brain 5-HT2A receptor binding "
-            "predicts the intensity of mystical effects during psilocybin administration — "
-            "people with fewer receptors (TT genotype) paradoxically report MORE intense "
-            "experiences. rs6313 (T102C) is a synonymous variant in strong linkage disequilibrium "
-            "with the promoter variant rs6311 (A-1438G). The 5-HT2A receptor is also implicated in "
-            "absorption — the psychological trait most consistently associated with reported spiritual "
-            "and mediumistic experiences."
+            "A 2021 PET study of 16 healthy volunteers (Stenbæk et al., PMID 33501857) found that "
+            "lower pre-drug neocortical 5-HT2A binding predicted higher mystical-experience "
+            "scores after psilocybin. That study measured receptors, not genotype. In human "
+            "cortex, the 102C allele was expressed about 20% less than 102T, and C/C carriers had "
+            "lower 5-HT2A mRNA and protein than T/T carriers (Polesskaya & Sokolov 2002), so any "
+            "link between this genotype and mystical experience is an untested inference. "
+            "rs6313 (T102C) is a synonymous variant in strong linkage disequilibrium "
+            "with the promoter variant rs6311 (A-1438G). The 5-HT2A receptor has been "
+            "hypothesised to relate to absorption."
         ),
         "references": [
-            {"pmid": "33501857", "title": "Brain 5-HT2A receptor binding predicts mystical experiences", "year": 2021},
-            {"pmid": "17606772", "title": "HTR2A polymorphisms and hallucinogen response", "year": 2007},
+            {"pmid": "33501857", "title": "Brain serotonin 2A receptor binding predicts subjective temporal and mystical effects of psilocybin in healthy humans.", "year": 2021},
+            {"pmid": "11891796", "title": "Differential expression of the \"C\" and \"T\" alleles of the 5-HT2A receptor gene in the temporal cortex of normal individuals and schizophrenics.", "year": 2002},
         ],
         "actionableInsights": [
-            "TT carriers: You may have increased sensitivity to contemplative practices (meditation, prayer)",
-            "Mindfulness and meditation practices may produce particularly vivid experiences for TT carriers",
+            "Contemplative practices (meditation, prayer) are open to everyone regardless of genotype",
+            "Whether this variant relates to the vividness of contemplative experiences has not been tested",
             "This variant relates to consciousness and perception — not to any specific spiritual ability",
         ],
     },
@@ -798,45 +811,48 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
         "effectSize": "moderate",
         "genotypes": {
             "GG": {
-                "label": "G/G (A-1438)",
-                "nickname": "Reference promoter",
+                "label": "G/G (-1438G)",
+                "nickname": "Lower promoter activity",
                 "interpretation": (
-                    "Reference genotype for the HTR2A promoter. Standard levels of "
-                    "5-HT2A receptor transcription and expression."
+                    "In cells expressing HTR2A, the G allele drove lower promoter activity than "
+                    "the A allele. This is the same direction as rs6313 C/C (lower expression), "
+                    "but any link to mystical or transcendent experience is untested."
                 ),
-                "score": 0.3,
+                "score": 0.7,
             },
             "GA": {
-                "label": "G/A (heterozigoto)",
-                "nickname": "Intermediate expression",
+                "label": "G/A (heterozygous)",
+                "nickname": "Intermediate",
                 "interpretation": (
-                    "One copy of the A allele. Altered promoter activity affecting 5-HT2A "
-                    "expression. Intermediate phenotype for serotonergic sensitivity."
+                    "One copy of the A allele. Expected to have intermediate HTR2A promoter "
+                    "activity. Any link to transcendent experience is untested."
                 ),
                 "score": 0.5,
             },
             "AA": {
-                "label": "A/A (-1438G>A)",
-                "nickname": "Altered expression",
+                "label": "A/A (-1438A)",
+                "nickname": "Higher promoter activity",
                 "interpretation": (
-                    "Two copies of the A allele. This promoter variant alters HTR2A "
-                    "transcription. In linkage disequilibrium with rs6313 — together, they modulate "
-                    "the serotonergic system's role in consciousness and perception. Associated with "
-                    "altered response to serotonergic stimuli."
+                    "Two copies of the A allele. In cells expressing HTR2A, the A allele drove "
+                    "greater promoter activity than G. This is the same direction as rs6313 T/T "
+                    "(higher expression), but any link to mystical or transcendent experience "
+                    "is untested."
                 ),
-                "score": 0.7,
+                "score": 0.3,
             },
         },
         "scientificBasis": (
             "HTR2A rs6311 (A-1438G) is a promoter polymorphism in strong linkage disequilibrium "
-            "with rs6313 (T102C). Together, they modulate 5-HT2A receptor density and function. The "
+            "with rs6313 (T102C). In cells expressing HTR2A, the A allele drove greater promoter activity than G "
+            "(Parsons et al. 2004, Biol Psychiatry). The "
             "serotonin 2A receptor is the primary mediator of psychedelic and mystical experiences, and "
-            "variations in this receptor system have been associated with individual differences in absorption, "
-            "openness to experience, and self-transcendence. Twin studies show 40-50% "
-            "heritability for self-transcendence (Bouchard et al.)."
+            "variations in this receptor system have been hypothesised to relate to individual differences in "
+            "absorption, openness to experience, and self-transcendence. In older Australian twins, "
+            "self-transcendence heritability was 0.37 (men) and 0.41 (women) (Kirk et al. 1999, Twin Res)."
         ),
         "references": [
-            {"pmid": "11779785", "title": "HTR2A promoter polymorphism and receptor density", "year": 2002},
+            {"pmid": "15364038", "title": "The -1438A/G polymorphism in the 5-hydroxytryptamine type 2A receptor gene affects promoter activity.", "year": 2004},
+            {"pmid": "10480742", "title": "Self-transcendence as a measure of spirituality in a sample of older Australian twins.", "year": 1999},
         ],
         "actionableInsights": [
             "Combined with rs6313, these variants shape your serotonergic system's sensitivity profile",
@@ -845,29 +861,28 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
     },
     {
         "rsid": "rs4570625",
-        "gene": "SLC18A2",
-        "name": "Vesicular Monoamine Transport and Self-Transcendence",
-        "chromosome": "10",
-        "position": 119003566,
+        "gene": "TPH2",
+        "name": "Serotonin Synthesis (TPH2) and Self-Transcendence (Exploratory)",
+        "chromosome": "12",
+        "position": 71938143,
         "effectSize": "preliminary",
         "genotypes": {
             "GG": {
                 "label": "GG",
                 "nickname": "Reference",
                 "interpretation": (
-                    "Reference genotype for the VMAT2 region. Standard vesicular monoamine "
-                    "transporter function and neurotransmitter packaging."
+                    "Reference genotype for this TPH2 promoter variant. No known effect on "
+                    "amygdala reactivity or self-transcendence."
                 ),
-                "score": 0.3,
+                "score": 0.5,
             },
             "GT": {
                 "label": "GT",
                 "nickname": "Intermediate",
                 "interpretation": (
-                    "One copy of the T allele. In Dean Hamer's 'God Gene' hypothesis (2004), "
-                    "the T allele was associated with higher self-transcendence scores on Cloninger's "
-                    "TCI personality inventory. This finding has NOT been replicated in large-scale "
-                    "GWAS. Interpret with extreme caution."
+                    "One copy of the T allele. This TPH2 regulatory variant has been associated "
+                    "with greater amygdala reactivity (T allele). No study has linked rs4570625 to "
+                    "self-transcendence. Interpret with extreme caution."
                 ),
                 "score": 0.5,
             },
@@ -875,32 +890,30 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
                 "label": "TT",
                 "nickname": "Variant",
                 "interpretation": (
-                    "Two copies of the T allele. Hamer's original study (n~1,000) suggested "
-                    "greater self-transcendence. However, the 'God Gene' hypothesis has NOT "
-                    "been replicated in large-scale studies. VMAT2 is a real monoamine transporter "
-                    "involved in packaging dopamine, serotonin, and norepinephrine "
-                    "into vesicles — but linking it specifically to spirituality remains "
+                    "Two copies of the T allele. This TPH2 regulatory variant has been associated "
+                    "with greater amygdala reactivity (Brown et al. 2005). No study has linked "
+                    "rs4570625 to self-transcendence, so any link to spirituality remains "
                     "scientifically unvalidated."
                 ),
-                "score": 0.6,
+                "score": 0.5,
             },
         },
         "scientificBasis": (
-            "VMAT2 (SLC18A2) was proposed as the 'God Gene' by Dean Hamer in 2004. The variant "
-            "rs4570625 was associated with self-transcendence scores in a small sample "
-            "(n~1,000). VMAT2 packages monoamines (dopamine, serotonin, norepinephrine) into synaptic "
-            "vesicles — it has a genuine role in neurotransmission. However, the 'God Gene' "
-            "hypothesis has NOT been replicated in large-scale GWAS. Scientific consensus considers this "
-            "speculative. We include it for completeness and cultural interest, clearly marked as "
+            "rs4570625 is a promoter variant of TPH2 (tryptophan hydroxylase 2, the G-703T variant), "
+            "not a variant in VMAT2, the gene Dean Hamer popularised as the 'God Gene'. A regulatory "
+            "TPH2 variant biases amygdala reactivity, with the T allele associated with greater "
+            "amygdala reactivity (Brown et al. 2005). No study has linked rs4570625 to "
+            "self-transcendence. Hamer's VMAT2 hypothesis has NOT been replicated in large-scale "
+            "GWAS. This marker is included as exploratory context only, clearly marked as "
             "preliminary evidence."
         ),
         "references": [
-            {"pmid": "15520385", "title": "Hamer: The God Gene (book review)", "year": 2004},
+            {"pmid": "16044172", "title": "A regulatory variant of the human tryptophan hydroxylase-2 gene biases amygdala reactivity.", "year": 2005},
         ],
         "actionableInsights": [
             "Self-transcendence is a validated personality dimension regardless of its genetic basis",
             "Contemplative practices (meditation, prayer, nature immersion) cultivate transcendence in everyone",
-            "The 'God Gene' is a cultural concept, not an established scientific finding",
+            "The 'God Gene' is a cultural concept, not an established scientific finding; this marker is not in that gene",
         ],
     },
 ]
@@ -994,7 +1007,7 @@ DISCLAIMERS = {
     ),
     "spiritualSensitivity": (
         "This report explores emerging scientific research on the genetics of spiritual "
-        "experiences, absorption, and transcendent states. The 2025 USP/BJPsych study "
+        "experiences, absorption, and transcendent states. The 2025 USP study published in the Brazilian Journal of Psychiatry "
         "(PMID 39874024) identified candidate genes potentially associated with mediumship "
         "in Spiritist practitioners — this research is preliminary and has not been independently "
         "replicated. No validated genetic test for mediumship or spiritual ability "
@@ -1170,8 +1183,9 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
                 f"Based on {count} of {total} variants analyzed, your serotonergic profile "
                 f"suggests potentially increased sensitivity to transcendent and "
                 f"contemplative experiences. Your HTR2A (serotonin 2A receptor) variants are associated "
-                f"with altered receptor density — research shows this correlates with the "
-                f"intensity of mystical experiences. This is a genetic tendency, not a spiritual "
+                f"with altered receptor expression; a PET study found that lower receptor binding "
+                f"predicted more intense psilocybin experiences, but the link from genotype to "
+                f"experience is untested. This is a genetic tendency, not a spiritual "
                 f"diagnosis. The 2025 USP study explored similar themes through a different "
                 f"lens (immune system genetics in mediums), and both lines of research "
                 f"point to the complex biology underlying spiritual experiences."
@@ -1180,7 +1194,7 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
             return (
                 f"Based on {count} of {total} variants analyzed, your serotonergic profile "
                 f"shows an intermediate sensitivity pattern. Your HTR2A variants suggest "
-                f"typical receptor density and sensitivity to altered states. Spiritual "
+                f"intermediate receptor expression. Spiritual "
                 f"experiences are shaped by practice, culture, belief, and biology together."
             )
         else:

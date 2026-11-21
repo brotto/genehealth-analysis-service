@@ -368,7 +368,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["28198005", "25974703"],
+        "pubmed_ids": ["28198005"],
         "interpretations": {
             "normal": "Standard dosing expected to be appropriate. Initiate per clinical protocol.",
             "intermediate": "Consider 25-50% dose reduction. Monitor INR closely during initiation.",
@@ -387,7 +387,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["23698643", "22992668"],
+        "pubmed_ids": ["23698643", "35034351"],
         "interpretations": {
             "normal": "Standard clopidogrel dosing expected to be effective.",
             "intermediate": "Reduced platelet inhibition. Consider alternative antiplatelet (prasugrel or ticagrelor) if undergoing PCI.",
@@ -425,7 +425,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["22617227"],
+        "pubmed_ids": ["35152405"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Moderate myopathy risk. Monitor for muscle symptoms. Consider dose adjustment.",
@@ -444,7 +444,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["38951961"],
         "interpretations": {
             "normal": "Standard dosing expected to be appropriate.",
             "intermediate": "Slightly increased drug exposure. Consider standard dose with monitoring.",
@@ -464,7 +464,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["25974703", "31006110"],
+        "pubmed_ids": ["33387367"],
         "interpretations": {
             "normal": "Standard codeine metabolism. Expected normal analgesic effect.",
             "intermediate": "Reduced conversion to morphine. May experience decreased pain relief. Consider alternative analgesics.",
@@ -483,7 +483,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["31006110"],
+        "pubmed_ids": ["33387367"],
         "interpretations": {
             "normal": "Standard tramadol metabolism expected.",
             "intermediate": "Reduced formation of active metabolite (O-desmethyltramadol). Decreased efficacy possible.",
@@ -521,11 +521,11 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["24458010"],
+        "pubmed_ids": ["33387367"],
         "interpretations": {
             "normal": "Standard opioid receptor function and pain sensitivity.",
             "intermediate": "May have altered opioid response. Dose titration may need adjustment based on clinical response.",
-            "poor": "Reduced opioid receptor binding affinity. May require higher doses for pain relief. Monitor closely.",
+            "poor": "OPRM1/COMT variants may alter opioid response, but CPIC (2021) judges the evidence limited and makes no dosing recommendation. Dose by clinical response and monitor closely.",
             "rapid": "Standard dosing appropriate with monitoring.",
         },
         "alternatives": ["Non-opioid analgesics", "Multimodal pain management"],
@@ -541,7 +541,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["25974703", "37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be effective.",
             "intermediate": "Increased drug levels possible. Standard starting dose, but monitor for side effects.",
@@ -560,7 +560,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["25974703", "37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be effective.",
             "intermediate": "Increased drug levels possible. Standard starting dose with monitoring.",
@@ -579,7 +579,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["25974703", "37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be effective.",
             "intermediate": "Minor increase in drug levels. Standard dosing with monitoring.",
@@ -598,7 +598,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be appropriate.",
             "intermediate": "Slightly increased drug levels. Standard dosing with monitoring for side effects.",
@@ -617,7 +617,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["25974703", "37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be appropriate.",
             "intermediate": "Slightly increased drug levels. Standard starting dose appropriate.",
@@ -675,7 +675,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["37032427"],
         "interpretations": {
             "normal": "Standard dosing expected to be appropriate.",
             "intermediate": "Minor alteration in parent/metabolite ratio. Standard dosing with monitoring.",
@@ -694,7 +694,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["37002327"],
         "interpretations": {
             "normal": "Standard dosing with TDM. Smoking induces CYP1A2 and reduces clozapine levels.",
             "intermediate": "Standard dosing with TDM.",
@@ -752,7 +752,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["29385237"],
+        "pubmed_ids": ["15007088", "36443464"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Increased risk of neutropenia. Consider dose reduction if experiencing toxicity.",
@@ -771,7 +771,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["29385237", "29385238"],
+        "pubmed_ids": ["29385237"],
         "interpretations": {
             "normal": "Normal conversion to endoxifen (active metabolite). Standard dosing appropriate.",
             "intermediate": "Reduced endoxifen levels. Consider increased dose (40 mg/day) or alternative (aromatase inhibitor if postmenopausal).",
@@ -829,7 +829,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["39639188"],
         "interpretations": {
             "normal": "Rapid acetylator. Standard dosing appropriate. Lower risk of hepatotoxicity.",
             "intermediate": "Intermediate acetylator. Standard dosing with routine liver function monitoring.",
@@ -849,7 +849,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["32770672"],
         "interpretations": {
             "normal": "Standard dosing appropriate. Good acid suppression expected.",
             "intermediate": "Enhanced acid suppression. Standard dosing appropriate.",
@@ -868,11 +868,11 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["24458010"],
+        "pubmed_ids": ["32426102"],
         "interpretations": {
             "normal": "Standard dosing expected to be tolerated. Ensure adequate folate supplementation.",
-            "intermediate": "Slightly reduced folate metabolism. Ensure adequate folate/leucovorin supplementation. Monitor for toxicity.",
-            "poor": "Significantly reduced folate metabolism. Increased toxicity risk (mucositis, myelosuppression). Ensure high-dose folate supplementation and close monitoring.",
+            "intermediate": "Mildly reduced folate metabolism. Evidence that MTHFR variants change methotrexate toxicity is mixed; ensure standard folate supplementation and routine monitoring.",
+            "poor": "Reduced folate metabolism. Some studies, mainly in East Asian rheumatoid arthritis patients, link MTHFR 677TT to higher methotrexate toxicity (mucositis, myelosuppression), but the evidence is inconsistent. Ensure adequate folate supplementation and close monitoring.",
             "rapid": "Standard dosing with routine folate supplementation.",
         },
         "alternatives": ["Leflunomide", "Biologics (for RA)"],
@@ -888,7 +888,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["24458010"],
+        "pubmed_ids": ["7968118"],
         "interpretations": {
             "normal": "No Factor V Leiden detected. Standard thrombosis risk with estrogen use.",
             "intermediate": "Heterozygous Factor V Leiden. 3-8x increased VTE risk with estrogen. Discuss with provider. Consider progestin-only or non-hormonal alternatives.",
@@ -1083,7 +1083,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["25974703", "37032427"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Minor increase in drug levels. Standard dosing with monitoring.",
@@ -1102,7 +1102,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": True,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["37002327"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Standard dosing appropriate. Monitor for side effects.",
@@ -1121,7 +1121,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["28002639"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Standard dosing appropriate.",
@@ -1140,7 +1140,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "low",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["32770672"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Enhanced acid suppression at standard doses.",
@@ -1159,7 +1159,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "low",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["32770672"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Enhanced acid suppression at standard doses.",
@@ -1178,7 +1178,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["24458010"],
+        "pubmed_ids": ["24096968"],
         "interpretations": {
             "normal": "IFNL3 CC genotype. Higher probability of SVR with interferon-based therapy. DAAs now standard of care.",
             "intermediate": "IFNL3 CT genotype. Intermediate SVR probability with interferon-based therapy. DAAs recommended.",
@@ -1275,7 +1275,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["37002327"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Slightly increased active moiety levels. Standard dosing with monitoring.",
@@ -1294,7 +1294,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["30801677"],
+        "pubmed_ids": ["37002327"],
         "interpretations": {
             "normal": "Standard dosing appropriate.",
             "intermediate": "Slightly increased drug levels. Standard dosing with monitoring.",
@@ -1313,7 +1313,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "high",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["31006110"],
+        "pubmed_ids": ["33387367"],
         "interpretations": {
             "normal": "Standard conversion to hydromorphone. Normal analgesic effect expected.",
             "intermediate": "Reduced conversion to active metabolite. May need dose adjustment.",
@@ -1332,7 +1332,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "moderate",
         "cpic_level": "2A",
         "fda_label": False,
-        "pubmed_ids": ["31006110"],
+        "pubmed_ids": ["33387367"],
         "interpretations": {
             "normal": "Standard dosing appropriate. Oxycodone less dependent on CYP2D6 than codeine.",
             "intermediate": "Minor effect on oxymorphone formation. Standard dosing with monitoring.",
@@ -1351,7 +1351,7 @@ DRUG_DATABASE: Dict[str, Dict[str, Any]] = {
         "risk_level": "low",
         "cpic_level": "1A",
         "fda_label": False,
-        "pubmed_ids": ["25974703"],
+        "pubmed_ids": ["32770672"],
         "interpretations": {
             "normal": "Standard dosing appropriate. Good choice regardless of CYP2C19 status.",
             "intermediate": "Standard dosing appropriate. Less affected by CYP2C19 variation.",

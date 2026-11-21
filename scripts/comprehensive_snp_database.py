@@ -243,15 +243,15 @@ SNP_DATABASE: Dict[str, SNPInfo] = {
         rsid="rs602662",
         gene="FUT2",
         category="Nutrition",
-        risk_allele="A",
-        normal_allele="G",
-        significance="moderate",
-        condition="Vitamin B12 Absorption Variant",
-        description="May affect B12 absorption from food sources.",
+        risk_allele="G",
+        normal_allele="A",
+        significance="low",
+        condition="FUT2 Secretor Genotype (B12)",
+        description="G-allele carriers had modestly lower average plasma B12 than A/A carriers (Hazra 2008); G is the common allele and most carriers have normal B12.",
         recommendations=[
-            "Regular B12 level monitoring",
-            "May benefit from sublingual B12",
-            "Consider methylcobalamin form"
+            "Standard dietary B12 intake is usually sufficient",
+            "Vegetarians and vegans should supplement B12",
+            "Check B12 levels if you have symptoms or a restricted diet"
         ]
     ),
 

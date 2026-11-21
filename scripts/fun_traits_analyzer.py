@@ -45,7 +45,12 @@ def complement_allele(allele: str) -> str:
     return COMPLEMENT.get(allele.upper(), allele.upper())
 
 
-def count_allele(genotype: str, allele: str) -> int:
+# C/G or A/T SNPs: the complement of one allele is the other allele, so the complement
+# fallback would count the wrong allele. Count these on the forward strand only.
+NO_COMPLEMENT_FALLBACK = {"rs228697"}
+
+
+def count_allele(genotype: str, allele: str, allow_complement: bool = True) -> int:
     """
     Count occurrences of an allele in a genotype, handling complement strands.
     """
@@ -55,7 +60,7 @@ def count_allele(genotype: str, allele: str) -> int:
 
     count = genotype.count(allele)
 
-    if count == 0 and comp != allele:
+    if count == 0 and comp != allele and allow_complement:
         count = genotype.count(comp)
 
     return min(count, 2)
@@ -359,7 +364,7 @@ FUN_VARIANTS: Dict[str, FunTraitSNP] = {
     "rs228697": FunTraitSNP(
         rsid="rs228697", gene="PER3", category="Sleep & Daily Rhythm",
         trait="Morningness vs eveningness",
-        target_allele="C",
+        target_allele="G",
         result_by_count={
             2: "You probably lean toward being a NIGHT OWL — natural late "
                "bedtime and late wake time.",
@@ -367,8 +372,8 @@ FUN_VARIANTS: Dict[str, FunTraitSNP] = {
             0: "You likely lean toward being a MORNING LARK — early bed, "
                "early rise.",
         },
-        description="PER3 is a core circadian clock gene; variants shift "
-                    "preferred sleep timing.",
+        description="PER3 is a core circadian clock gene; the minor G allele of "
+                    "rs228697 was more common in evening types (Hida 2014).",
         fun_fact="About 40% of people are clearly morning or evening types; "
                  "the rest are somewhere in between.",
     ),
@@ -570,7 +575,8 @@ def analyze_fun_traits(
             _chrom, _pos, genotype = variants[rsid_lower]
             genotype = genotype.upper().replace("-", "")
 
-            target_count = count_allele(genotype, snp_info.target_allele)
+            target_count = count_allele(genotype, snp_info.target_allele,
+                                        allow_complement=snp_info.rsid not in NO_COMPLEMENT_FALLBACK)
             result_text = snp_info.result_by_count.get(
                 target_count,
                 "Indeterminate — genotype not recognized.",

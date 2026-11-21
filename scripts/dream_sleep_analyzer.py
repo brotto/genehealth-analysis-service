@@ -12,22 +12,21 @@ FOUR CATEGORIES:
                                         COMT (cross-ref), DRD4 (lucid dreams)
 
 SCIENTIFIC BASIS:
-  - Dreams & HTR2A: Nichols (2004) Pharmacol Ther — 5-HT2A receptors and dream content
-  - HTR2A rs6311: Berger et al. (2003) Neuropsychobiology — receptor density and REM
-  - DRD4 rs1800955: Schmack et al. (2013) PLOS ONE — dopamine and dream content
-  - FAAH rs324420: Fezza et al. (2014) Molecules — endocannabinoids and REM sleep
-  - PER3 VNTR / rs228697: Viola et al. (2007) Current Biology — sleep architecture
-  - ADORA2A rs5751876: Retey et al. (2005) PNAS — sleep pressure and adenosine
-  - CLOCK rs1801260: Mishima et al. (2005) Sleep — circadian rhythm and phase delay
-  - CRY1 rs2287161: Patke et al. (2017) Cell — circadian period +~50 min (DSPD)
-  - PER1 rs2735611: Katzenberg et al. (1998) / Carpen et al. (2006) — morningness
-  - PER2 rs2304672: Archer et al. (2003) Sleep — evening/morning chronotype
+  - HTR2A & hallucinogens: Nichols (2004) Pharmacol Ther — 5-HT2A receptors and hallucinogens
+  - HTR2A rs6311: Parsons et al. (2004) Biol Psychiatry — promoter activity (dream link exploratory)
+  - DRD4 rs1800955: Okuyama et al. (2000) Mol Psychiatry — novelty seeking (dream link exploratory)
+  - FAAH rs324420: Sipe et al. (2002) PNAS; Dincheva et al. (2015) Nat Commun (dream link exploratory)
+  - PER3 rs228697: Hida et al. (2014) Sci Rep — minor allele and evening preference; PER3 VNTR: Viola et al. (2007)
+  - ADORA2A rs5751876: Rétey et al. (2007) Clin Pharmacol Ther; Alsene et al. (2003) Neuropsychopharmacology
+  - CLOCK rs1801260: Katzenberg et al. (1998) Sleep; Mishima et al. (2005) Am J Med Genet B — 3111C allele and evening preference
+  - CRY1 rs2287161: Patke et al. (2017) Cell — rare CRY1 variant in familial DSPD; rs2287161 itself has no established chronotype effect
+  - PER1 rs2735611: Jones et al. (2019) Nat Commun; Carpen et al. (2006) J Hum Genet — direction for this SNP not established
 
 SPIRITUAL CONNECTION (GeneHealth identity):
   - HTR2A is at the center of both vivid dreams and spiritual sensitivity
   - Sleep paralysis and hypnagogia are frequently reported as spiritual experiences
     across cultures (visions, sense of presence, astral travel)
-  - Lucid dreams have a neurobiological basis in prefrontal dopamine (DRD4, COMT)
+  - Links between these variants and dream content are hypotheses; none has been tested directly
 
 CAVEATS:
   - All associations are probabilistic (each SNP explains <2% of variance)
@@ -141,21 +140,23 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs6311",
         "gene": "HTR2A",
-        "name": "Dream Vividness and REM Density",
+        "name": "Serotonin 2A Receptor Expression and Dreams (exploratory)",
         "chromosome": "13",
         "position": 46897343,
         "effectSize": "moderate",
         "category": "dreamVividness",
         "genotypes": {
-            "GG": {
-                "label": "G/G (-1438G)",
+            "AA": {
+                "label": "A/A (-1438A)",
                 "nickname": "Intense Dreamer",
                 "interpretation": (
-                    "Two copies of the G allele associated with higher 5-HT2A receptor expression "
-                    "in the cortex. Denser 5-HT2A receptors are linked to more vivid, emotionally "
-                    "intense, and memorable dreams — the same mechanism that explains the dream-like "
-                    "effects of psychedelic substances (which activate exactly this receptor). "
-                    "You may have a naturally rich and intense dream life."
+                    "Two copies of the -1438A allele, which showed higher promoter activity "
+                    "than the G allele in laboratory cell experiments and travels with the 102T "
+                    "allele of rs6313, which is expressed more in human cortex. This points to "
+                    "somewhat higher 5-HT2A receptor expression. If 5-HT2A receptors do shape "
+                    "dream experience, this is the genotype where an effect would be most "
+                    "expected, but no study has yet measured dream vividness by HTR2A genotype, "
+                    "so this link is a hypothesis, not an established finding."
                 ),
                 "score": 0.8,
             },
@@ -163,51 +164,53 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
                 "label": "A/G",
                 "nickname": "Moderate Dreamer",
                 "interpretation": (
-                    "Heterozygous genotype for the HTR2A promoter. Intermediate 5-HT2A expression. "
-                    "You likely experience dreams of varying intensity — sometimes very vivid, "
-                    "other times more diffuse. Dream quality may be sensitive to factors such as "
-                    "stress, diet, and substance use."
+                    "One copy of each allele. Intermediate promoter activity is expected. "
+                    "Whether this has any bearing on your dreams has not been tested; dream "
+                    "quality is strongly shaped by stress, diet, sleep timing and substance use."
                 ),
                 "score": 0.5,
             },
-            "AA": {
-                "label": "A/A (-1438A)",
+            "GG": {
+                "label": "G/G (-1438G)",
                 "nickname": "Serene Dreamer",
                 "interpretation": (
-                    "Two copies of the A allele. Slightly reduced 5-HT2A receptor expression. "
-                    "Your dreams tend to be less emotionally intrusive. You may recall fewer "
-                    "dreams upon waking, but you may enjoy quieter and more restorative REM sleep."
+                    "Two copies of the -1438G allele, which showed lower promoter activity than "
+                    "the A allele in laboratory cell experiments, pointing to somewhat lower "
+                    "5-HT2A receptor expression. Whether this relates to dream experience has "
+                    "not been tested; it remains a hypothesis."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "HTR2A rs6311 (C-1438T/A) is in the promoter of the serotonin 2A receptor gene. "
-            "The G allele increases HTR2A transcription by ~30% compared to the A allele (Polesskaya & "
-            "Sokolov, 2002). During sleep, 5-HT2A receptors are active during wakefulness and REM, "
-            "regulating the intensity and emotional content of dreams. Berger et al. (2003) "
-            "(Neuropsychobiology 47:2) demonstrated a correlation between HTR2A promoter variants "
-            "and REM sleep architecture. The connection is mechanistically clear: classic psychedelics "
-            "(LSD, psilocybin) that produce intense dream-like experiences act as agonists at "
-            "exactly this receptor. This SNP is also present in GeneHealth's mind_spirit_analyzer "
-            "in the context of spiritual sensitivity — the same variant that amplifies the dream "
-            "experience tends to amplify transcendent sensitivity during wakefulness."
+            "HTR2A rs6311 (-1438A/G) lies in the promoter of the serotonin 2A receptor gene. "
+            "Parsons et al. (2004, Biol Psychiatry) found that the -1438A allele drove significantly "
+            "greater promoter activity than G in cell lines that express HTR2A. rs6311 is in strong "
+            "linkage disequilibrium with rs6313 (102T/C), and -1438A travels with 102T. In human "
+            "temporal cortex, Polesskaya & Sokolov (2002, J Neurosci Res) found the 102C allele was "
+            "expressed about 20% less than 102T, and C/C individuals had lower 5-HT2A mRNA and "
+            "protein than T/T. Taken together, A (and T) corresponds to higher expression. The link "
+            "to dreams is a hypothesis: classic psychedelics (LSD, psilocybin) act as agonists at "
+            "this receptor and produce dream-like experiences, which motivates the idea, but no "
+            "study has measured dream vividness by HTR2A genotype. It is also a hypothesis, not a "
+            "finding, that the same variant could relate to transcendent experiences during "
+            "wakefulness."
         ),
         "references": [
-            {"pmid": "12566938", "title": "HTR2A promoter polymorphism and receptor expression", "year": 2003},
-            {"pmid": "15163253", "title": "Serotonin 2A receptor and sleep architecture", "year": 2004},
+            {"pmid": "15364038", "title": "The -1438A/G polymorphism in the 5-hydroxytryptamine type 2A receptor gene affects promoter activity.", "year": 2004},
+            {"pmid": "11891796", "title": "Differential expression of the \"C\" and \"T\" alleles of the 5-HT2A receptor gene in the temporal cortex of normal individuals and schizophrenics.", "year": 2002},
         ],
         "actionableInsights": [
-            "G/G carriers: Avoid bright screens 2h before bed — serotonergic stimulation may over-intensify dreams",
-            "Evening meditation can help 'prepare' the mental space for more integrative dreams",
-            "If dreams are disturbing, dream processing strategies (journaling) are especially valuable for you",
-            "A/A carriers: Lucid dream induction techniques (MILD, WILD) may be needed to increase dream recall",
+            "A/A carriers: Limiting bright screens in the 2 hours before bed is good sleep hygiene for everyone",
+            "Evening relaxation or meditation can help prepare for sleep",
+            "If dreams are disturbing, journaling can help you process them",
+            "Keeping a dream journal beside your bed can help with dream recall, whatever your genotype",
         ],
     },
     {
         "rsid": "rs1800955",
         "gene": "DRD4",
-        "name": "Dopamine, Dream Novelty, and Lucid Dreams",
+        "name": "Dopamine Signalling and Novelty Seeking (dream link exploratory)",
         "chromosome": "11",
         "position": 637304,
         "effectSize": "moderate",
@@ -215,63 +218,59 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Typical Dream Content",
+                "nickname": "Lower Novelty-Seeking Tendency",
                 "interpretation": (
-                    "Reference genotype for DRD4 -521. Typical expression and function of the "
-                    "dopamine D4 receptor. Your dreams tend to predominantly reflect everyday "
-                    "content and recent memories."
+                    "Two copies of the T allele, which reduces transcriptional efficiency of DRD4. "
+                    "In the original study, T/T individuals had the lowest novelty-seeking scores. "
+                    "No study has measured dream content or lucid dreaming by DRD4 genotype, so any "
+                    "link to dreams is a hypothesis."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Explorer Dreamer",
+                "nickname": "Intermediate Novelty-Seeking",
                 "interpretation": (
-                    "One copy of the C allele. The D4 receptor with the C variant has reduced "
-                    "expression in the prefrontal cortex, which may increase the likelihood of "
-                    "unusual, bizarre, or novelty-seeking dream content. Some studies associate "
-                    "DRD4 variants with lucid dream propensity."
+                    "One copy of the C allele. Novelty-seeking scores in the original study were "
+                    "intermediate between the two homozygous groups. Whether this has any bearing "
+                    "on dream content has not been tested."
                 ),
                 "score": 0.6,
             },
             "CC": {
                 "label": "C/C",
-                "nickname": "Visionary Dreamer",
+                "nickname": "Higher Novelty-Seeking Tendency",
                 "interpretation": (
-                    "Two copies of the C allele. Variant associated with a lower-affinity D4 receptor "
-                    "for dopamine. Correlated with novelty seeking, creativity, and in a dream context, "
-                    "more unusual and potentially more bizarre or visionary content. Prefrontal "
-                    "dopaminergic activity during REM is linked to dream metacognition (awareness "
-                    "that one is dreaming)."
+                    "Two copies of the C allele, associated with higher DRD4 transcriptional "
+                    "efficiency. In the original study, C/C individuals had the highest "
+                    "novelty-seeking scores. Whether this relates to dream content, such as more "
+                    "unusual dreams or lucid dreaming, has not been studied; it is a hypothesis "
+                    "built on the novelty-seeking finding."
                 ),
                 "score": 0.8,
             },
         },
         "scientificBasis": (
-            "DRD4 -521C/T (rs1800955) affects expression of the dopamine D4 receptor — variants with "
-            "lower expression in the prefrontal cortex have been associated with novelty seeking (Strobel "
-            "et al., 1999). During REM sleep, prefrontal dopamine is crucial for dream metacognition. "
-            "Schmack et al. (2013, PLOS ONE) demonstrated that dopaminergic profiles influence dream "
-            "content and bizarreness. The link to lucid dreams is explored by Hobson & Friston (2012): "
-            "consciousness during REM requires activation of frontal areas that are normally inactive — "
-            "a pattern favored by certain D4 receptor profiles. The 7-repeat DRD4 VNTR (well correlated "
-            "with rs1800955) is the allele most strongly associated with novelty, creativity, and "
-            "exploratory behaviors."
+            "DRD4 -521C/T (rs1800955) lies in the promoter of the dopamine D4 receptor gene. "
+            "Okuyama et al. (2000, Mol Psychiatry) found it significantly associated with Novelty "
+            "Seeking (P = 0.0001): C/C individuals scored highest and T/T lowest, and the T variant "
+            "reduces transcriptional efficiency. This SNP is distinct from the DRD4 exon III "
+            "repeat polymorphism. No study has measured dream content or lucid dreaming by DRD4 "
+            "genotype, so any connection to dreams is exploratory."
         ),
         "references": [
-            {"pmid": "23516459", "title": "Dopaminergic prediction errors drive dream content", "year": 2013},
-            {"pmid": "10205490", "title": "DRD4 promoter polymorphism and novelty seeking", "year": 1999},
+            {"pmid": "10673770", "title": "Identification of a polymorphism in the promoter region of DRD4 associated with the human novelty seeking personality trait.", "year": 2000},
         ],
         "actionableInsights": [
-            "CC carriers: Reality check techniques during the day can increase the probability of lucid dreams",
-            "Keep a dream journal beside your bed — your predisposition to unusual content is worth recording",
-            "TT carriers: MILD (Mnemonic Induction of Lucid Dreams) techniques may be especially effective by strengthening pre-sleep intention",
+            "Keep a dream journal beside your bed to notice your own patterns",
+            "Regular sleep and wake times support dream recall and sleep quality for everyone",
+            "If you are curious about lucid dreaming, techniques such as reality checks and MILD (Mnemonic Induction of Lucid Dreams) are widely discussed; individual results vary",
         ],
     },
     {
         "rsid": "rs324420",
         "gene": "FAAH",
-        "name": "Endocannabinoids and Dream Emotional Intensity",
+        "name": "Endocannabinoid Enzyme FAAH (dream link exploratory)",
         "chromosome": "1",
         "position": 46891060,
         "effectSize": "moderate",
@@ -279,13 +278,15 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "AA": {
                 "label": "C385A / A385A",
-                "nickname": "Emotionally Amplified Dreams",
+                "nickname": "Reduced FAAH Expression",
                 "interpretation": (
-                    "Carrier of the A allele (385A). The FAAH enzyme with 385A has reduced activity, "
-                    "resulting in higher levels of anandamide (the 'endogenous cannabinoid' or "
-                    "'bliss molecule'). Higher anandamide is associated with more emotionally intense "
-                    "dreams, with greater positive tone and, in some studies, less dream anxiety. "
-                    "You may have an emotionally rich dream life with higher hedonic tone."
+                    "Two copies of the A allele (385A, Pro129Thr). This variant gives an FAAH "
+                    "enzyme with normal catalytic properties but enhanced sensitivity to "
+                    "degradation, and in a mouse and human study it was linked to reduced FAAH "
+                    "expression, stronger fronto-amygdala connectivity, better fear-extinction "
+                    "learning and lower anxiety-like behaviour. No study has measured dream "
+                    "intensity or emotional tone by FAAH genotype, so any link to your dreams is "
+                    "exploratory."
                 ),
                 "score": 0.7,
             },
@@ -293,9 +294,8 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
                 "label": "Heterozygous C385A",
                 "nickname": "Balanced Endocannabinoid Modulation",
                 "interpretation": (
-                    "One copy of each variant. Intermediate FAAH activity and anandamide levels "
-                    "between the extremes. You likely experience a dream life with emotional "
-                    "intensity that varies depending on your waking emotional state."
+                    "One copy of each variant. FAAH function is expected to be intermediate. "
+                    "Whether this has any bearing on dreams has not been tested."
                 ),
                 "score": 0.5,
             },
@@ -303,34 +303,32 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
                 "label": "C/C (385Pro)",
                 "nickname": "Standard Endocannabinoid Processing",
                 "interpretation": (
-                    "Reference genotype with normal FAAH activity. Standard anandamide levels. "
-                    "Your dreams tend to have typical emotional intensity, without any particular "
-                    "endocannabinoid amplification."
+                    "Reference genotype with the common form of the FAAH enzyme. No particular "
+                    "effect on dreams is expected or has been shown."
                 ),
                 "score": 0.3,
             },
         },
         "scientificBasis": (
-            "FAAH (Fatty Acid Amide Hydrolase) rs324420 (C385A) is the most studied variant in the "
-            "endocannabinoid system. The 385A allele produces a protein ~30% less stable, resulting "
-            "in reduced anandamide degradation. Prather et al. (2013, PNAS) showed that A allele "
-            "carriers have reduced stress response and more positive mood. In the sleep context, the "
-            "endocannabinoid system regulates REM sleep — animals lacking FAAH (and therefore with "
-            "high anandamide) show increased REM sleep with greater neuronal activity during that "
-            "phase. Bhattacharya et al. (2021, Int J Mol Sci) reviewed the relationship between "
-            "endocannabinoids and sleep regulation, confirming the role of anandamide in REM sleep "
-            "intensity. This SNP is particularly relevant for GeneHealth's spiritual profile: "
-            "anandamide is called the 'bliss molecule' and its connection to absorption experiences "
-            "and spiritual well-being is documented."
+            "FAAH (Fatty Acid Amide Hydrolase) rs324420 (C385A) is a well-studied variant in the "
+            "endocannabinoid system. Sipe et al. (2002, PNAS) showed that the 385A (Pro129Thr) "
+            "variant gives an FAAH with normal catalytic properties but enhanced sensitivity to "
+            "proteolytic degradation. Dincheva et al. (2015, Nat Commun) found, in a knock-in mouse "
+            "and in humans, that the variant allele reduced FAAH expression, enhanced fronto-amygdala "
+            "connectivity and fear-extinction learning, and decreased anxiety-like behaviours. "
+            "Huitron-Resendiz et al. (2004, Sleep) found that mice lacking FAAH had more and more "
+            "intense slow-wave sleep at baseline. No study has measured dream intensity by FAAH "
+            "genotype, so any link to dreams is exploratory."
         ),
         "references": [
-            {"pmid": "23754379", "title": "FAAH C385A and stress reactivity in humans", "year": 2013},
-            {"pmid": "34444209", "title": "Endocannabinoid system and sleep regulation", "year": 2021},
+            {"pmid": "12060782", "title": "A missense mutation in human fatty acid amide hydrolase associated with problem drug use.", "year": 2002},
+            {"pmid": "25731744", "title": "FAAH genetic variation enhances fronto-amygdala function in mouse and human.", "year": 2015},
+            {"pmid": "15453543", "title": "Characterization of the sleep-wake patterns in mice lacking fatty acid amide hydrolase.", "year": 2004},
         ],
         "actionableInsights": [
-            "A/A carriers: Mindfulness practices that increase endogenous anandamide (meditation, exercise) can enhance your dream experience",
-            "C/C carriers: Physical exercise temporarily elevates anandamide and may enrich your dreams on subsequent nights",
-            "All genotypes: A diet rich in omega-3 fatty acids supports endocannabinoid synthesis",
+            "Regular physical exercise supports sleep quality for everyone",
+            "Consistent sleep and wake times support restorative sleep whatever your genotype",
+            "Keeping a dream journal can help you notice your own dream patterns",
         ],
     },
 ]
@@ -344,130 +342,130 @@ SLEEP_ARCHITECTURE_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs228697",
         "gene": "PER3",
-        "name": "REM Sleep Architecture and Sleep Pressure",
+        "name": "PER3 and Sleep Timing Preference",
         "chromosome": "1",
         "position": 7847208,
         "effectSize": "strong",
         "category": "sleepArchitecture",
         "genotypes": {
             "CC": {
-                "label": "Short allele (proxy 4-repeat)",
-                "nickname": "Efficient Sleeper",
+                "label": "C/C",
+                "nickname": "Typical Timing",
                 "interpretation": (
-                    "Associated with the PER3 4-repeat allele (proxy). Carriers tend to accumulate "
-                    "sleep pressure more quickly, fall asleep easily, and have efficient deep sleep. "
-                    "However, they are more sensitive to the cognitive effects of sleep deprivation. "
-                    "REM sleep is typically more compact and concentrated at the end of the night."
+                    "Two copies of the common C allele. The minor G allele of this marker was "
+                    "more prevalent in evening types, so C/C is the genotype least associated "
+                    "with eveningness in that study. This single marker explains only a small "
+                    "part of sleep-timing preference."
                 ),
                 "score": 0.4,
             },
-            "CT": {
-                "label": "Heterozygous",
-                "nickname": "Mixed Sleep Profile",
+            "CG": {
+                "label": "C/G",
+                "nickname": "Mixed Profile",
                 "interpretation": (
-                    "Heterozygous genotype. Combines characteristics of both sleep architecture "
-                    "profiles. You likely experience good sleep efficiency with a moderately rich "
-                    "dream life — the most common balance."
+                    "One copy of the minor G allele. Intermediate between the two homozygous "
+                    "groups for evening preference. Your actual sleep timing depends on many "
+                    "genes, light exposure and daily routine."
                 ),
                 "score": 0.5,
             },
-            "TT": {
-                "label": "Long allele (proxy 5-repeat)",
-                "nickname": "REM-Rich Dreamer",
+            "GG": {
+                "label": "G/G",
+                "nickname": "Evening-Leaning",
                 "interpretation": (
-                    "Associated with the PER3 5-repeat allele (proxy). This profile is fascinating: "
-                    "carriers have REM sleep more distributed throughout the night, with higher "
-                    "dream density and better dream recall. They are more cognitively resilient to "
-                    "sleep deprivation (need less sleep to function well), but have longer sleep "
-                    "onset latency. Viola et al. (2007) showed that 5/5 carriers have higher "
-                    "amplitude delta waves — more intense deep sleep."
+                    "Two copies of the minor G allele, which was more common in evening types "
+                    "than in morning types (sex-adjusted odds ratio 2.48) and in people with "
+                    "free-running circadian rhythm disorder (odds ratio 2.02) in Hida et al. "
+                    "(2014). This points to a lean toward later sleep timing, not a certainty."
                 ),
                 "score": 0.7,
             },
         },
         "scientificBasis": (
-            "PER3 (Period Circadian Regulator 3) contains a VNTR (rs57875989) of 4 or 5 repeats "
-            "of 54 base pairs, which is the most studied sleep SNP in consumer genomics. rs228697 "
-            "is a high-correlation proxy available on standard genotyping arrays. Viola et al. "
-            "(2007, Current Biology 17:4) demonstrated that 5/5 carriers have more slow-wave "
-            "activity (SWA) and higher theta EEG activity during wakefulness after sleep deprivation. "
-            "Dijk & Archer (2010, J Sleep Res) extensively reviewed how PER3 genotype modulates "
-            "both sleep homeostasis and the response to deprivation. The relevance for GeneHealth: "
-            "carriers of the long allele have naturally richer dream experiences — a finding that "
-            "connects directly to the spiritual sensitivity profile."
+            "PER3 (Period Circadian Regulator 3) is a circadian clock gene. Hida et al. (2014, "
+            "Sci Rep) screened clock gene polymorphisms and found that the minor allele of rs228697 "
+            "(G) was more prevalent in evening types than morning types (sex-adjusted OR 2.48) and "
+            "in people with free-running circadian rhythm disorder (OR 2.02). A separate, much-studied "
+            "PER3 length polymorphism (VNTR) is linked to sleep structure and sleep-loss response "
+            "(Viola et al., 2007, Curr Biol: 5/5 carriers had more slow-wave activity and larger "
+            "cognitive deficits after sleep loss) and to delayed sleep phase syndrome and extreme "
+            "diurnal preference (Archer et al., 2003, Sleep). That VNTR is not on standard "
+            "genotyping arrays, and rs228697 is not an established proxy for it, so those findings "
+            "are listed for context only."
         ),
         "references": [
-            {"pmid": "17320392", "title": "PER3 polymorphism and sleep homeostasis", "year": 2007},
-            {"pmid": "20082661", "title": "PER3 VNTR and sleep regulation", "year": 2010},
+            {"pmid": "25201053", "title": "Screening of clock gene polymorphisms demonstrates association of a PER3 polymorphism with morningness-eveningness preference and circadian rhythm sleep disorder.", "year": 2014},
+            {"pmid": "17346965", "title": "PER3 polymorphism predicts sleep structure and waking performance.", "year": 2007},
+            {"pmid": "12841365", "title": "A length polymorphism in the circadian clock gene Per3 is linked to delayed sleep phase syndrome and extreme diurnal preference.", "year": 2003},
         ],
         "actionableInsights": [
-            "TT carriers (proxy 5/5): Ensure 8+ hours — your sleep architecture is naturally longer to complete REM cycles",
-            "CC carriers (proxy 4/4): You may be more cognitively resilient to deprivation, but don't neglect quality sleep",
-            "Everyone: Maintaining regular sleep schedules maximizes REM density regardless of genotype",
+            "G/G carriers: If you lean toward evenings, bright light in the morning can help anchor your schedule",
+            "Everyone: Maintaining regular sleep schedules supports sleep quality regardless of genotype",
         ],
     },
     {
         "rsid": "rs5751876",
         "gene": "ADORA2A",
-        "name": "Sleep Pressure and Caffeine Sensitivity",
+        "name": "Caffeine Sensitivity and Sleep",
         "chromosome": "22",
         "position": 24822676,
-        "effectSize": "strong",
+        "effectSize": "moderate",
         "category": "sleepArchitecture",
         "genotypes": {
             "TT": {
                 "label": "T/T (1083T)",
-                "nickname": "High Sleep Pressure",
+                "nickname": "Mixed Evidence",
                 "interpretation": (
-                    "Genotype associated with greater adenosine A2A receptor sensitivity. "
-                    "Adenosine is the main molecule that accumulates 'sleep pressure' during "
-                    "wakefulness. TT carriers feel sleepier throughout the day, have a greater "
-                    "propensity to fall asleep, and are more sensitive to caffeine (which blocks "
-                    "exactly this receptor). When they do sleep, they tend to have deeper and more "
-                    "restorative sleep. Their dreams may be more intense after partial deprivation."
+                    "Two copies of the T allele (c.1083T>C, also called 1976T>C). Studies point in "
+                    "different directions: T/T carriers reported more anxiety after 150 mg of caffeine "
+                    "in one study (Alsene et al. 2003), while in 1,023 workers the T allele was linked to "
+                    "fewer sleep complaints and less insomnia (Erblang et al. 2019). Limiting caffeine "
+                    "late in the day is sensible advice for everyone."
                 ),
-                "score": 0.7,
+                "score": 0.5,
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Intermediate Sensitivity",
+                "nickname": "Mixed Evidence",
                 "interpretation": (
-                    "Heterozygous profile. Adenosine and caffeine sensitivity between the extremes. "
-                    "You probably tolerate moderate caffeine without major sleep impact if consumed "
-                    "before 2 PM."
+                    "One copy of each allele. Findings for this variant point in different directions "
+                    "for anxiety and for sleep, so no clear tendency can be given. Limiting caffeine "
+                    "late in the day is good practice for sleep quality."
                 ),
                 "score": 0.5,
             },
             "CC": {
                 "label": "C/C (1083C)",
-                "nickname": "Resilient Sleeper",
+                "nickname": "Mixed Evidence",
                 "interpretation": (
-                    "Lower adenosine A2A receptor sensitivity. CC carriers tend to accumulate sleep "
-                    "pressure more slowly, are less drowsy during the day, and are more tolerant of "
-                    "evening caffeine. They may function better with partial sleep deprivation, but "
-                    "deep sleep (slow waves) may be slightly reduced compared to TT carriers."
+                    "Two copies of the C allele. Studies point in different directions: the caffeine "
+                    "anxiety increase was reported for T/T rather than C/C carriers (Alsene et al. 2003), "
+                    "while T-allele carriers reported fewer sleep complaints than C/C carriers in a "
+                    "workplace study (Erblang et al. 2019). Limiting late-day caffeine remains good advice."
                 ),
-                "score": 0.3,
+                "score": 0.5,
             },
         },
         "scientificBasis": (
-            "ADORA2A rs5751876 is the best-validated caffeine sensitivity SNP. Retey et al. "
-            "(2005, PNAS 102:17) showed that T/T carriers have greater subjective and objective "
-            "caffeine sensitivity (measured by EEG and sleepiness scales). The adenosine A2A "
-            "receptor is the main target of caffeine — when adenosine binds, it signals fatigue; "
-            "when caffeine blocks, you feel awake. T/T carriers have a receptor that 'amplifies' "
-            "both the sleep signal and the wakefulness effect of caffeine. In terms of dreams: "
-            "the sleep architecture of T/T carriers favors more intense REM cycles when sleep "
-            "finally occurs, potentially amplifying the dream experience."
+            "ADORA2A encodes the adenosine A2A receptor, one of the targets of caffeine. Retey et al. "
+            "(2007, Clin Pharmacol Ther) found that c.1083T>C (rs5751876) genotype distributions differed "
+            "between self-rated caffeine-sensitive and -insensitive adults, and that genotype determined how "
+            "caffeine changed the sleep EEG. Byrne et al. (2012, Sleep), in a genome-wide study of "
+            "caffeine-induced insomnia, replicated an association at ADORA2A. For individual alleles the "
+            "findings conflict: T/T carriers reported more anxiety after caffeine (Alsene et al. 2003), "
+            "while the T allele was linked to fewer sleep complaints and less insomnia, but also shorter "
+            "sleep in low caffeine consumers (Erblang et al. 2019). Because the directions conflict, this "
+            "marker does not shift your sleep score."
         ),
         "references": [
-            {"pmid": "16188225", "title": "ADORA2A polymorphism and caffeine sensitivity", "year": 2005},
-            {"pmid": "17592536", "title": "Adenosine A2A receptor and sleep homeostasis", "year": 2007},
+            {"pmid": "17329997", "title": "A genetic variation in the adenosine A2A receptor gene (ADORA2A) contributes to individual sensitivity to caffeine effects on sleep.", "year": 2007},
+            {"pmid": "12825092", "title": "Association between A2a receptor gene polymorphisms and caffeine-induced anxiety.", "year": 2003},
+            {"pmid": "22754043", "title": "A genome-wide association study of caffeine-related sleep disturbance: confirmation of a role for a common variant in the adenosine receptor.", "year": 2012},
+            {"pmid": "31817803", "title": "The Impact of Genetic Variations in ADORA2A in the Association between Caffeine Consumption and Sleep.", "year": 2019},
         ],
         "actionableInsights": [
-            "T/T carriers: Avoid caffeine after 1 PM — your adenosinergic system amplifies the impact",
-            "C/C carriers: You may tolerate afternoon coffee, but monitor sleep quality individually",
-            "Everyone: Accumulated 'sleep debt' leads to more intense recovery dreams — use this consciously",
+            "Everyone: Limiting caffeine late in the day supports sleep",
+            "If caffeine makes you jittery or disturbs your sleep, try cutting back after early afternoon",
         ],
     },
 ]
@@ -481,7 +479,7 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs1801260",
         "gene": "CLOCK",
-        "name": "Circadian Rhythm and Sleep Phase Delay",
+        "name": "Circadian Rhythm and Evening Preference",
         "chromosome": "4",
         "position": 56292869,
         "effectSize": "moderate",
@@ -489,62 +487,63 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "C/C (3111C)",
-                "nickname": "Standard Circadian Cycle",
+                "nickname": "Evening Chronotype",
                 "interpretation": (
-                    "Reference genotype for CLOCK 3111T/C. Typical circadian period (~24h). "
-                    "You likely adapt well to conventional sleep schedules and have relative "
-                    "ease in adjusting your sleep-wake cycle."
+                    "Two copies of the 3111C allele (reported as G/G on the forward strand "
+                    "that most DNA files use). This genotype was associated with evening "
+                    "preference and later sleep timing in Katzenberg et al. (1998) and Mishima "
+                    "et al. (2005). You may find it easier to stay up late and harder to wake "
+                    "early."
                 ),
-                "score": 0.3,
+                "score": 0.7,
             },
             "CT": {
                 "label": "C/T",
                 "nickname": "Mild Evening Tendency",
                 "interpretation": (
-                    "One copy of the T allele. Associated with a slight tendency toward evening "
-                    "chronotype (night owl). You may find it easy to stay up late and difficult "
-                    "to wake up early, especially during adolescence and early adulthood."
+                    "One copy of the 3111C allele. Carriers in the original study leaned "
+                    "slightly toward eveningness."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "T/T (3111T)",
-                "nickname": "Evening Chronotype",
+                "nickname": "Standard Circadian Cycle",
                 "interpretation": (
-                    "Two copies of the T allele. Mishima et al. (2005) associated this genotype "
-                    "with delayed sleep phase and an evening circadian pattern. TT carriers have "
-                    "a greater tendency to sleep late, wake late, and function better at night. "
-                    "The melatonin peak occurs later compared to CC carriers. More intense dreams "
-                    "tend to occur near the natural late wake time of this chronotype."
+                    "Two copies of the 3111T allele (A/A on the forward strand). This is the "
+                    "most common genotype in the original studies, with relatively earlier "
+                    "sleep timing than C carriers."
                 ),
-                "score": 0.7,
+                "score": 0.3,
             },
         },
         "scientificBasis": (
-            "CLOCK 3111T/C (rs1801260) is in the 3' UTR region of the CLOCK gene, one of the main "
-            "regulators of the molecular circadian clock. CLOCK forms the CLOCK:BMAL1 heterodimer "
-            "that activates transcription of Per and Cry genes. Mishima et al. (2005, Sleep 28:1) "
-            "demonstrated a significant association of the T allele with delayed sleep phase syndrome "
-            "(DSPS) in Japanese populations. Katzenberg et al. (1998, Sleep 21:6) also reported an "
-            "association with morningness vs. eveningness. CLOCK is the 'conductor' of circadian "
-            "rhythm — variants here affect not only sleep but also the timing of hormonal peaks, "
-            "body temperature, and consequently when the most vivid dreams occur during personalized "
-            "sleep architecture."
+            "CLOCK 3111T/C (rs1801260) is in the 3' UTR of the CLOCK gene, which encodes a core "
+            "clock transcription factor that forms the CLOCK:BMAL1 heterodimer activating "
+            "transcription of Per and Cry genes. In two studies the 3111C allele was the evening allele. "
+            "Katzenberg et al. (1998, Sleep) found in 410 adults that carriers of 3111C had lower "
+            "Horne-Ostberg scores (a shift toward eveningness) and a 10-44 minute delay in preferred "
+            "timing of activity and sleep. Mishima et al. (2005, Am J Med Genet B) found in 421 "
+            "Japanese subjects that 3111C/C homozygotes had the strongest eveningness, delayed sleep "
+            "onset, shorter sleep and more daytime sleepiness compared with T carriers. The evidence "
+            "is mixed: Iwase et al. (2002, Psychiatry Res) found the 3111C allele was less frequent, "
+            "not more, in patients with delayed sleep phase syndrome."
         ),
         "references": [
-            {"pmid": "15700720", "title": "CLOCK mutation and delayed sleep phase syndrome", "year": 2005},
-            {"pmid": "9756555", "title": "CLOCK gene polymorphism and human diurnal preference", "year": 1998},
+            {"pmid": "9779516", "title": "A CLOCK polymorphism associated with human diurnal preference.", "year": 1998},
+            {"pmid": "15578592", "title": "The 3111T/C polymorphism of hClock is associated with evening preference and delayed sleep timing in a Japanese population sample.", "year": 2005},
+            {"pmid": "11927136", "title": "Mutation screening of the human Clock gene in circadian rhythm sleep disorders.", "year": 2002},
         ],
         "actionableInsights": [
-            "T/T carriers: Respect your biology — forcing a very early schedule can chronically reduce REM sleep quality",
-            "Morning sunlight exposure helps 'anchor' the circadian cycle regardless of genotype",
-            "T/T carriers who need morning schedules: low-dose melatonin (0.5mg) 5h before desired sleep time may help",
+            "C/C carriers: Respect your natural timing where you can, and avoid chronic sleep loss from forcing very early schedules",
+            "Morning sunlight exposure helps anchor the circadian cycle regardless of genotype",
+            "C/C carriers who need morning schedules: gradually shifting bedtime earlier and getting bright light soon after waking may help",
         ],
     },
     {
         "rsid": "rs2287161",
         "gene": "CRY1",
-        "name": "Long Circadian Period and Delayed Sleep",
+        "name": "CRY1 Region Variant (context only)",
         "chromosome": "12",
         "position": 107484498,
         "effectSize": "strong",
@@ -552,63 +551,55 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "C/C",
-                "nickname": "Typical Circadian Period",
+                "nickname": "Common Genotype",
                 "interpretation": (
-                    "Reference genotype. Endogenous circadian period close to 24h. "
-                    "You adapt well to conventional schedules and tend to have good synchronization "
-                    "between your internal clock and the environmental light-dark cycle."
+                    "No established effect on circadian period or chronotype is known for this "
+                    "genotype. It is shown for context only."
                 ),
-                "score": 0.3,
+                "score": 0.5,
             },
             "CG": {
                 "label": "C/G",
-                "nickname": "Slightly Extended Period",
+                "nickname": "Heterozygous",
                 "interpretation": (
-                    "One copy of the G allele. Your endogenous circadian period may be slightly "
-                    "longer than 24h. This creates a natural tendency to progressively delay the "
-                    "sleep-wake cycle if there are no strong external light anchors."
+                    "No established effect on circadian period or chronotype is known for this "
+                    "genotype. It is shown for context only."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "G/G",
-                "nickname": "Extended Circadian Period (~50 min+)",
+                "nickname": "Variant Genotype",
                 "interpretation": (
-                    "High-impact variant described by Patke et al. (2017, Cell). Carriers have "
-                    "a longer endogenous circadian period — approximately 50 minutes above average. "
-                    "This means your internal clock prefers to 'run slower', resulting in a strong "
-                    "tendency to sleep late and wake late. In free-running environments (without "
-                    "schedule obligations), carriers naturally sleep 2-3h later than average. This "
-                    "is one of the most potent chronotype variants identified to date."
+                    "No established effect on circadian period or chronotype is known for this "
+                    "genotype. It is shown for context only."
                 ),
-                "score": 0.85,
+                "score": 0.5,
             },
         },
         "scientificBasis": (
-            "CRY1 (Cryptochrome 1) is a central repressor of the molecular circadian clock — "
-            "it inhibits the CLOCK:BMAL1 heterodimer, closing the feedback loop. Patke et al. "
-            "(2017, Cell 169:2) identified a splicing mutation in CRY1 associated with familial "
-            "advanced sleep phase syndrome (FASP). rs2287161 is a linkage disequilibrium marker "
-            "for this functional variant. Carriers with a longer period have more difficulty "
-            "synchronizing with the standard solar cycle — their 'biological midnight' occurs "
-            "later. Sleep EEG studies show that carriers with a long CRY1 period have greater "
-            "accumulated slow-wave intensity when they finally sleep, potentially resulting in "
-            "richer recovery REM."
+            "CRY1 (Cryptochrome 1) is a central repressor of the molecular circadian clock: it "
+            "inhibits the CLOCK:BMAL1 heterodimer, closing the feedback loop. Patke et al. (2017, "
+            "Cell) found that a rare dominant CRY1 variant causes familial delayed sleep phase "
+            "disorder (DSPD). rs2287161 is a different, common variant near CRY1 and has not been "
+            "shown to tag Patke's variant. It has been studied mainly for an interaction with "
+            "carbohydrate intake on insulin resistance (Dashti et al., 2014, Chronobiol Int), and "
+            "has no established effect on chronotype or circadian period. This marker is shown for "
+            "context only and does not shift the chronotype score."
         ),
         "references": [
-            {"pmid": "28388406", "title": "CRY1 splice variant and delayed sleep phase disorder", "year": 2017},
-            {"pmid": "30773234", "title": "CRY1 functional variants and circadian period", "year": 2019},
+            {"pmid": "28388406", "title": "Mutation of the Human Circadian Clock Gene CRY1 in Familial Delayed Sleep Phase Disorder.", "year": 2017},
+            {"pmid": "24548145", "title": "CRY1 circadian gene variant interacts with carbohydrate intake for insulin resistance in two independent populations: Mediterranean and North American.", "year": 2014},
         ],
         "actionableInsights": [
-            "G/G carriers: Your chronotype has a strong genetic basis — validating this can relieve the social guilt of being a 'night owl'",
-            "Intense morning light exposure (10,000 lux for 30 min) is the most effective intervention for advancing the cycle",
-            "If work allows, consider adjusting schedules to respect your natural cognitive peak (typically 11 AM-1 PM for night owls)",
+            "Morning light exposure and regular schedules support a healthy circadian rhythm for everyone",
+            "If work allows, consider scheduling demanding tasks around your own natural cognitive peak",
         ],
     },
     {
         "rsid": "rs2735611",
         "gene": "PER1",
-        "name": "Morning Preference and Circadian Anticipation",
+        "name": "PER1 Region Variant (context only)",
         "chromosome": "17",
         "position": 8123949,
         "effectSize": "moderate",
@@ -616,53 +607,46 @@ CHRONOTYPE_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "AA": {
                 "label": "A/A",
-                "nickname": "Morning Chronotype",
+                "nickname": "Common Genotype",
                 "interpretation": (
-                    "Associated with morning preference. Carriers tend to fall asleep earlier, "
-                    "wake up naturally early, and have peak energy and cognition in the first "
-                    "hours of the morning. The most intense REM sleep occurs in the early morning "
-                    "cycles, which may result in more vivid dreams in the first hours after falling asleep."
+                    "No established direction of effect on chronotype is known for rs2735611. "
+                    "It is shown for context only."
                 ),
-                "score": 0.7,
+                "score": 0.5,
             },
             "AG": {
                 "label": "A/G",
-                "nickname": "Intermediate Chronotype",
+                "nickname": "Heterozygous",
                 "interpretation": (
-                    "Heterozygous genotype. Tendency toward an intermediate chronotype — you "
-                    "likely adapt reasonably well to different schedules, with a slight "
-                    "preference for waking at moderate times."
+                    "No established direction of effect on chronotype is known for rs2735611. "
+                    "It is shown for context only."
                 ),
                 "score": 0.5,
             },
             "GG": {
                 "label": "G/G",
-                "nickname": "Evening Tendency",
+                "nickname": "Variant Genotype",
                 "interpretation": (
-                    "Associated with lower morning preference. You may find it easier to stay "
-                    "awake at night and harder to wake up early. In combination with other "
-                    "circadian markers, this may indicate a moderate evening chronotype."
+                    "No established direction of effect on chronotype is known for rs2735611. "
+                    "It is shown for context only."
                 ),
-                "score": 0.4,
+                "score": 0.5,
             },
         },
         "scientificBasis": (
-            "PER1 (Period 1) is one of three 'period' genes of the circadian clock. rs2735611 "
-            "was associated with chronotype and morning preference in large-scale GWAS studies. "
-            "Jones et al. (2019, Nature Communications) identified 351 loci for chronotype in "
-            "~700,000 individuals from the UK Biobank, with PER1 among the most significant. "
-            "Carpen et al. (2006, J Sleep Res) also reported an association of PER1 variants "
-            "with morningness. PER1 regulates the circadian clock phase along with PER2 and "
-            "PER3 — variants in this gene affect how quickly the clock 'advances' in response "
-            "to morning light."
+            "PER1 (Period 1) is one of three 'period' genes of the circadian clock. Chronotype is "
+            "polygenic: Jones et al. (2019, Nat Commun) increased the number of known chronotype "
+            "loci from 24 to 351 using 697,828 UK Biobank and 23andMe participants. Carpen et al. "
+            "(2006, J Hum Genet) reported a synonymous PER1 variant (T2434C) linked to extreme "
+            "morning preference, but whether rs2735611 is that variant is not established. This "
+            "marker is shown for context and does not shift the chronotype score."
         ),
         "references": [
-            {"pmid": "30696823", "title": "GWAS of chronotype in UK Biobank identifies 351 loci", "year": 2019},
-            {"pmid": "16685255", "title": "PER1 polymorphism and diurnal preference", "year": 2006},
+            {"pmid": "30696823", "title": "Genome-wide association analyses of chronotype in 697,828 individuals provides insights into circadian rhythms.", "year": 2019},
+            {"pmid": "17051316", "title": "A silent polymorphism in the PER1 gene associates with extreme diurnal preference in humans.", "year": 2006},
         ],
         "actionableInsights": [
-            "A/A carriers: Take advantage of your morning peak — schedule creative work and important decisions before noon",
-            "G/G carriers: Consider deep work blocks in the late afternoon/early evening when your cognition peaks",
+            "Consider scheduling demanding work around the time of day when you personally feel sharpest",
             "Everyone: Consistency in wake time (even on weekends) is the most important factor for sleep quality",
         ],
     },
@@ -678,7 +662,7 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
     {
         "rsid": "rs6313",
         "gene": "HTR2A",
-        "name": "Sleep Paralysis and Hypnagogic Experiences",
+        "name": "Sleep Paralysis and Hypnagogic Experiences (exploratory)",
         "chromosome": "13",
         "position": 46897065,
         "effectSize": "moderate",
@@ -686,68 +670,63 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Defined Sleep-Wake Boundary",
+                "nickname": "Highly Permeable Boundary",
                 "interpretation": (
-                    "Reference genotype. Typical sleep-wake transition. You likely experience "
-                    "the boundary between sleep and wakefulness in a relatively clear manner, "
-                    "without frequent boundary phenomena."
+                    "Two copies of the 102T allele, which was expressed more than the 102C allele "
+                    "in human cortex, suggesting somewhat higher 5-HT2A receptor expression. "
+                    "Whether genotype relates to sleep paralysis or hypnagogic experiences has "
+                    "not been tested; this link is exploratory."
                 ),
-                "score": 0.3,
+                "score": 0.8,
             },
             "CT": {
                 "label": "C/T",
                 "nickname": "Permeable Boundary",
                 "interpretation": (
-                    "One copy of the C allele. Increased HTR2A expression may make the sleep-wake "
-                    "boundary more permeable. You may experience hypnagogic hallucinations (while "
-                    "falling asleep) or hypnopompic hallucinations (while waking), occasional sleep "
-                    "paralysis, or vivid sensations during state transitions more frequently. "
-                    "These experiences, though sometimes frightening, have a clear neurobiological "
-                    "basis and are reported in many traditions as spiritual experiences."
+                    "One copy of each allele; expression is expected to be intermediate. Whether "
+                    "this relates to sleep paralysis or hypnagogic experiences has not been "
+                    "tested; this link is exploratory."
                 ),
-                "score": 0.6,
+                "score": 0.5,
             },
             "CC": {
                 "label": "C/C",
-                "nickname": "Highly Permeable Boundary",
+                "nickname": "Defined Sleep-Wake Boundary",
                 "interpretation": (
-                    "Higher 5-HT2A receptor expression. The boundary between REM and wakefulness "
-                    "may be especially permeable for you. Episodes of sleep paralysis with rich "
-                    "hallucinatory content, spontaneous lucid dreams, and intense hypnagogic "
-                    "experiences are more likely with this profile. In many cultures, these "
-                    "sleep-wake boundary experiences are interpreted as contact with other "
-                    "dimensions, visions, or spiritual messages — and you may have a genetic "
-                    "predisposition for these boundary experiences."
+                    "Two copies of the 102C allele, which was expressed about 20% less than 102T "
+                    "in human cortex, suggesting somewhat lower 5-HT2A receptor expression. "
+                    "Whether genotype relates to sleep paralysis or hypnagogic experiences has "
+                    "not been tested; this link is exploratory."
                 ),
-                "score": 0.8,
+                "score": 0.3,
             },
         },
         "scientificBasis": (
-            "HTR2A rs6313 is another polymorphism in the serotonin 2A receptor promoter. "
-            "Sleep paralysis (SP) occurs when REM state intrudes into wakefulness — the "
-            "mechanisms that paralyze musculature during REM persist upon waking, frequently "
-            "accompanied by hypnopompic hallucinations. The serotonergic system via HTR2A "
-            "regulates the REM-wakefulness transition. Jalal & Hinton (2013, Psychol Sci) "
-            "extensively documented SP hallucinations across 30+ cultures as 'night visitors', "
-            "'demons', 'entities' — the same neurobiology expressed in distinct spiritual "
-            "narratives. Variants that increase HTR2A can increase both the probability and "
-            "the intensity of these boundary experiences."
+            "HTR2A rs6313 (102T/C) is a synonymous variant in exon 1 of the serotonin 2A receptor "
+            "gene (not a promoter polymorphism) and is in strong linkage disequilibrium with rs6311. "
+            "Polesskaya & Sokolov (2002, J Neurosci Res) found the 102T allele expressed more than "
+            "102C in human temporal cortex. Sleep paralysis (SP) occurs when REM-state muscle "
+            "paralysis persists into wakefulness. A systematic review (Denis et al., 2018, Sleep Med "
+            "Rev) found it is associated with substance use, stress and trauma, genetic influences, "
+            "physical illness, personality, anomalous beliefs, sleep problems or disruption, and "
+            "anxiety symptoms. No study has linked HTR2A genotype to sleep paralysis, so this "
+            "marker is shown as an exploratory hypothesis."
         ),
         "references": [
-            {"pmid": "23983260", "title": "Sleep paralysis hallucinations across cultures", "year": 2013},
-            {"pmid": "11774094", "title": "HTR2A polymorphisms and serotonin receptor expression", "year": 2001},
+            {"pmid": "11891796", "title": "Differential expression of the \"C\" and \"T\" alleles of the 5-HT2A receptor gene in the temporal cortex of normal individuals and schizophrenics.", "year": 2002},
+            {"pmid": "28735779", "title": "A systematic review of variables associated with sleep paralysis.", "year": 2018},
         ],
         "actionableInsights": [
-            "CC carriers: If sleep paralysis is disturbing, sleeping on your side (not on your back) significantly reduces frequency",
-            "You can explore lucid dream induction techniques — your permeable boundary can be a gateway",
-            "Understanding the neurobiology of these states can transform frightening experiences into conscious exploration",
-            "Meditative practices that work with hypnagogic states (yoga nidra, NSDR) are especially relevant for your profile",
+            "If sleep paralysis is disturbing, keeping a regular sleep schedule and reducing stress and sleep disruption are sensible first steps",
+            "Sleeping on your side rather than your back is a commonly suggested tip for some people",
+            "Meditative practices such as yoga nidra or NSDR can be helpful for relaxation around sleep",
+            "If episodes are frequent or distressing, consult a sleep medicine specialist",
         ],
     },
     {
         "rsid": "rs6265",
         "gene": "BDNF",
-        "name": "Dream Memory Consolidation and Neuroplasticity",
+        "name": "Sleep Intensity and Neuroplasticity",
         "chromosome": "11",
         "position": 27658369,
         "effectSize": "moderate",
@@ -755,60 +734,56 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "CC": {
                 "label": "Val/Val",
-                "nickname": "Standard Dream Consolidation",
+                "nickname": "Standard Sleep Profile",
                 "interpretation": (
-                    "Reference genotype. Normal activity-dependent BDNF secretion. Memory "
-                    "consolidation during sleep follows the typical pattern — dreams related "
-                    "to recent events and usual emotional processing."
+                    "Reference genotype with normal activity-dependent BDNF secretion. In a small "
+                    "study (Bachmann et al., 2012), Val/Val participants had higher deep (stage 4) "
+                    "sleep and NREM slow-wave activity than Val/Met participants."
                 ),
                 "score": 0.3,
             },
             "CT": {
                 "label": "Val/Met",
-                "nickname": "Altered Dream Consolidation",
+                "nickname": "Intermediate Profile",
                 "interpretation": (
-                    "One copy of the Met allele. Reduced activity-dependent BDNF secretion may "
-                    "affect how emotional memories are processed and consolidated during sleep. "
-                    "You may have dreams with replay of emotionally intense events more frequently "
-                    "— your brain may need more REM 'iterations' to process emotionally charged "
-                    "experiences."
+                    "One copy of the Met allele, which impairs activity-dependent secretion of "
+                    "mature BDNF. In Bachmann et al. (2012), Val/Met participants showed lower "
+                    "deep-sleep intensity than Val/Val. No study has measured dream recall or "
+                    "content by BDNF genotype, so any dream link is exploratory."
                 ),
                 "score": 0.5,
             },
             "TT": {
                 "label": "Met/Met",
-                "nickname": "Intensified Dream Processing",
+                "nickname": "Altered Sleep Intensity",
                 "interpretation": (
-                    "Two copies of the Met allele (Val66Met). The reduction in activity-dependent "
-                    "BDNF release affects hippocampal plasticity and memory consolidation. In the "
-                    "dream context, this may manifest as more frequent dreams processing emotional "
-                    "memories, recurrent dreams during stressful periods (the brain trying to "
-                    "'resolve' via REM), and possibly greater dream rumination. Regular exercise "
-                    "elevates BDNF and can improve the quality of processing during sleep."
+                    "Two copies of the Met allele (Val66Met), which impairs activity-dependent "
+                    "secretion of mature BDNF. In Bachmann et al. (2012), Met carriers showed "
+                    "lower deep-sleep intensity than Val/Val. No study has measured dream recall "
+                    "or content by BDNF genotype, so any dream link is exploratory. Regular "
+                    "exercise supports overall brain health and sleep."
                 ),
                 "score": 0.65,
             },
         },
         "scientificBasis": (
-            "BDNF Val66Met (rs6265) is already in GeneHealth's mind_spirit_analyzer in the context "
-            "of daytime neuroplasticity. Here, the focus is on BDNF's role in memory consolidation "
-            "during sleep. Walker & Stickgold (2004, Neuron 44:1) established that REM sleep is "
-            "critical for the consolidation of procedural and emotional memories. BDNF is the "
-            "main mediator of synaptic plasticity during this consolidation. Bhattacharya et al. "
-            "(2015, Neurobiology of Sleep and Circadian Rhythms) reviewed how BDNF variants "
-            "affect sleep-dependent memory consolidation. This SNP appears in two contexts on "
-            "the GeneHealth platform: during wakefulness (plasticity and mood) and during sleep "
-            "(dream consolidation and nocturnal emotional processing) — illustrating the "
-            "mind-sleep continuum."
+            "BDNF Val66Met (rs6265) is also in GeneHealth's mind_spirit_analyzer in the context of "
+            "daytime neuroplasticity. The Met allele impairs activity-dependent secretion of mature "
+            "BDNF. Tononi & Cirelli (2014, Neuron) review how sleep supports synaptic homeostasis and "
+            "memory consolidation. Bachmann et al. (2012, Sleep) compared 11 Val/Met with 11 Val/Val "
+            "participants and found deep stage-4 sleep and NREM slow-wave activity were higher in "
+            "Val/Val than Val/Met in both baseline and recovery nights, and Val/Val had better 2-back "
+            "accuracy. No study has measured dream recall or content by BDNF genotype, so any "
+            "dream-related interpretation is exploratory."
         ),
         "references": [
-            {"pmid": "15450160", "title": "Sleep and the price of plasticity", "year": 2004},
-            {"pmid": "26779544", "title": "BDNF and sleep-dependent memory consolidation", "year": 2015},
+            {"pmid": "24411729", "title": "Sleep and the price of plasticity: from synaptic and cellular homeostasis to memory consolidation and integration.", "year": 2014},
+            {"pmid": "22379239", "title": "The BDNF Val66Met polymorphism modulates sleep intensity: EEG frequency- and state-specificity.", "year": 2012},
         ],
         "actionableInsights": [
-            "TT carriers: Aerobic exercise (especially morning/afternoon) elevates BDNF and can dramatically improve dream processing quality",
-            "Pre-sleep journaling helps 'pre-digest' emotional content before REM needs to process it",
-            "Val/Val carriers: Your sleep memory processing is efficient — take advantage by sleeping well after important learning",
+            "Regular aerobic exercise supports sleep and brain health for everyone",
+            "Pre-sleep journaling can help quiet a busy mind before bed",
+            "Sleeping well after important learning is a good habit for every genotype",
         ],
     },
 ]
@@ -872,14 +847,14 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
 
     summaries = {
         "dreamVividness": {
-            0.65: "Your genetic profile suggests a naturally intense and rich dream life — vivid, emotionally charged dreams with good memorability are likely characteristics.",
-            0.45: "You have a balanced dream profile — with potential for vivid dreams under favorable conditions, especially after emotionally intense days.",
-            0.0: "Your profile suggests a more serene approach to dream life — dreams tend to be less intrusive, with moderate recall.",
+            0.65: "Your markers lean toward higher serotonin 2A receptor expression and a higher novelty-seeking tendency. Whether this relates to dream life is an untested hypothesis.",
+            0.45: "Your markers fall in an intermediate range. Any link to dream life is an untested hypothesis.",
+            0.0: "Your markers lean toward lower expression or lower novelty-seeking scores. Any link to dream life is an untested hypothesis.",
         },
         "sleepArchitecture": {
-            0.65: "Your sleep architecture tends toward rich REM cycles and intense deep sleep — you likely need adequate hours to complete your naturally longer cycles.",
-            0.45: "Balanced sleep architecture with good response to schedule regularity.",
-            0.0: "Efficient sleep with rapid pressure buildup — you can function well with more compact cycles.",
+            0.65: "Your markers here lean toward evening timing preference. Regular schedules and limiting late caffeine are sensible for everyone.",
+            0.45: "Intermediate profile for sleep timing; regular schedules help everyone.",
+            0.0: "Your markers here lean toward typical sleep timing.",
         },
         "chronotype": {
             0.65: "Your biological clock has a strong evening (night owl) tendency with a solid genetic basis.",
@@ -887,9 +862,9 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
             0.0: "Strong predisposition to a morning chronotype — you likely function best early.",
         },
         "nocturnal": {
-            0.65: "High probability of sleep-wake boundary experiences (hypnagogia, sleep paralysis, spontaneous lucid dreams).",
-            0.45: "Moderate propensity for nocturnal phenomena — boundary experiences are possible under deprivation or stress conditions.",
-            0.0: "Profile with typically well-defined sleep-wake transitions.",
+            0.65: "Your markers lean toward higher HTR2A expression and altered sleep intensity. Links to sleep paralysis or hypnagogia are untested hypotheses.",
+            0.45: "Intermediate markers; links to nocturnal phenomena are untested hypotheses. Stress and sleep disruption are known contributors to sleep paralysis.",
+            0.0: "Markers lean toward lower expression; links to nocturnal phenomena are untested hypotheses.",
         },
     }
 
@@ -923,9 +898,9 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
             0.0: "Serene Dreamer",
         },
         "sleepArchitecture": {
-            0.65: "REM-Rich Architecture",
-            0.45: "Balanced Architecture",
-            0.0: "Efficient and Compact Sleep",
+            0.65: "Evening-Leaning Timing",
+            0.45: "Intermediate Profile",
+            0.0: "Typical Timing",
         },
         "chronotype": {
             0.65: "Genetic Night Owl",
@@ -933,9 +908,9 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
             0.0: "Genetic Early Bird",
         },
         "nocturnal": {
-            0.65: "Boundary Explorer",
-            0.45: "Moderate Sensitivity",
-            0.0: "Defined Boundary",
+            0.65: "Higher HTR2A Expression",
+            0.45: "Intermediate Profile",
+            0.0: "Lower HTR2A Expression",
         },
     }
 
@@ -1018,9 +993,8 @@ def generate_dream_sleep_json(result: Dict[str, Any]) -> Dict[str, Any]:
         "crossReferences": {
             "mindSpirit": (
                 "HTR2A (rs6311, rs6313) and BDNF (rs6265) also appear in the Mind & Spirit "
-                "report. The same neurobiology that amplifies spiritual sensitivity during "
-                "wakefulness manifests as an intense dream life during sleep — consciousness "
-                "is a continuum."
+                "report. Whether the same variants relate to experiences during wakefulness "
+                "and during sleep is a hypothesis that has not been tested."
             ),
         },
     }

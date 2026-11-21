@@ -148,9 +148,9 @@ GENETIC_MARKERS: Dict[str, Dict[str, Any]] = {
         "dimension": "spiritual_sensitivity",
         "label": "Spiritual / Mystical Sensitivity",
         "interpretations": {
-            "TT": {"label": "High sensitivity", "score": 1.0, "desc": "Enhanced serotonin 2A receptor activity — higher mystical/spiritual experience tendency"},
-            "CT": {"label": "Moderate sensitivity", "score": 0.5, "desc": "Moderate serotonin receptor sensitivity"},
-            "CC": {"label": "Standard sensitivity", "score": 0.0, "desc": "Typical serotonin 2A function — more grounded, less prone to mystical states"},
+            "CC": {"label": "High sensitivity", "score": 1.0, "desc": "Lower serotonin 2A receptor expression; in PET research lower receptor binding predicted more intense mystical experiences (genotype link untested)"},
+            "CT": {"label": "Moderate sensitivity", "score": 0.5, "desc": "Intermediate serotonin 2A receptor expression"},
+            "TT": {"label": "Standard sensitivity", "score": 0.0, "desc": "Higher serotonin 2A receptor expression; genotype link to mystical experience untested"},
         },
     },
     # DRD4 — Novelty seeking
@@ -170,9 +170,9 @@ GENETIC_MARKERS: Dict[str, Dict[str, Any]] = {
         "dimension": "chronotype",
         "label": "Chronotype (Morning/Evening)",
         "interpretations": {
-            "TT": {"label": "Night owl tendency", "score": 1.0, "desc": "CLOCK variant associated with evening preference and later sleep onset"},
+            "CC": {"label": "Night owl tendency", "score": 1.0, "desc": "CLOCK 3111C variant associated with evening preference and later sleep onset"},
             "TC": {"label": "Intermediate", "score": 0.5, "desc": "No strong genetic preference — chronotype shaped mainly by habits"},
-            "CC": {"label": "Morning lark tendency", "score": 0.0, "desc": "CLOCK variant associated with earlier wake times and morning alertness"},
+            "TT": {"label": "Morning lark tendency", "score": 0.0, "desc": "CLOCK 3111T variant associated with relatively earlier sleep timing"},
         },
     },
     # RGS2 — Anxiety susceptibility
@@ -192,9 +192,9 @@ GENETIC_MARKERS: Dict[str, Dict[str, Any]] = {
         "dimension": "cognitive_performance",
         "label": "Cognitive Performance",
         "interpretations": {
-            "GG": {"label": "Enhanced cognition", "score": 1.0, "desc": "SNAP25 variant associated with higher IQ and cognitive performance"},
+            "AA": {"label": "Enhanced cognition", "score": 1.0, "desc": "SNAP25 A allele associated with slightly higher performance IQ in a family study"},
             "AG": {"label": "Typical cognition", "score": 0.5, "desc": "Standard cognitive performance"},
-            "AA": {"label": "Standard cognition", "score": 0.3, "desc": "Standard cognitive performance — no deficit, just population average"},
+            "GG": {"label": "Standard cognition", "score": 0.3, "desc": "Standard cognitive performance — no deficit, just population average"},
         },
     },
     # KIBRA — Memory
@@ -214,9 +214,9 @@ GENETIC_MARKERS: Dict[str, Dict[str, Any]] = {
         "dimension": "transcendence",
         "label": "Self-Transcendence",
         "interpretations": {
-            "CC": {"label": "Higher transcendence", "score": 1.0, "desc": "VMAT2 variant associated with higher self-transcendence and spiritual inclination"},
+            "CC": {"label": "Higher transcendence", "score": 1.0, "desc": "VMAT2 variant; a link to self-transcendence was proposed (Hamer's 'God gene' idea) but has not been replicated"},
             "CT": {"label": "Moderate transcendence", "score": 0.5, "desc": "Intermediate self-transcendence tendency"},
-            "TT": {"label": "Lower transcendence", "score": 0.0, "desc": "More materialist/pragmatic orientation — lower self-transcendence scores"},
+            "TT": {"label": "Lower transcendence", "score": 0.0, "desc": "Lower score on this unreplicated self-transcendence marker"},
         },
     },
     # MSRA — Irritability / behavioral inhibition
@@ -727,20 +727,26 @@ def _read_genetic_markers(
             gt_comp = gt_clean.translate(_COMPLEMENT)
             gt_comp_sorted = "".join(sorted(gt_comp))
 
-            # Find matching interpretation (try direct first, then complement)
-            for genotype, interp in marker_info["interpretations"].items():
-                gs = "".join(sorted(genotype))
-                if gs == gt_sorted or gs == gt_comp_sorted:
-                    results[rsid] = {
-                        "gene": marker_info["gene"],
-                        "dimension": marker_info["dimension"],
-                        "label": marker_info["label"],
-                        "genotype": gt_clean,
-                        "interpretation": interp["label"],
-                        "score": interp["score"],
-                        "description": interp["desc"],
-                    }
+            # Find matching interpretation: direct strand across all keys first, then complement.
+            # (A single pass would let C/G or A/T SNPs match the wrong key via the complement.)
+            match = None
+            for target in (gt_sorted, gt_comp_sorted):
+                for genotype, interp in marker_info["interpretations"].items():
+                    if "".join(sorted(genotype)) == target:
+                        match = interp
+                        break
+                if match is not None:
                     break
+            if match is not None:
+                results[rsid] = {
+                    "gene": marker_info["gene"],
+                    "dimension": marker_info["dimension"],
+                    "label": marker_info["label"],
+                    "genotype": gt_clean,
+                    "interpretation": match["label"],
+                    "score": match["score"],
+                    "description": match["desc"],
+                }
 
     return results
 

@@ -35,7 +35,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="C",
         effect="Slightly increased risk of autism spectrum traits",
         description="CNTNAP2 is involved in neural development and language. Variants associated with autism and language delays.",
-        references=["PMID:18179900"]
+        references=["PMID:18179893"]
     ),
     "rs7794745": TraitSNP(
         rsid="rs7794745",
@@ -45,7 +45,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Associated with autism spectrum traits",
         description="Another CNTNAP2 variant linked to autism and social communication differences.",
-        references=["PMID:18179900"]
+        references=["PMID:18179894"]
     ),
     "rs1858830": TraitSNP(
         rsid="rs1858830",
@@ -75,9 +75,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Cognitive",
         trait="ADHD Risk",
         risk_allele="C",
-        effect="Increased ADHD risk, novelty seeking",
-        description="Dopamine receptor D4 variant. Associated with attention and novelty-seeking behavior.",
-        references=["PMID:11943377"]
+        effect="Higher novelty-seeking scores in some studies; link to ADHD not consistently replicated",
+        description="Promoter variant (-521C/T) of the dopamine D4 receptor gene. The C allele was associated with higher novelty-seeking scores in a Japanese sample (Okuyama 2000); findings for ADHD are mixed.",
+        references=["PMID:10673770"]
     ),
     "rs27072": TraitSNP(
         rsid="rs27072",
@@ -85,9 +85,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Cognitive",
         trait="ADHD Risk",
         risk_allele="A",
-        effect="Associated with ADHD and dopamine transport",
-        description="Dopamine transporter gene. Affects dopamine reuptake in the brain.",
-        references=["PMID:12893112"]
+        effect="Dopamine transporter variant studied in ADHD; not an established risk marker",
+        description="SLC6A3 encodes the dopamine transporter, the target of stimulant ADHD medications. Candidate-gene findings for SLC6A3 in ADHD are heterogeneous across studies (Gizer 2009 meta-analysis).",
+        references=["PMID:19506906"]
     ),
     "rs5569": TraitSNP(
         rsid="rs5569",
@@ -95,19 +95,19 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Cognitive",
         trait="ADHD Risk",
         risk_allele="T",
-        effect="Associated with ADHD symptoms",
-        description="Norepinephrine transporter. Affects attention and arousal systems.",
-        references=["PMID:16642436"]
+        effect="Norepinephrine transporter variant studied in ADHD; not an established risk marker",
+        description="SLC6A2 encodes the norepinephrine transporter, the target of atomoxetine. rs5569 (G1287A) has been tested for association with ADHD in candidate-gene studies (e.g. Oh 2016); it is not an established risk marker.",
+        references=["PMID:27984158"]
     ),
     "rs1801260": TraitSNP(
         rsid="rs1801260",
         gene="CLOCK",
         category="Cognitive",
         trait="ADHD Risk / Circadian Rhythm",
-        risk_allele="C",
-        effect="Evening preference, possible ADHD link",
-        description="Circadian rhythm gene affecting sleep patterns and potentially ADHD.",
-        references=["PMID:17346975"]
+        risk_allele="A",
+        effect="Informational only: one small study linked this common allele to adult ADHD symptom scores",
+        description="CLOCK 3111T/C. Most people carry the 3111T allele (reported as A on the forward strand used by DNA files). In one study of 143 adults, T carriers had higher ADHD symptom scores (Kissling 2008); this has not been replicated and is not a risk prediction.",
+        references=["PMID:17948273"]
     ),
 
     # Intelligence / Cognitive Performance
@@ -116,10 +116,10 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="SNAP25",
         category="Cognitive",
         trait="Cognitive Performance",
-        risk_allele="G",
-        effect="Associated with higher IQ scores",
-        description="SNAP25 is crucial for neurotransmitter release. G allele linked to better cognitive performance.",
-        references=["PMID:19197363"]
+        risk_allele="A",
+        effect="Associated with slightly higher performance IQ in one family study",
+        description="SNAP25 is crucial for neurotransmitter release. In two Dutch family cohorts, each A allele was associated with about 2.8 points higher performance IQ (Gosso 2006); single-SNP effects on IQ are small.",
+        references=["PMID:16801949"]
     ),
     "rs17070145": TraitSNP(
         rsid="rs17070145",
@@ -129,7 +129,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Better episodic memory",
         description="T allele carriers show enhanced memory recall in multiple studies.",
-        references=["PMID:16741276"]
+        references=["PMID:17053149"]
     ),
     "rs6265": TraitSNP(
         rsid="rs6265",
@@ -139,7 +139,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",  # Met allele
         effect="Reduced memory performance, anxiety risk",
         description="BDNF Val66Met. Met carriers may have reduced hippocampal volume and memory. Also affects mood.",
-        references=["PMID:12805289", "PMID:15728823"]
+        references=["PMID:12553913"]
     ),
     "rs4680": TraitSNP(
         rsid="rs4680",
@@ -149,7 +149,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="A",  # Met/Met
         effect="Warrior vs Worrier: A=better cognition under low stress, G=better under high stress",
         description="COMT Val158Met affects dopamine in prefrontal cortex. Met/Met (AA): better working memory but more stress sensitive. Val/Val (GG): more stress resilient but lower baseline cognition.",
-        references=["PMID:11182883"]
+        references=["PMID:11381111", "PMID:17008817"]
     ),
     "rs1800497": TraitSNP(
         rsid="rs1800497",
@@ -159,7 +159,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",  # A1 allele
         effect="Reduced dopamine receptors, different learning style",
         description="Taq1A polymorphism. T allele (A1) linked to fewer D2 receptors, affecting reward-based learning.",
-        references=["PMID:9449002"]
+        references=["PMID:18063800"]
     ),
 
     # ============================================
@@ -185,17 +185,17 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Higher caffeine consumption tendency",
         description="Affects how much caffeine you naturally tend to consume.",
-        references=["PMID:21490707"]
+        references=["PMID:21357676"]
     ),
     "rs4410790": TraitSNP(
         rsid="rs4410790",
         gene="AHR",
         category="Metabolism",
-        trait="Caffeine Sensitivity",
+        trait="Caffeine Intake (AHR)",
         risk_allele="T",
-        effect="Higher caffeine sensitivity",
-        description="Affects caffeine's effects on the body, including anxiety and sleep disruption.",
-        references=["PMID:25288136"]
+        effect="Associated with lower habitual caffeine intake",
+        description="Located near AHR, which regulates the caffeine-metabolising enzyme CYP1A2. In a genome-wide meta-analysis, each T allele was associated with lower habitual caffeine consumption (Cornelis 2011).",
+        references=["PMID:21490707"]
     ),
 
     # Alcohol
@@ -207,7 +207,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="A",
         effect="Alcohol flush reaction, poor alcohol tolerance",
         description="Common in East Asian populations. A allele causes acetaldehyde buildup, flushing, and nausea.",
-        references=["PMID:20626054"]
+        references=["PMID:2562960"]
     ),
     "rs1229984": TraitSNP(
         rsid="rs1229984",
@@ -217,7 +217,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Fast alcohol metabolism, protective against alcoholism",
         description="Processes alcohol faster, making intoxication less pleasant. Protective against alcohol dependence.",
-        references=["PMID:18385738"]
+        references=["PMID:21968928"]
     ),
 
     # Lactose
@@ -258,10 +258,10 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="FUT2",
         category="Metabolism",
         trait="Vitamin B12 Absorption",
-        risk_allele="A",
-        effect="Lower B12 levels",
-        description="Affects B12 absorption. May benefit from monitoring B12 status.",
-        references=["PMID:18779456"]
+        risk_allele="G",
+        effect="Modestly lower average B12 levels",
+        description="FUT2 variant in strong linkage with the 'non-secretor' W143X allele. In a GWAS of about 2,700 women, carriers of the G (Gly) allele had modestly lower average plasma B12 than Ser/Ser carriers (Hazra 2008). G is the common allele and most carriers have normal B12.",
+        references=["PMID:18776911"]
     ),
 
     # ============================================
@@ -280,23 +280,23 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
     ),
     "rs12649507": TraitSNP(
         rsid="rs12649507",
-        gene="ADA",
+        gene="CLOCK",
         category="Sleep",
-        trait="Sleep Depth",
+        trait="Sleep Duration (CLOCK)",
         risk_allele="A",
-        effect="Deeper sleep, more slow-wave sleep",
-        description="Affects adenosine metabolism which regulates sleep pressure.",
-        references=["PMID:15931224"]
+        effect="Associated with differences in habitual sleep duration",
+        description="Intronic variant in the CLOCK gene, associated with habitual sleep duration in two European population samples (Allebrandt 2010); the per-allele direction is not well established.",
+        references=["PMID:20149345"]
     ),
     "rs1801260_clock": TraitSNP(  # Note: same as ADHD one, different effect
         rsid="rs1801260",
         gene="CLOCK",
         category="Sleep",
         trait="Chronotype (Morning/Evening)",
-        risk_allele="C",
+        risk_allele="G",
         effect="Evening preference (night owl)",
-        description="C allele associated with being a night owl. T allele with morning preference.",
-        references=["PMID:12957359"]
+        description="CLOCK 3111C allele (reported as G on the forward strand used by DNA files) was associated with evening preference and later sleep timing in two studies (Katzenberg 1998; Mishima 2005); another study found the opposite trend in delayed sleep phase syndrome, so the evidence is mixed.",
+        references=["PMID:9779516", "PMID:15578592"]
     ),
     "rs10830963": TraitSNP(
         rsid="rs10830963",
@@ -305,8 +305,8 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         trait="Melatonin Sensitivity",
         risk_allele="G",
         effect="Higher fasting glucose, sleep disruption effects on metabolism",
-        description="Affects melatonin receptor. Night eating/late meals may particularly affect blood sugar.",
-        references=["PMID:19060906"]
+        description="Variant in the melatonin receptor 1B gene; the G allele is associated with higher fasting glucose (Prokopenko 2009). In a crossover trial, eating dinner late impaired glucose tolerance in risk-allele carriers but not in non-carriers (Lopez-Minguez 2018).",
+        references=["PMID:19060907", "PMID:28455106"]
     ),
 
     # Fatigue & Energy
@@ -334,7 +334,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Red hair, fair skin, increased sun sensitivity",
         description="One of several MC1R variants causing red hair phenotype.",
-        references=["PMID:8651275"]
+        references=["PMID:7581459"]
     ),
     "rs1805008": TraitSNP(
         rsid="rs1805008",
@@ -344,7 +344,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Red hair, fair skin",
         description="Another MC1R variant for red hair.",
-        references=["PMID:8651275"]
+        references=["PMID:7581459"]
     ),
     "rs12821256": TraitSNP(
         rsid="rs12821256",
@@ -354,7 +354,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="C",
         effect="Blonde hair",
         description="Affects hair color through melanocyte development.",
-        references=["PMID:25283252"]
+        references=["PMID:17952075", "PMID:24880339"]
     ),
 
     # Baldness
@@ -366,7 +366,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Increased baldness risk",
         description="One of several variants associated with androgenetic alopecia.",
-        references=["PMID:18849991"]
+        references=["PMID:18849994"]
     ),
     "rs6152": TraitSNP(
         rsid="rs6152",
@@ -380,13 +380,13 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
     ),
     "rs1385699": TraitSNP(
         rsid="rs1385699",
-        gene="Chr7p21.1",
+        gene="EDA2R",
         category="Physical",
         trait="Male Pattern Baldness",
         risk_allele="T",
         effect="Increased baldness risk",
-        description="Genome-wide association with baldness.",
-        references=["PMID:18849991"]
+        description="Variant in EDA2R on the X chromosome, strongly associated with male-pattern baldness (Prodi 2008).",
+        references=["PMID:18385763"]
     ),
 
     # Eyes
@@ -408,7 +408,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Green/hazel eyes",
         description="Modifies eye color, associated with green and hazel.",
-        references=["PMID:18172690"]
+        references=["PMID:18252222"]
     ),
     "rs12896399": TraitSNP(
         rsid="rs12896399",
@@ -418,7 +418,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Lighter eye color",
         description="Contributes to lighter eye pigmentation.",
-        references=["PMID:18488028"]
+        references=["PMID:17952075"]
     ),
 
     # Skin
@@ -451,21 +451,21 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         rsid="rs4994",
         gene="ADRB3",
         category="Athletic",
-        trait="Exercise Recovery",
+        trait="Body Composition & Fitness (ADRB3)",
         risk_allele="T",
-        effect="May have slower recovery from exercise",
-        description="Affects metabolic rate and fat oxidation during exercise.",
-        references=["PMID:9771751"]
+        effect="Studied for body composition and fitness; effects are small and inconsistent",
+        description="Beta-3 adrenergic receptor (Trp64Arg), involved in fat metabolism. A 2023 study of 304 young adults linked the Trp64 allele to body-composition measures in men (Potocka 2023); there is no established effect on exercise recovery.",
+        references=["PMID:37628593"]
     ),
     "rs8192678": TraitSNP(
         rsid="rs8192678",
         gene="PPARGC1A",
         category="Athletic",
         trait="Aerobic Capacity",
-        risk_allele="A",
-        effect="Better response to endurance training",
-        description="PGC-1alpha affects mitochondrial biogenesis. Important for endurance.",
-        references=["PMID:14557860"]
+        risk_allele="C",
+        effect="Gly482 allele: more common in world-class endurance athletes",
+        description="PGC-1alpha regulates mitochondrial biogenesis. The minor Ser482 allele was less frequent in world-class endurance athletes than in controls (Lucia 2005), so the common Gly482 allele (C on the forward strand) is the one linked to endurance capacity.",
+        references=["PMID:15705733"]
     ),
     "rs1042713": TraitSNP(
         rsid="rs1042713",
@@ -473,9 +473,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Athletic",
         trait="Exercise Performance",
         risk_allele="G",
-        effect="Better endurance performance",
-        description="Beta-2 adrenergic receptor. Affects bronchodilation and metabolic response to exercise.",
-        references=["PMID:17456243"]
+        effect="Association with endurance performance not confirmed",
+        description="Beta-2 adrenergic receptor (Arg16Gly). Small studies reported links with athletic status, but a meta-analysis did not confirm an association with endurance athlete status (reviewed in Li 2026).",
+        references=["PMID:42938427"]
     ),
 
     # ============================================
@@ -490,17 +490,17 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="G",
         effect="Increased anxiety and depression risk",
         description="Serotonin receptor variant. G allele associated with mood disorders.",
-        references=["PMID:16631126"]
+        references=["PMID:14507979"]
     ),
     "rs25531": TraitSNP(
         rsid="rs25531",
         gene="SLC6A4",
         category="Mental Health",
-        trait="Stress Sensitivity",
+        trait="Serotonin Transporter Expression",
         risk_allele="G",
-        effect="Lower serotonin transporter expression, more stress sensitive",
-        description="Part of 5-HTTLPR. Affects how you respond to life stress.",
-        references=["PMID:12869766"]
+        effect="Lower serotonin transporter expression",
+        description="rs25531 sits inside 5-HTTLPR; its G variant makes the long allele behave like the low-expressing short allele (Hu 2006). A large meta-analysis found no robust interaction between 5-HTTLPR and life stress on depression (Culverhouse 2018).",
+        references=["PMID:16642437", "PMID:28373689"]
     ),
     "rs4570625": TraitSNP(
         rsid="rs4570625",
@@ -510,7 +510,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="T",
         effect="Enhanced emotional reactivity",
         description="Affects serotonin synthesis in the brain. Influences emotional responses.",
-        references=["PMID:16402131"]
+        references=["PMID:16044172"]
     ),
     "rs1800532": TraitSNP(
         rsid="rs1800532",
@@ -518,19 +518,19 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Mental Health",
         trait="Mood Regulation",
         risk_allele="A",
-        effect="Associated with mood disorders",
-        description="Tryptophan hydroxylase variant affecting serotonin production.",
-        references=["PMID:10369410"]
+        effect="Studied in mood disorders and suicidal behavior; evidence is modest",
+        description="Tryptophan hydroxylase 1 (A218C) variant affecting serotonin production. A meta-analysis found a modest association with suicidal behavior that was significant only in fixed-effects models (Gonzalez-Castro 2014).",
+        references=["PMID:25005534"]
     ),
     "rs6313": TraitSNP(
         rsid="rs6313",
         gene="HTR2A",
         category="Mental Health",
         trait="SSRI Response",
-        risk_allele="T",
-        effect="May respond differently to SSRI antidepressants",
-        description="Serotonin receptor 2A. Affects response to serotonergic medications.",
-        references=["PMID:16642437"]
+        risk_allele="G",
+        effect="More paroxetine side effects in one trial (102C allele)",
+        description="Serotonin 2A receptor 102T/C. In patients treated with paroxetine, the C allele (reported as G on the forward strand) was associated with more discontinuations due to side effects (Murphy 2003). Current CPIC guidance (2023) makes no HTR2A-based antidepressant recommendation.",
+        references=["PMID:14514498", "PMID:37032427"]
     ),
 
     # ============================================
@@ -564,8 +564,8 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         trait="Cancer Risk / Longevity",
         risk_allele="C",
         effect="Pro72 variant - different cancer profile",
-        description="p53 codon 72. Affects cancer risk profile and cellular aging.",
-        references=["PMID:12474142"]
+        description="p53 codon 72. In a prospective study of people aged 85+, Pro/Pro carriers had 41% higher survival despite a higher proportional cancer mortality (van Heemst 2005).",
+        references=["PMID:15732191"]
     ),
 
     # ============================================
@@ -578,9 +578,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Sensitivity",
         trait="Pain Sensitivity / Opioid Response",
         risk_allele="G",
-        effect="Higher pain sensitivity, may need more pain medication",
-        description="Mu-opioid receptor. G allele associated with higher pain sensitivity and opioid requirements.",
-        references=["PMID:15583379"]
+        effect="Possible differences in opioid response; evidence is limited",
+        description="Mu-opioid receptor A118G. The G allele alters receptor binding and signalling (Bond 1998). CPIC (2021) describes the OPRM1 evidence as limited and makes no dosing recommendation based on it.",
+        references=["PMID:9689128", "PMID:33387367"]
     ),
     "rs4680_pain": TraitSNP(
         rsid="rs4680",
@@ -590,7 +590,7 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         risk_allele="A",
         effect="Met/Met - higher pain sensitivity",
         description="COMT affects pain processing. Met/Met individuals may be more pain sensitive.",
-        references=["PMID:14985765"]
+        references=["PMID:12595695", "PMID:15537663"]
     ),
 }
 

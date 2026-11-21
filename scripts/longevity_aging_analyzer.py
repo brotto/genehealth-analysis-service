@@ -16,11 +16,12 @@ EIGHT SECTIONS:
 
 SCIENTIFIC BASIS:
   - Deelen et al. (2019) Nature Communications 10:3669 — GWAS meta-analysis
-    confirming APOE and FOXO3 as genome-wide significant for longevity
+    confirming APOE as genome-wide significant for longevity
   - Timmers et al. (2019) eLife 8:e39856 — Genomics of 1M parent lifespans
   - Timmers et al. (2020) Nature Communications 11:3570 — Multivariate
     genomic scan for healthspan/lifespan/longevity
-  - Willcox et al. (2008) PNAS — FOXO3 longevity association
+  - Willcox et al. (2008) PNAS — FOXO3 longevity association (minor G allele of rs2802292)
+  - Flachsbart et al. (2009) PNAS — FOXO3 association replicated in German centenarians
   - Kaplanis et al. (2018) Science — Heritability of lifespan ~7%
   - Ruby et al. (2018) Genetics — Heritability inflated by assortative mating
 
@@ -307,36 +308,39 @@ FOXO3_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Longevity Variant (Homozygous)",
+                "nickname": "Common Variant",
                 "interpretation": (
-                    "Two copies of the T allele at FOXO3 rs2802292. This is the genotype most "
-                    "consistently associated with longevity across multiple populations (European, "
-                    "Japanese, Chinese, Hawaiian). The T allele enhances FOXO3 transcription factor "
-                    "activity, which promotes cellular stress resistance, DNA repair, apoptosis of "
-                    "damaged cells, and antioxidant defense. OR ~1.17-1.26 for longevity (Deelen 2019)."
+                    "Two copies of the T allele at FOXO3 rs2802292. T is the more common allele in "
+                    "European and East Asian populations. No longevity association from this variant, but FOXO3 "
+                    "pathway activity is influenced by many factors including caloric restriction, "
+                    "exercise, and fasting."
                 ),
-                "score": 0.9,
+                "score": 0.4,
             },
             "GT": {
                 "label": "G/T",
                 "nickname": "Longevity Variant (Heterozygous)",
                 "interpretation": (
-                    "One copy of the longevity-associated T allele at FOXO3. Intermediate "
-                    "enhancement of FOXO3 activity. This genotype still confers a modest longevity "
-                    "advantage compared to G/G homozygotes."
+                    "One copy of the longevity-associated G allele at FOXO3 rs2802292. The "
+                    "strongest association in the original study was for two copies (Willcox "
+                    "et al. 2008); one copy is expected to carry a smaller effect."
                 ),
                 "score": 0.65,
             },
             "GG": {
                 "label": "G/G",
-                "nickname": "Common Variant",
+                "nickname": "Longevity Variant (Homozygous)",
                 "interpretation": (
-                    "The most common genotype at FOXO3 rs2802292. Standard FOXO3 transcription "
-                    "factor activity. No enhanced longevity association from this variant, but FOXO3 "
-                    "pathway activity is influenced by many factors including caloric restriction, "
-                    "exercise, and fasting."
+                    "Two copies of the G allele at FOXO3 rs2802292, the allele associated with "
+                    "longevity (it is the minor allele in European and East Asian populations, but "
+                    "the more common one in African populations). In long-lived Japanese-American men, homozygotes for the minor "
+                    "allele had 2.75-fold higher odds of being long-lived than homozygotes for the "
+                    "major allele (Willcox et al. 2008), and FOXO3 variation was associated with "
+                    "reaching exceptional old age in German centenarians (Flachsbart et al. 2009). "
+                    "FOXO3 is a transcription factor involved in cellular stress resistance, DNA "
+                    "repair and antioxidant defense."
                 ),
-                "score": 0.4,
+                "score": 0.9,
             },
         },
     },

@@ -52,7 +52,8 @@ def analyze_traits(
 
     # Check each trait SNP
     for rsid, trait_info in TRAITS_DATABASE.items():
-        rsid_lower = rsid.lower()
+        # Dict keys can carry suffixes (e.g. "rs1801260_clock"); match on the SNP's real rsID.
+        rsid_lower = trait_info.rsid.lower()
 
         if rsid_lower in variants:
             traits_found += 1
@@ -65,7 +66,7 @@ def analyze_traits(
         else:
             traits_not_found += 1
             missing_by_category[trait_info.category].append(
-                f"{rsid} ({trait_info.gene}): {trait_info.trait}"
+                f"{trait_info.rsid} ({trait_info.gene}): {trait_info.trait}"
             )
 
     return TraitsAnalysisResult(

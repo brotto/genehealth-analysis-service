@@ -95,15 +95,15 @@ SNP_PANEL: List[ChronoSNP] = [
     # ── Morningness axis (early-bird ←→ night-owl) ─────────────────────
     ChronoSNP(
         rsid="rs1801260", gene="CLOCK", axis="morningness",
-        effect_allele="T", weight=0.55,
+        effect_allele="A", weight=0.55,
         reference="Mishima 2005; Katzenberg 1998",
-        note="CLOCK 3111T/C — T allele associated with morningness; C allele with eveningness and delayed sleep phase.",
+        note="CLOCK 3111T/C — 3111T (reported as A on the forward strand used by DNA files) is associated with morningness; 3111C (G) with eveningness and later sleep timing.",
     ),  # ✓ ds (chr 4, pos ~56412979)
     ChronoSNP(
         rsid="rs228697", gene="PER3", axis="morningness",
         effect_allele="C", weight=0.45,
-        reference="Archer 2003; Hida 2014",
-        note="PER3 — C allele linked to evening preference and longer sleep need; G to morningness.",
+        reference="Hida 2014",
+        note="PER3 Pro864Ala — the minor G allele was more common in evening types (Hida 2014), so C pushes toward morningness.",
     ),  # ✓ ds (chr 1)
     ChronoSNP(
         rsid="rs10157197", gene="PER3", axis="morningness",
@@ -119,9 +119,9 @@ SNP_PANEL: List[ChronoSNP] = [
     ),  # ✓ ds (chr 2)
     ChronoSNP(
         rsid="rs2287161", gene="CRY1", axis="morningness",
-        effect_allele="C", weight=0.35,
-        reference="Patke 2017; Hida 2014",
-        note="CRY1 — splice variants lengthen circadian period (~50 min) and push toward delayed sleep phase; effect allele here marks the morning side.",
+        effect_allele="C", weight=0.0,
+        reference="Patke 2017; Dashti 2014",
+        note="CRY1 rs2287161 — a common variant near CRY1 with no established chronotype effect (the rare CRY1 variant in familial delayed sleep phase, Patke 2017, is a different variant). Weight 0: shown for context only.",
     ),  # ✓ ds (chr 12)
     ChronoSNP(
         rsid="rs2306074", gene="CRY2", axis="morningness",
