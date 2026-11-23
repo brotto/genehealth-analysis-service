@@ -755,7 +755,7 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
                     "mystical experience is an untested inference: that study measured receptors, "
                     "not genotype."
                 ),
-                "score": 0.8,
+                "score": 0.3,
             },
             "CT": {
                 "label": "C/T (heterozygous)",
@@ -776,7 +776,7 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
                     "genotype) predicted more intense psilocybin experiences in PET research, "
                     "the genotype-to-experience link is an untested inference."
                 ),
-                "score": 0.3,
+                "score": 0.8,
             },
         },
         "scientificBasis": (
@@ -790,7 +790,9 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
             "link between this genotype and mystical experience is an untested inference. "
             "rs6313 (T102C) is a synonymous variant in strong linkage disequilibrium "
             "with the promoter variant rs6311 (A-1438G). The 5-HT2A receptor has been "
-            "hypothesised to relate to absorption."
+            "hypothesised to relate to absorption. DNA files report this SNP on the forward "
+            "strand, where 102T appears as A and 102C as G. The score for this marker reflects "
+            "expected receptor expression (higher for T/T), not the strength of any experience."
         ),
         "references": [
             {"pmid": "33501857", "title": "Brain serotonin 2A receptor binding predicts subjective temporal and mystical effects of psilocybin in healthy humans.", "year": 2021},
@@ -818,7 +820,7 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
                     "the A allele. This is the same direction as rs6313 C/C (lower expression), "
                     "but any link to mystical or transcendent experience is untested."
                 ),
-                "score": 0.7,
+                "score": 0.3,
             },
             "GA": {
                 "label": "G/A (heterozygous)",
@@ -838,7 +840,7 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
                     "(higher expression), but any link to mystical or transcendent experience "
                     "is untested."
                 ),
-                "score": 0.3,
+                "score": 0.7,
             },
         },
         "scientificBasis": (
@@ -848,14 +850,17 @@ SPIRITUAL_SNPS: List[Dict[str, Any]] = [
             "serotonin 2A receptor is the primary mediator of psychedelic and mystical experiences, and "
             "variations in this receptor system have been hypothesised to relate to individual differences in "
             "absorption, openness to experience, and self-transcendence. In older Australian twins, "
-            "self-transcendence heritability was 0.37 (men) and 0.41 (women) (Kirk et al. 1999, Twin Res)."
+            "self-transcendence heritability was 0.37 (men) and 0.41 (women) (Kirk et al. 1999, Twin Res). "
+            "DNA files report this SNP on the forward strand, where -1438A appears as T and -1438G as C. "
+            "The score for this marker reflects expected promoter activity (higher for A/A), not the "
+            "strength of any experience."
         ),
         "references": [
             {"pmid": "15364038", "title": "The -1438A/G polymorphism in the 5-hydroxytryptamine type 2A receptor gene affects promoter activity.", "year": 2004},
             {"pmid": "10480742", "title": "Self-transcendence as a measure of spirituality in a sample of older Australian twins.", "year": 1999},
         ],
         "actionableInsights": [
-            "Combined with rs6313, these variants shape your serotonergic system's sensitivity profile",
+            "Together with rs6313, this variant points to your expected serotonin 2A receptor expression; links to experience are untested",
             "Contemplative traditions across cultures describe phenomena consistent with serotonergic variation",
         ],
     },
@@ -1038,6 +1043,27 @@ def _lookup_snp(variants: Dict[str, Tuple[str, str, str]], rsid: str) -> Optiona
     return None
 
 
+_COMPLEMENT = str.maketrans("ACGT", "TGCA")
+
+
+def _match_genotype(
+    genotype_map: Dict[str, Any], genotype: str
+) -> Optional[Dict[str, Any]]:
+    """Find a genotype's interpretation, allowing for the opposite strand.
+
+    DNA files report alleles on the forward strand, but some entries (e.g. HTR2A
+    rs6313/rs6311) are keyed on the gene's strand. Try the reported alleles in both
+    orders across every key first, and only then the complement strand. Checking the
+    direct strand first keeps C/G and A/T SNPs from matching the wrong key through
+    the complement.
+    """
+    for candidate in (genotype, genotype.translate(_COMPLEMENT)):
+        for ordered in (candidate, candidate[::-1]):
+            if ordered in genotype_map:
+                return genotype_map[ordered]
+    return None
+
+
 def _analyze_snp_category(
     variants: Dict[str, Tuple[str, str, str]],
     snp_database: List[Dict[str, Any]]
@@ -1069,13 +1095,9 @@ def _analyze_snp_category(
             })
             continue
 
-        # Normalize genotype for lookup (try both orientations)
+        # Normalize genotype for lookup (both allele orders, then the complement strand)
         genotype_upper = genotype.upper().strip()
-        reversed_gt = genotype_upper[::-1] if len(genotype_upper) == 2 else genotype_upper
-
-        genotype_info = snp_info["genotypes"].get(genotype_upper)
-        if genotype_info is None:
-            genotype_info = snp_info["genotypes"].get(reversed_gt)
+        genotype_info = _match_genotype(snp_info["genotypes"], genotype_upper)
 
         if genotype_info is None:
             # Unknown genotype combination
@@ -1178,31 +1200,37 @@ def _generate_category_summary(traits: List[Dict[str, Any]], category: str) -> s
         htr2a_traits = [t for t in analyzed if t["gene"] == "HTR2A"]
         htr2a_score = sum(t["score"] for t in htr2a_traits) / len(htr2a_traits) if htr2a_traits else 0.5
 
+        # The HTR2A score reflects expected serotonin 2A receptor expression (102T / -1438A
+        # higher), the same convention as the Dreams & Sleep report. No study has linked
+        # these genotypes to spiritual experience, so the text describes expression only.
         if htr2a_score >= 0.6:
             return (
-                f"Based on {count} of {total} variants analyzed, your serotonergic profile "
-                f"suggests potentially increased sensitivity to transcendent and "
-                f"contemplative experiences. Your HTR2A (serotonin 2A receptor) variants are associated "
-                f"with altered receptor expression; a PET study found that lower receptor binding "
-                f"predicted more intense psilocybin experiences, but the link from genotype to "
-                f"experience is untested. This is a genetic tendency, not a spiritual "
-                f"diagnosis. The 2025 USP study explored similar themes through a different "
-                f"lens (immune system genetics in mediums), and both lines of research "
-                f"point to the complex biology underlying spiritual experiences."
+                f"Based on {count} of {total} variants analyzed, your HTR2A (serotonin 2A "
+                f"receptor) variants point to somewhat higher expected receptor expression. "
+                f"Whether this relates to transcendent or contemplative experience has not been "
+                f"tested; the one relevant PET study measured receptors, not genes, and found that "
+                f"lower (not higher) receptor binding predicted more intense psilocybin experiences. "
+                f"Spiritual experiences are shaped by practice, culture, belief, and biology together. "
+                f"The 2025 USP study explored similar themes through a different lens (immune "
+                f"system genetics in mediums)."
             )
         elif htr2a_score >= 0.4:
             return (
-                f"Based on {count} of {total} variants analyzed, your serotonergic profile "
-                f"shows an intermediate sensitivity pattern. Your HTR2A variants suggest "
-                f"intermediate receptor expression. Spiritual "
-                f"experiences are shaped by practice, culture, belief, and biology together."
+                f"Based on {count} of {total} variants analyzed, your HTR2A (serotonin 2A "
+                f"receptor) variants point to intermediate expected receptor expression. "
+                f"Whether this relates to transcendent or contemplative experience has not been "
+                f"tested. Spiritual experiences are shaped by practice, culture, belief, and "
+                f"biology together."
             )
         else:
             return (
-                f"Based on {count} of {total} variants analyzed, your serotonergic profile "
-                f"shows a standard sensitivity pattern. Spiritual and contemplative experiences "
-                f"are accessible to everyone regardless of genetic profile — practice and "
-                f"intention are the primary drivers."
+                f"Based on {count} of {total} variants analyzed, your HTR2A (serotonin 2A "
+                f"receptor) variants point to somewhat lower expected receptor expression. "
+                f"Whether this relates to transcendent or contemplative experience has not been "
+                f"tested; one PET study found that lower receptor binding (measured directly, not "
+                f"inferred from genes) predicted more intense psilocybin experiences. Spiritual and "
+                f"contemplative experiences are accessible to everyone regardless of genetic "
+                f"profile — practice and intention are the primary drivers."
             )
 
 
@@ -1225,10 +1253,12 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
             0.4: "Typical Stress Response",
             0.0: "Resilient Profile",
         },
+        # Exploratory markers with no tested link to experience: describe the marker
+        # pattern, not a "sensitivity" level.
         "spiritualSensitivity": {
-            0.6: "Elevated Transcendent Sensitivity",
-            0.4: "Intermediate Sensitivity",
-            0.0: "Standard Sensitivity",
+            0.6: "Higher-Score Marker Pattern (exploratory)",
+            0.4: "Intermediate Marker Pattern (exploratory)",
+            0.0: "Lower-Score Marker Pattern (exploratory)",
         },
     }
 
