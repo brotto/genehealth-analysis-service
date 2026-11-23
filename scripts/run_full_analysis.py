@@ -225,6 +225,16 @@ def run_analysis(genome_content: str, source_format: str) -> Dict[str, Any]:
                     max_rsids=40,
                 )
                 print(f"Live enrichment: {len(clinical_live)} variants resolved from NCBI")
+
+                # Attach the user's OWN genotype to every card. Without it the
+                # report is a list of ClinVar entries at positions on the chip,
+                # which a user misread in May 2026 as "I carry all of these".
+                # Zygosity is computed against NCBI's reference/variant alleles
+                # (strand- and palindrome-aware); see clinical_genotype.py for
+                # why two identical letters never imply "reference" on their own.
+                from .clinical_genotype import annotate_user_genotypes, summarize
+                annotate_user_genotypes(clinical_live, variants)
+                print(f"Live enrichment genotypes: {summarize(clinical_live)}")
         except Exception as e:  # noqa: BLE001
             print(f"ClinVar Live enrichment skipped: {type(e).__name__}: {e}")
 

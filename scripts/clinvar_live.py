@@ -33,9 +33,23 @@ Output per rsID:
             "conditions": ["APOE4(-)-FREIBURG", "Familial hypercholesterolemia"],
             "reviewStatus": "criteria provided, multiple submitters, no conflicts",
             "reviewStars": 2,
-            "lastEvaluated": "2024-08-06"
+            "lastEvaluated": "2024-08-06",
+            # Alleles on the GRCh38 plus strand (dbSNP SPDI). variantAllele is
+            # the ALT the ClinVar record classifies (or dbSNP's only ALT).
+            "refAllele": "T",
+            "altAlleles": ["C"],
+            "variantAllele": "C",
+            # Present (True) only when a ClinVar record classifies the
+            # reference allele itself as non-benign ("c.388=").
+            "referenceAlleleClassified": True,
+            # Present (True) only when the ClinVar search hit its page limit,
+            # so not every record could be checked.
+            "referenceCheckIncomplete": True
         }
     }
+
+The user's own genotype is added afterwards by
+`clinical_genotype.annotate_user_genotypes()` (userGenotype, zygosity, ...).
 
 Any missing field is dropped. Full failure returns an empty dict and logs
 a warning — it must never block the analyzer pipeline.
@@ -47,6 +61,12 @@ import logging
 import re
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
+from .clinical_genotype import (
+    apply_clinvar_alleles,
+    is_reference_equal_spdi,
+    parse_dbsnp_spdi,
+    parse_spdi,
+)
 from .ncbi_client import NCBIClient, default_client
 
 log = logging.getLogger(__name__)
@@ -85,6 +105,25 @@ _REVIEW_STARS: Dict[str, int] = {
 
 # Severities we bother enriching further with a ClinVar deep-dive.
 _NOTABLE_SEVERITIES = {"high", "moderate"}
+
+# ClinVar germline descriptions that do NOT make a reference-equal record
+# ("c.388=") a reason to doubt a homozygous-reference call. Anything else
+# (pathogenic, risk factor, drug response, uncertain, conflicting, empty...)
+# does.
+_NON_CLASSIFYING_DESCRIPTIONS = {
+    "benign",
+    "likely benign",
+    "benign/likely benign",
+    "not provided",
+    "no classification provided",
+    "no classification for the single variant",
+    "no classifications from unflagged records",
+}
+
+# How many ClinVar records to read per rsID. Pharmacogenomic sites carry
+# 30-40 records; when the search fills the whole page we cannot be sure we
+# saw every record, so a reference call is reported as unconfirmed.
+_CLINVAR_SEARCH_MAX = 50
 
 
 def _normalize_rsid(rs: str) -> Optional[str]:
@@ -160,6 +199,16 @@ def _parse_dbsnp_record(rsid: str, rec: Dict[str, Any]) -> Optional[Dict[str, An
             "functionalClass": fxn_primary,
             "dbsnpUrl": DBSNP_URL.format(rsid),
         }
+
+        # Reference / alternate alleles on the GRCh38 plus strand. Needed to
+        # tell homozygous-reference from homozygous-alternate later.
+        alleles = parse_dbsnp_spdi(_get_ci(rec, "spdi"))
+        if alleles:
+            out["refAllele"] = alleles["ref"]
+            out["altAlleles"] = list(alleles["alts"])
+            if len(alleles["alts"]) == 1:
+                out["variantAllele"] = alleles["alts"][0]
+            out["_dbsnp"] = alleles  # internal; removed before returning
         return out
     except (KeyError, TypeError, ValueError) as e:
         log.warning("malformed dbSNP record for %s: %s", rsid, e)
@@ -215,6 +264,76 @@ def _extract_dbsnp_xrefs(record: Dict[str, Any]) -> List[str]:
     return ids
 
 
+def _extract_entries(record: Dict[str, Any]) -> List[Tuple[List[str], str]]:
+    """(dbSNP ids, canonical SPDI) for every variation_set entry.
+
+    Haplotype records ("c.[137T>C;388T>C]") carry one entry per variant, so
+    the allele for *our* rsID must come from the entry whose xref matches.
+    """
+    out: List[Tuple[List[str], str]] = []
+    vs = record.get("variation_set")
+    if not isinstance(vs, list):
+        return out
+    for v in vs:
+        if not isinstance(v, dict):
+            continue
+        spdi = str(v.get("canonical_spdi") or "").strip()
+        ids: List[str] = []
+        xrefs = v.get("variation_xrefs")
+        if isinstance(xrefs, list):
+            for x in xrefs:
+                if isinstance(x, dict) and str(x.get("db_source") or "").lower() == "dbsnp":
+                    db_id = str(x.get("db_id") or "").strip()
+                    if db_id:
+                        ids.append(db_id)
+        out.append((ids, spdi))
+    return out
+
+
+def _site_spdis(
+    parsed: Dict[str, Any],
+    rs_digits: str,
+    site: Optional[Dict[str, Any]] = None,
+) -> List[str]:
+    """SPDIs of the record's entries at our position: matched by dbSNP xref,
+    or (when the dbSNP site is known) by sequence + position."""
+    found: List[str] = []
+    for ids, spdi in parsed.get("_entries") or []:
+        if not spdi:
+            continue
+        at_site = rs_digits in ids
+        if not at_site and site:
+            loc = parse_spdi(spdi)
+            at_site = bool(loc) and (loc[0], loc[1]) == (site.get("seq"), site.get("pos"))
+        if at_site and spdi not in found:
+            found.append(spdi)
+    return found
+
+
+def _is_reference_only_record(parsed: Dict[str, Any], rs_digits: str, site=None) -> bool:
+    """True when the record's entry at our position describes the reference
+    allele itself ("c.388=", SPDI T:T) rather than a change."""
+    spdis = _site_spdis(parsed, rs_digits, site)
+    return bool(spdis) and all(is_reference_equal_spdi(s) for s in spdis)
+
+
+def _classifies_reference(parsed: Dict[str, Any], rs_digits: str, site=None) -> bool:
+    """Does this record give the reference allele at our position a
+    non-benign classification?
+
+    Only records where *every* entry is reference-equal count. A haplotype
+    record such as CYP2C9 "c.[430C=;1075A>C]" classifies the 1075A>C change;
+    the reference base at 430 is context, not what is being classified.
+    """
+    desc = str(parsed.get("_description") or "").strip().lower()
+    if desc in _NON_CLASSIFYING_DESCRIPTIONS:
+        return False
+    if not _is_reference_only_record(parsed, rs_digits, site):
+        return False
+    all_spdis = [spdi for _ids, spdi in parsed.get("_entries") or [] if spdi]
+    return all(is_reference_equal_spdi(s) for s in all_spdis)
+
+
 def _parse_clinvar_record(record: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     try:
         cvid = str(record.get("uid") or record.get("Id") or "").strip()
@@ -264,6 +383,8 @@ def _parse_clinvar_record(record: Dict[str, Any]) -> Optional[Dict[str, Any]]:
             "reviewStars": stars,
             "lastEvaluated": iso_date,
             "_dbsnp_xrefs": _extract_dbsnp_xrefs(record),
+            "_entries": _extract_entries(record),
+            "_description": desc,
         }
     except (KeyError, TypeError, ValueError) as e:
         log.warning("malformed ClinVar summary: %s", e)
@@ -289,14 +410,19 @@ def _score_clinvar(parsed: Dict[str, Any], rs_digits: str) -> int:
 def _fetch_clinvar(
     client: NCBIClient,
     rsid: str,
+    site: Optional[Dict[str, Any]] = None,
 ) -> Optional[Dict[str, Any]]:
-    """Look up a single rsID in ClinVar, validated via dbSNP xref match."""
+    """Look up a single rsID in ClinVar, validated via dbSNP xref match.
+
+    `site` is the parsed dbSNP SPDI ({seq, pos, ref, alts}) when known; it lets
+    reference-allele records be recognised by position as well as by xref.
+    """
     rs_digits = rsid.lower().lstrip("rs")
 
     ids: List[str] = []
     for term in (rsid, f"{rsid}*"):
         try:
-            ids = client.esearch(db="clinvar", term=term, retmax=10)
+            ids = client.esearch(db="clinvar", term=term, retmax=_CLINVAR_SEARCH_MAX)
         except RuntimeError as e:
             log.warning("ClinVar esearch failed rsid=%s term=%r: %s", rsid, term, e)
             continue
@@ -311,11 +437,13 @@ def _fetch_clinvar(
         log.warning("ClinVar esummary failed for ids=%s: %s", ids, e)
         return None
 
+    parsed_all: List[Dict[str, Any]] = []
     candidates: List[Dict[str, Any]] = []
     for rec in records:
         parsed = _parse_clinvar_record(rec)
         if not parsed:
             continue
+        parsed_all.append(parsed)
         # Only keep records whose dbSNP xref matches our rsID.
         if rs_digits not in (parsed.get("_dbsnp_xrefs") or []):
             continue
@@ -324,9 +452,33 @@ def _fetch_clinvar(
     if not candidates:
         return None
 
-    candidates.sort(key=lambda p: _score_clinvar(p, rs_digits), reverse=True)
+    # Show a record that describes a change at this position whenever one
+    # exists: a reference-only record ("c.1601=") on the card would make
+    # "you don't carry the variant" describe the wrong allele.
+    candidates.sort(
+        key=lambda p: (not _is_reference_only_record(p, rs_digits, site), _score_clinvar(p, rs_digits)),
+        reverse=True,
+    )
+
+    # Does any record classify the *reference* allele here as something
+    # other than benign? Then two reference copies are not reassuring.
+    ref_classified = any(_classifies_reference(p, rs_digits, site) for p in parsed_all)
+
     best = candidates[0]
-    best.pop("_dbsnp_xrefs", None)
+    # If even the record shown on the card describes the reference allele
+    # here (only reference-only records exist), its classification is about
+    # the reference allele, whatever other changes a haplotype includes.
+    if _is_reference_only_record(best, rs_digits, site):
+        best_desc = str(best.get("_description") or "").strip().lower()
+        if best_desc not in _NON_CLASSIFYING_DESCRIPTIONS:
+            ref_classified = True
+    best["_clinvarSpdis"] = _site_spdis(best, rs_digits, site)
+    if ref_classified:
+        best["referenceAlleleClassified"] = True
+    if len(ids) >= _CLINVAR_SEARCH_MAX:
+        best["referenceCheckIncomplete"] = True
+    for key in ("_dbsnp_xrefs", "_entries", "_description"):
+        best.pop(key, None)
     return best
 
 
@@ -373,13 +525,19 @@ def enrich_with_clinvar(
             if severity not in _NOTABLE_SEVERITIES:
                 continue
             try:
-                cv = _fetch_clinvar(cli, rsid)
+                cv = _fetch_clinvar(cli, rsid, data.get("_dbsnp"))
+                if cv:
+                    clinvar_spdis = cv.pop("_clinvarSpdis", None)
+                    data.update(cv)
+                    # Prefer the exact allele ClinVar classified over the
+                    # dbSNP single-ALT fallback set in phase 1.
+                    apply_clinvar_alleles(data, data.get("_dbsnp"), clinvar_spdis)
             except Exception as e:  # noqa: BLE001
                 log.warning("ClinVar deep-dive crashed for %s: %s", rsid, e)
                 continue
-            if cv:
-                data.update(cv)
 
+    for data in out.values():
+        data.pop("_dbsnp", None)
     return out
 
 
