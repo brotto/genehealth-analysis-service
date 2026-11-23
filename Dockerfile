@@ -9,9 +9,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libc6-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies from the lock file, so every rebuild gets the same
+# transitive versions. requirements.txt lists the direct pins; after editing it, regenerate
+# the lock with:
+#   uv pip compile requirements.txt --universal --python-version 3.11 -o requirements.lock.txt
+COPY requirements.lock.txt .
+RUN pip install --no-cache-dir -r requirements.lock.txt
 
 # Copy application code
 COPY api_server.py .

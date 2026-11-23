@@ -142,15 +142,20 @@ GENETIC_MARKERS: Dict[str, Dict[str, Any]] = {
             "TT": {"label": "Reduced plasticity (Met/Met)", "score": 0.0, "desc": "Lower BDNF secretion — may benefit from extra exercise and environmental enrichment"},
         },
     },
-    # HTR2A — Spiritual sensitivity / dream vividness
+    # HTR2A — compared with astrological "spiritual sensitivity", but no study links this
+    # genotype to spiritual experience, so the comparison is exploratory (never counted as
+    # aligned or contradicted). Score = expected receptor expression (102T higher), the same
+    # convention as the Mind & Spirit and Dreams & Sleep reports. Keys are on the gene strand;
+    # DNA files report 102T as A and 102C as G (handled by the complement match below).
     "rs6313": {
         "gene": "HTR2A",
         "dimension": "spiritual_sensitivity",
-        "label": "Spiritual / Mystical Sensitivity",
+        "label": "Serotonin 2A Receptor Expression (exploratory)",
+        "exploratory": True,
         "interpretations": {
-            "CC": {"label": "High sensitivity", "score": 1.0, "desc": "Lower serotonin 2A receptor expression; in PET research lower receptor binding predicted more intense mystical experiences (genotype link untested)"},
-            "CT": {"label": "Moderate sensitivity", "score": 0.5, "desc": "Intermediate serotonin 2A receptor expression"},
-            "TT": {"label": "Standard sensitivity", "score": 0.0, "desc": "Higher serotonin 2A receptor expression; genotype link to mystical experience untested"},
+            "TT": {"label": "Higher expected receptor expression (T/T)", "score": 1.0, "desc": "Two 102T alleles, which were expressed more than 102C in human cortex. No study has tested whether this genotype relates to spiritual or mystical experience"},
+            "CT": {"label": "Intermediate expected receptor expression (C/T)", "score": 0.5, "desc": "One 102T and one 102C allele; intermediate serotonin 2A receptor expression is expected. No study has tested a link to spiritual or mystical experience"},
+            "CC": {"label": "Lower expected receptor expression (C/C)", "score": 0.0, "desc": "Two 102C alleles, which were expressed about 20% less than 102T in human cortex. No study has tested whether this genotype relates to spiritual or mystical experience"},
         },
     },
     # DRD4 — Novelty seeking
@@ -746,6 +751,7 @@ def _read_genetic_markers(
                     "interpretation": match["label"],
                     "score": match["score"],
                     "description": match["desc"],
+                    "exploratory": bool(marker_info.get("exploratory", False)),
                 }
 
     return results
@@ -788,7 +794,11 @@ def _compare_trait(
                 else:
                     verdict = "inconclusive"
 
-            marker_info = GENETIC_MARKERS.get(rsid, {})
+            # Exploratory markers have no tested link to the trait: never call them
+            # aligned or contradicted.
+            exploratory = bool(result.get("exploratory", False))
+            if exploratory:
+                verdict = "inconclusive"
 
             return {
                 "trait": trait_def["trait"],
@@ -799,6 +809,7 @@ def _compare_trait(
                 "genotype": result["genotype"],
                 "verdict": verdict,
                 "confidenceNote": f"{result['gene']} {rsid} — {result['interpretation']}",
+                "exploratory": exploratory,
             }
 
     return None
@@ -818,6 +829,8 @@ def _build_sign_comparison(
         comparison = _compare_trait(trait_def, genetic_results)
         if comparison:
             trait_comparisons.append(comparison)
+            if comparison.get("exploratory"):
+                continue  # shown, but not counted toward the alignment score
             total_count += 1
             if comparison["verdict"] == "aligned":
                 aligned_count += 1

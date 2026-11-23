@@ -148,7 +148,7 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "AA": {
                 "label": "A/A (-1438A)",
-                "nickname": "Intense Dreamer",
+                "nickname": "Higher expected expression",
                 "interpretation": (
                     "Two copies of the -1438A allele, which showed higher promoter activity "
                     "than the G allele in laboratory cell experiments and travels with the 102T "
@@ -162,7 +162,7 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
             },
             "AG": {
                 "label": "A/G",
-                "nickname": "Moderate Dreamer",
+                "nickname": "Intermediate expected expression",
                 "interpretation": (
                     "One copy of each allele. Intermediate promoter activity is expected. "
                     "Whether this has any bearing on your dreams has not been tested; dream "
@@ -172,7 +172,7 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
             },
             "GG": {
                 "label": "G/G (-1438G)",
-                "nickname": "Serene Dreamer",
+                "nickname": "Lower expected expression",
                 "interpretation": (
                     "Two copies of the -1438G allele, which showed lower promoter activity than "
                     "the A allele in laboratory cell experiments, pointing to somewhat lower "
@@ -194,7 +194,8 @@ DREAM_VIVIDNESS_SNPS: List[Dict[str, Any]] = [
             "this receptor and produce dream-like experiences, which motivates the idea, but no "
             "study has measured dream vividness by HTR2A genotype. It is also a hypothesis, not a "
             "finding, that the same variant could relate to transcendent experiences during "
-            "wakefulness."
+            "wakefulness. DNA files report this SNP on the forward strand, where -1438A appears as "
+            "T and -1438G as C. The score reflects expected receptor expression, not dream intensity."
         ),
         "references": [
             {"pmid": "15364038", "title": "The -1438A/G polymorphism in the 5-hydroxytryptamine type 2A receptor gene affects promoter activity.", "year": 2004},
@@ -670,7 +671,7 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
         "genotypes": {
             "TT": {
                 "label": "T/T",
-                "nickname": "Highly Permeable Boundary",
+                "nickname": "Higher expected expression",
                 "interpretation": (
                     "Two copies of the 102T allele, which was expressed more than the 102C allele "
                     "in human cortex, suggesting somewhat higher 5-HT2A receptor expression. "
@@ -681,7 +682,7 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
             },
             "CT": {
                 "label": "C/T",
-                "nickname": "Permeable Boundary",
+                "nickname": "Intermediate expected expression",
                 "interpretation": (
                     "One copy of each allele; expression is expected to be intermediate. Whether "
                     "this relates to sleep paralysis or hypnagogic experiences has not been "
@@ -691,7 +692,7 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
             },
             "CC": {
                 "label": "C/C",
-                "nickname": "Defined Sleep-Wake Boundary",
+                "nickname": "Lower expected expression",
                 "interpretation": (
                     "Two copies of the 102C allele, which was expressed about 20% less than 102T "
                     "in human cortex, suggesting somewhat lower 5-HT2A receptor expression. "
@@ -710,7 +711,9 @@ NOCTURNAL_PHENOMENA_SNPS: List[Dict[str, Any]] = [
             "Rev) found it is associated with substance use, stress and trauma, genetic influences, "
             "physical illness, personality, anomalous beliefs, sleep problems or disruption, and "
             "anxiety symptoms. No study has linked HTR2A genotype to sleep paralysis, so this "
-            "marker is shown as an exploratory hypothesis."
+            "marker is shown as an exploratory hypothesis. DNA files report this SNP on the "
+            "forward strand, where 102T appears as A and 102C as G. The score reflects expected "
+            "receptor expression, not the likelihood of any nocturnal experience."
         ),
         "references": [
             {"pmid": "11891796", "title": "Differential expression of the \"C\" and \"T\" alleles of the 5-HT2A receptor gene in the temporal cortex of normal individuals and schizophrenics.", "year": 2002},
@@ -892,10 +895,12 @@ def _generate_overall_profile(traits: List[Dict[str, Any]], category: str) -> st
     avg = sum(scores) / len(scores)
 
     profiles = {
+        # All dream-vividness markers are exploratory (no study has measured dreams by
+        # genotype): describe the marker pattern, not a kind of dreamer.
         "dreamVividness": {
-            0.65: "Intense Dreamer",
-            0.45: "Balanced Dreamer",
-            0.0: "Serene Dreamer",
+            0.65: "Higher-Score Marker Pattern (exploratory)",
+            0.45: "Intermediate Marker Pattern (exploratory)",
+            0.0: "Lower-Score Marker Pattern (exploratory)",
         },
         "sleepArchitecture": {
             0.65: "Evening-Leaning Timing",
