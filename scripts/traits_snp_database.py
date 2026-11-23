@@ -103,9 +103,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         rsid="rs1801260",
         gene="CLOCK",
         category="Cognitive",
-        trait="ADHD Risk / Circadian Rhythm",
+        trait="Circadian Rhythm & Attention (exploratory)",
         risk_allele="A",
-        effect="Informational only: one small study linked this common allele to adult ADHD symptom scores",
+        effect="Informational only: most people carry this allele. One small, unreplicated study (143 adults) linked it to higher adult ADHD symptom scores",
         description="CLOCK 3111T/C. Most people carry the 3111T allele (reported as A on the forward strand used by DNA files). In one study of 143 adults, T carriers had higher ADHD symptom scores (Kissling 2008); this has not been replicated and is not a risk prediction.",
         references=["PMID:17948273"]
     ),
@@ -259,8 +259,8 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         category="Metabolism",
         trait="Vitamin B12 Absorption",
         risk_allele="G",
-        effect="Modestly lower average B12 levels",
-        description="FUT2 variant in strong linkage with the 'non-secretor' W143X allele. In a GWAS of about 2,700 women, carriers of the G (Gly) allele had modestly lower average plasma B12 than Ser/Ser carriers (Hazra 2008). G is the common allele and most carriers have normal B12.",
+        effect="Slightly lower average B12 than non-secretors (secretor-linked)",
+        description="FUT2 variant in strong linkage with the 'non-secretor' W143X allele. In a GWAS of about 2,700 women that measured a closely linked FUT2 marker, women with two non-secretor copies had higher plasma B12 (Hazra 2008), so the common G (secretor) allele goes with somewhat lower average B12. Most carriers have normal B12.",
         references=["PMID:18776911"]
     ),
 

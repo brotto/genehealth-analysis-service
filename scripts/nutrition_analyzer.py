@@ -330,17 +330,17 @@ NUTRITION_DATABASE: Dict[str, NutritionSNP] = {
         genotype_interpretations={
             "GG": GenotypeInterpretation(
                 label="Common Genotype (Typical B12)",
-                meaning="You carry two copies of the common G (Gly) allele, typical of FUT2 'secretors'. In a large study of women, G-allele carriers had modestly lower average plasma vitamin B12 than A/A carriers (Hazra 2008); most people with this genotype have normal B12.",
+                meaning="You carry two copies of the common G (Gly) allele, typical of FUT2 'secretors'. In a large study of women that measured a closely linked FUT2 marker, secretors had somewhat lower average plasma vitamin B12 than non-secretors (Hazra 2008); most people with this genotype have normal B12.",
                 recommendation="Standard dietary B12 intake from animal products or fortified foods is usually sufficient. If vegetarian or vegan, B12 supplementation is recommended.",
             ),
             "AG": GenotypeInterpretation(
                 label="Common Genotype (Typical B12)",
-                meaning="You carry one copy of the G allele. In the same study, average B12 levels were similar in people with one or two G alleles, and modestly lower than in A/A carriers.",
+                meaning="You carry one copy of the G allele, so you are most likely a FUT2 'secretor'. In that study, higher B12 was reported for women with two non-secretor copies; the study does not describe an effect of one copy.",
                 recommendation="Standard dietary B12 intake from animal products or fortified foods is usually sufficient. If vegetarian or vegan, B12 supplementation is recommended.",
             ),
             "AA": GenotypeInterpretation(
                 label="Slightly Higher B12 Levels",
-                meaning="You carry two copies of the A (Ser) allele, which is strongly linked to the FUT2 'non-secretor' variant. A/A carriers had the highest plasma vitamin B12 levels (Hazra 2008).",
+                meaning="You carry two copies of the A (Ser) allele, which is strongly linked to the FUT2 'non-secretor' variant. In a large study of women that measured a closely linked FUT2 marker, women with two non-secretor copies had higher plasma vitamin B12 levels (Hazra 2008).",
                 recommendation="Standard dietary B12 intake from animal products, fortified foods, or supplementation (for vegetarians/vegans) is adequate.",
             ),
         },

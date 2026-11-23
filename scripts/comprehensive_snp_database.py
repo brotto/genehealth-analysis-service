@@ -247,7 +247,7 @@ SNP_DATABASE: Dict[str, SNPInfo] = {
         normal_allele="A",
         significance="low",
         condition="FUT2 Secretor Genotype (B12)",
-        description="G-allele carriers had modestly lower average plasma B12 than A/A carriers (Hazra 2008); G is the common allele and most carriers have normal B12.",
+        description="Tags the FUT2 'non-secretor' allele. In a GWAS of women that measured a closely linked FUT2 marker, women with two non-secretor copies had higher plasma B12 (Hazra 2008), so the common G allele goes with somewhat lower average B12; most carriers have normal B12.",
         recommendations=[
             "Standard dietary B12 intake is usually sufficient",
             "Vegetarians and vegans should supplement B12",

@@ -524,7 +524,7 @@ MENTAL_HEALTH_SNPS: List[Dict[str, Any]] = [
                 "score": 0.5,
             },
             "AA": {
-                "label": "TT (homozigoto)",
+                "label": "TT (homozygous)",
                 "nickname": "Significantly reduced (~30%)",
                 "interpretation": (
                     "Two copies of the T allele. MTHFR enzyme activity reduced to approximately "
