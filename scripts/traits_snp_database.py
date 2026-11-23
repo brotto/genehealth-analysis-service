@@ -68,12 +68,12 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         references=["PMID:19404256"]
     ),
 
-    # ADHD
+    # Attention-related candidate genes (exploratory; none is an established ADHD risk marker)
     "rs1800955": TraitSNP(
         rsid="rs1800955",
         gene="DRD4",
         category="Cognitive",
-        trait="ADHD Risk",
+        trait="Attention-Related Candidate Genes (exploratory)",
         risk_allele="C",
         effect="Higher novelty-seeking scores in some studies; link to ADHD not consistently replicated",
         description="Promoter variant (-521C/T) of the dopamine D4 receptor gene. The C allele was associated with higher novelty-seeking scores in a Japanese sample (Okuyama 2000); findings for ADHD are mixed.",
@@ -83,20 +83,20 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         rsid="rs27072",
         gene="DAT1/SLC6A3",
         category="Cognitive",
-        trait="ADHD Risk",
-        risk_allele="A",
-        effect="Dopamine transporter variant studied in ADHD; not an established risk marker",
-        description="SLC6A3 encodes the dopamine transporter, the target of stimulant ADHD medications. Candidate-gene findings for SLC6A3 in ADHD are heterogeneous across studies (Gizer 2009 meta-analysis).",
+        trait="Attention-Related Candidate Genes (exploratory)",
+        risk_allele="T",  # minor allele; "A" on the gene's own strand (SLC6A3 is on the minus strand)
+        effect="Informational only: dopamine transporter variant studied in ADHD; not an established risk marker",
+        description="SLC6A3 encodes the dopamine transporter, the target of stimulant ADHD medications. Candidate-gene findings for SLC6A3 in ADHD are heterogeneous across studies (Gizer 2009 meta-analysis). The minor allele of rs27072 is reported as T on the forward strand used by DNA files (A on the gene's own strand).",
         references=["PMID:19506906"]
     ),
     "rs5569": TraitSNP(
         rsid="rs5569",
         gene="NET/SLC6A2",
         category="Cognitive",
-        trait="ADHD Risk",
-        risk_allele="T",
-        effect="Norepinephrine transporter variant studied in ADHD; not an established risk marker",
-        description="SLC6A2 encodes the norepinephrine transporter, the target of atomoxetine. rs5569 (G1287A) has been tested for association with ADHD in candidate-gene studies (e.g. Oh 2016); it is not an established risk marker.",
+        trait="Attention-Related Candidate Genes (exploratory)",
+        risk_allele="A",  # 1287A; SLC6A2 is on the forward strand, so DNA files report G/A
+        effect="Informational only: norepinephrine transporter variant studied in ADHD; not an established risk marker",
+        description="SLC6A2 encodes the norepinephrine transporter, the target of atomoxetine. rs5569 (G1287A) has been tested for association with ADHD in candidate-gene studies (e.g. Oh 2016); it is not an established risk marker. The 1287A allele is reported as A in DNA files.",
         references=["PMID:27984158"]
     ),
     "rs1801260": TraitSNP(
@@ -156,9 +156,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="ANKK1/DRD2",
         category="Cognitive",
         trait="Learning & Reward Processing",
-        risk_allele="T",  # A1 allele
-        effect="Reduced dopamine receptors, different learning style",
-        description="Taq1A polymorphism. T allele (A1) linked to fewer D2 receptors, affecting reward-based learning.",
+        risk_allele="A",  # A1 allele: T on the DRD2 strand, A on the forward strand
+        effect="A1 carriers have been reported to have fewer D2 receptors and, in one neuroimaging study, learned less efficiently from negative feedback",
+        description="Taq1A polymorphism. The A1 allele (reported as A on the forward strand used by DNA files; often written T in papers that use the DRD2 strand) has been linked to lower D2 receptor density. In a probabilistic learning task, A1 carriers learned to avoid actions with negative consequences less efficiently (Klein 2007).",
         references=["PMID:18063800"]
     ),
 
@@ -248,10 +248,10 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="GC",
         category="Metabolism",
         trait="Vitamin D Levels",
-        risk_allele="T",
-        effect="Lower vitamin D levels",
-        description="Affects vitamin D binding protein. May need more sun or supplementation.",
-        references=["PMID:20418485"]
+        risk_allele="A",  # Asp432 allele: T on the GC gene's strand, A on the forward strand
+        effect="Associated with modestly lower vitamin D (25-hydroxyvitamin D) levels in some studies; this allele is common",
+        description="rs7041 (Asp432Glu) changes the vitamin D binding protein. GC rs7041 was associated with circulating vitamin D in a genome-wide study (Ahn 2010), and in the control group of a postpartum-depression study the TT genotype (two Asp432 alleles on the gene's strand; AA on the forward strand used by DNA files) had lower 25-hydroxyvitamin D (Pillai 2022). Sun exposure, diet and supplements also strongly affect vitamin D levels.",
+        references=["PMID:20418485", "PMID:35878482"]
     ),
     "rs602662": TraitSNP(
         rsid="rs602662",
@@ -452,9 +452,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="ADRB3",
         category="Athletic",
         trait="Body Composition & Fitness (ADRB3)",
-        risk_allele="T",
+        risk_allele="A",  # Trp64 allele: T on the ADRB3 strand, A on the forward strand
         effect="Studied for body composition and fitness; effects are small and inconsistent",
-        description="Beta-3 adrenergic receptor (Trp64Arg), involved in fat metabolism. A 2023 study of 304 young adults linked the Trp64 allele to body-composition measures in men (Potocka 2023); there is no established effect on exercise recovery.",
+        description="Beta-3 adrenergic receptor (Trp64Arg), involved in fat metabolism. A 2023 study of 304 young adults linked the Trp64 allele to body-composition measures in men (Potocka 2023); there is no established effect on exercise recovery. Trp64 is the common allele, reported as A on the forward strand used by DNA files.",
         references=["PMID:37628593"]
     ),
     "rs8192678": TraitSNP(
@@ -497,9 +497,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="SLC6A4",
         category="Mental Health",
         trait="Serotonin Transporter Expression",
-        risk_allele="G",
+        risk_allele="C",  # rs25531 G on the SLC6A4 strand = C on the forward strand
         effect="Lower serotonin transporter expression",
-        description="rs25531 sits inside 5-HTTLPR; its G variant makes the long allele behave like the low-expressing short allele (Hu 2006). A large meta-analysis found no robust interaction between 5-HTTLPR and life stress on depression (Culverhouse 2018).",
+        description="rs25531 sits inside 5-HTTLPR; its G variant (reported as C on the forward strand used by DNA files) makes the long allele behave like the low-expressing short allele (Hu 2006). A large meta-analysis found no robust interaction between 5-HTTLPR and life stress on depression (Culverhouse 2018).",
         references=["PMID:16642437", "PMID:28373689"]
     ),
     "rs4570625": TraitSNP(
@@ -517,9 +517,9 @@ TRAITS_DATABASE: Dict[str, TraitSNP] = {
         gene="TPH1",
         category="Mental Health",
         trait="Mood Regulation",
-        risk_allele="A",
+        risk_allele="T",  # A218C "A" on the TPH1 strand = T on the forward strand
         effect="Studied in mood disorders and suicidal behavior; evidence is modest",
-        description="Tryptophan hydroxylase 1 (A218C) variant affecting serotonin production. A meta-analysis found a modest association with suicidal behavior that was significant only in fixed-effects models (Gonzalez-Castro 2014).",
+        description="Tryptophan hydroxylase 1 (A218C) variant affecting serotonin production. A meta-analysis that compared the A allele (reported as T on the forward strand used by DNA files) with the C allele found a modest association with suicidal behavior that was significant only in fixed-effects models (Gonzalez-Castro 2014).",
         references=["PMID:25005534"]
     ),
     "rs6313": TraitSNP(
